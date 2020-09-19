@@ -1,6 +1,6 @@
 import React, { useState } from "react"; // eslint-disable-line
 import { gql, useMutation } from "@apollo/client";
-import useProjectCache from "../use-project-cache";
+import useProjectCache from "../project/use-project-cache";
 
 import { LOAD_RESOURCES_LIST } from "./use-resources-list";
 

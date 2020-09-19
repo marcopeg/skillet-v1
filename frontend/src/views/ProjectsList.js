@@ -12,7 +12,7 @@ import {
   IonRefresherContent
 } from "@ionic/react";
 
-import useProjectsList from "../state/use-projects-list";
+import useProjectsList from "../state/project/use-projects-list";
 import ProjectCreate from "./ProjectCreate";
 
 const ProjectsList = () => {

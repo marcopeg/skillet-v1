@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 
-import useProjectCache from "../use-project-cache";
+import useProjectCache from "../project/use-project-cache";
 
 export const LOAD_RESOURCES_LIST = gql`
   query propertiesList($projectId: String) {

@@ -30,7 +30,7 @@ import {
   settingsOutline
 } from "ionicons/icons";
 
-import { ProjectCacheProvider } from "../state/use-project-cache";
+import { ProjectCacheProvider } from "../state/project/use-project-cache";
 
 // Views
 import DashboardView from "../views/DashboardView";

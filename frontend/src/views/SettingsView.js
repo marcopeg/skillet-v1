@@ -12,7 +12,7 @@ import {
 } from "@ionic/react";
 
 // Hooks
-import useProjectCache from "../state/use-project-cache";
+import useProjectCache from "../state/project/use-project-cache";
 import useEntryUpsert from "../state/use-entry-upsert";
 
 import SkillMatrix from "../components/SkillMatrix/SkillMatrix";
