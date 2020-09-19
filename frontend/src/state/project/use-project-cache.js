@@ -1,22 +1,53 @@
 import React, { useContext, createContext } from "react";
-import { gql, useQuery, useSubscription } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
-const LOAD_PROJECT_CACHE = gql`
-  query loadProjectCache($projectId: String!) {
-    project: projects_cache_by_pk(project_id: $projectId) {
-      data
-      project_id
+export const LOAD_PROJECT_BY_ID = gql`
+  query getProjectById($projectId: String!) {
+    project: projects_by_pk(id: $projectId) {
+      id
+      title
       updated_at
-    }
-  }
-`;
-
-const GET_PROJECT_CACHE = gql`
-  subscription getProjectCache($projectId: String!) {
-    project: projects_cache_by_pk(project_id: $projectId) {
-      data
-      project_id
-      updated_at
+      prop_groups(order_by: { order: desc, id: asc }) {
+        id
+        name
+        description
+        order
+        prop_values(order_by: { order: desc, id: asc }) {
+          id
+          name
+          description
+          order
+          tags
+        }
+      }
+      prop_values(order_by: { order: desc, id: asc }) {
+        id
+        prop_group_id
+        name
+        description
+        order
+        tags
+      }
+      res_groups(order_by: { order: desc, id: asc }) {
+        id
+        name
+        description
+        order
+        res_values(order_by: { order: desc, id: asc }) {
+          id
+          name
+          description
+          order
+          tags
+          entries {
+            prop_value_id
+            res_value_id
+            updated_at
+            description
+            value
+          }
+        }
+      }
     }
   }
 `;
@@ -29,23 +60,29 @@ const getData = (load, sub) => {
 
 const ProjectCacheContext = createContext();
 
+const formatProjectData = (data) => {
+  if (!data) return null;
+  const { prop_groups, prop_values, res_groups, ...project } = data.project;
+  return {
+    project,
+    prop_groups,
+    prop_values,
+    res_groups
+  };
+};
+
 export const ProjectCacheProvider = ({ projectId, children }) => {
-  const load = useQuery(LOAD_PROJECT_CACHE, {
-    variables: { projectId }
+  const load = useQuery(LOAD_PROJECT_BY_ID, {
+    variables: { projectId },
+    fetchPolicy: "network-only"
   });
-
-  const sub = useSubscription(GET_PROJECT_CACHE, {
-    variables: { projectId }
-  });
-
-  const data = getData(load, sub);
 
   const value = {
     projectId,
-    isReady: !!data,
-    isLoading: load.loading || sub.loading,
-    lastUpdate: data ? data.project.updated_at : null,
-    data: data ? data.project.data : null
+    isReady: !!load.data,
+    isLoading: load.loading,
+    lastUpdate: null,
+    data: formatProjectData(load.data)
   };
 
   return <ProjectCacheContext.Provider value={value} children={children} />;

@@ -36,7 +36,7 @@ const DashboardView = ({ match }) => {
           <IonTitle>{title}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent scrollX={true}>
         {isReady && <SkillMatrix data={data} onUpdate={onUpdate} />}
       </IonContent>
     </IonPage>

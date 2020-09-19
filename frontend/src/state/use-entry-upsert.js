@@ -1,4 +1,8 @@
 import { gql, useMutation } from "@apollo/client";
+import {
+  useProjectCache,
+  LOAD_PROJECT_BY_ID
+} from "./project/use-project-cache";
 
 const UPSERT_ENTRY = gql`
   mutation upsertEntry(
@@ -22,10 +26,19 @@ const UPSERT_ENTRY = gql`
 `;
 
 const useEntryUpsert = () => {
-  const [upsertEntry] = useMutation(UPSERT_ENTRY);
+  const { projectId } = useProjectCache();
+
+  const [upsertEntry] = useMutation(UPSERT_ENTRY, {
+    refetchQueries: [
+      {
+        query: LOAD_PROJECT_BY_ID,
+        variables: { projectId }
+      }
+    ]
+  });
+
   return {
     upsertEntry: (variables) => {
-      console.log(variables);
       return upsertEntry({ variables })
         .then((res) => console.log(res))
         .catch((err) => console.error(err));

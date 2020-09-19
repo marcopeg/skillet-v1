@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { IonInput } from "@ionic/react";
+
 const Cell = ({ propValue, resource, onUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -44,10 +46,14 @@ const Cell = ({ propValue, resource, onUpdate }) => {
   if (isEditing) {
     return (
       <td>
-        <input
+        <IonInput
           type="number"
           value={currValue}
-          onChange={updateValue}
+          onIonChange={updateValue}
+          min={0}
+          max={100}
+          size={4}
+          step={20}
           onKeyUp={handleGestoures}
         />
       </td>

@@ -13,6 +13,17 @@
       - value
       backend_only: false
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - project_id
+      - prop_value_id
+      - res_value_id
+      - updated_at
+      - description
+      - value
+      filter: {}
+      limit: 5000
   - role: backend
     permission:
       columns:
