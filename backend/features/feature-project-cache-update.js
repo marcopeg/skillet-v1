@@ -131,7 +131,9 @@ const upsertProjectCache = async (apollo, projectId) => {
 
 const handler = async (req) => {
   // Cache is dropped automatically by cascade constraints
-  if (req.body.event.op === "DELETE") return "+ok";
+  // when it comes to delete an entire project
+  if (req.body.event.op === "DELETE" && req.body.table.name === "projects")
+    return "+ok";
 
   // Retrieve projectId and run the cache update procedure
   const eventData = getEventData(req.body.event.data);

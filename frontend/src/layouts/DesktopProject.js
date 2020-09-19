@@ -34,6 +34,9 @@ import { ProjectCacheProvider } from "../state/use-project-cache";
 
 // Views
 import DashboardView from "../views/DashboardView";
+import PropertiesView from "../views/PropertiesView";
+import ResourcesView from "../views/ResourcesView";
+import SettingsView from "../views/SettingsView";
 import PageNotFoundView from "../views/PageNotFoundView";
 
 // Components
@@ -118,6 +121,21 @@ const DesktopLayout = ({ match }) => {
               exact
               path="/p/:projectId/dashboard"
               component={DashboardView}
+            />
+            <Route
+              exact
+              path="/p/:projectId/resources"
+              component={ResourcesView}
+            />
+            <Route
+              exact
+              path="/p/:projectId/properties"
+              component={PropertiesView}
+            />
+            <Route
+              exact
+              path="/p/:projectId/settings"
+              component={SettingsView}
             />
             <Route
               exact

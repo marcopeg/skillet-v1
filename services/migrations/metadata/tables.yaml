@@ -178,7 +178,27 @@
         column_mapping:
           project_id: project_id
           id: prop_group_id
+  insert_permissions:
+  - role: anonymous
+    permission:
+      check: {}
+      columns:
+      - description
+      - name
+      - order
+      - project_id
+      backend_only: false
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - description
+      - id
+      - name
+      - order
+      - project_id
+      filter: {}
+      limit: 20
   - role: backend
     permission:
       columns:
@@ -211,7 +231,31 @@
 - table:
     schema: public
     name: prop_values
+  insert_permissions:
+  - role: anonymous
+    permission:
+      check: {}
+      columns:
+      - description
+      - name
+      - order
+      - project_id
+      - prop_group_id
+      - tags
+      backend_only: false
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - description
+      - id
+      - name
+      - order
+      - project_id
+      - prop_group_id
+      - tags
+      filter: {}
+      limit: 500
   - role: backend
     permission:
       columns:

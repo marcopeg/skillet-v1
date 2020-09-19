@@ -1,7 +1,7 @@
 import React from "react";
 
 const Properties = ({ data }) => {
-  console.log(data);
+  // console.log(data);
 
   return (
     <thead>

@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useEffect } from "react";
+import React, { useContext, createContext } from "react";
 import { gql, useQuery, useSubscription } from "@apollo/client";
 
 const LOAD_PROJECT_CACHE = gql`

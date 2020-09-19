@@ -16,10 +16,8 @@ import useEntryUpsert from "../state/use-entry-upsert";
 import SkillMatrix from "../components/SkillMatrix/SkillMatrix";
 
 const DashboardView = ({ match }) => {
-  console.log(match);
-  const projectId = match.params.projectId;
-  const { isReady, data } = useProjectCache(projectId);
-  const { upsertEntry } = useEntryUpsert(projectId);
+  const { projectId, isReady, data } = useProjectCache();
+  const { upsertEntry } = useEntryUpsert();
   const title = isReady ? data.project.title : "Loading skills...";
 
   const onUpdate = (evt) =>
@@ -27,6 +25,7 @@ const DashboardView = ({ match }) => {
       ...evt.detail,
       project_id: projectId
     });
+
   return (
     <IonPage>
       <IonHeader>
