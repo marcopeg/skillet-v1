@@ -16,13 +16,20 @@ const getProjectByIdQuery = gql`
       id
       title
       updated_at
-      prop_groups {
+      prop_groups(order_by: { order: desc, id: asc }) {
         id
         name
         description
         order
+        prop_values(order_by: { order: desc, id: asc }) {
+          id
+          name
+          description
+          order
+          tags
+        }
       }
-      prop_values {
+      prop_values(order_by: { order: desc, id: asc }) {
         id
         prop_group_id
         name
@@ -30,26 +37,25 @@ const getProjectByIdQuery = gql`
         order
         tags
       }
-      res_groups {
+      res_groups(order_by: { order: desc, id: asc }) {
         id
         name
         description
         order
-      }
-      res_values {
-        id
-        res_group_id
-        name
-        description
-        order
-        tags
-      }
-      entries {
-        prop_value_id
-        res_value_id
-        updated_at
-        description
-        value
+        res_values(order_by: { order: desc, id: asc }) {
+          id
+          name
+          description
+          order
+          tags
+          entries {
+            prop_value_id
+            res_value_id
+            updated_at
+            description
+            value
+          }
+        }
       }
     }
   }
@@ -82,25 +88,22 @@ const buildProjectCache = async (apollo, projectId) => {
   try {
     const res = await apollo.query({
       query: getProjectByIdQuery,
-      variables: { projectId }
+      variables: { projectId },
+      fetchPolicy: "network-only"
     });
 
     const {
       prop_groups,
       prop_values,
       res_groups,
-      res_values,
-      entries,
       ...project
     } = res.data.project;
 
     return {
       project,
-      entries: entries.map(removeTypename),
       prop_groups: prop_groups.map(removeTypename),
       prop_values: prop_values.map(removeTypename),
-      res_groups: res_groups.map(removeTypename),
-      res_values: res_values.map(removeTypename)
+      res_groups: res_groups.map(removeTypename)
     };
   } catch (err) {
     throw new Error(
@@ -124,10 +127,6 @@ const upsertProjectCache = async (apollo, projectId) => {
       `Failed upsert project cache [${projectId}]: ${err.message}`
     );
   }
-};
-
-const dropProjectCache = (projectId) => {
-  console.log("@DROP CACHE", projectId);
 };
 
 const handler = async (req) => {
