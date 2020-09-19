@@ -1,3 +1,4 @@
+import React, { useContext, createContext, useEffect } from "react";
 import { gql, useQuery, useSubscription } from "@apollo/client";
 
 const LOAD_PROJECT_CACHE = gql`
@@ -26,7 +27,9 @@ const getData = (load, sub) => {
   return null;
 };
 
-const useProjectCache = (projectId) => {
+const ProjectCacheContext = createContext();
+
+export const ProjectCacheProvider = ({ projectId, children }) => {
   const load = useQuery(LOAD_PROJECT_CACHE, {
     variables: { projectId }
   });
@@ -37,13 +40,16 @@ const useProjectCache = (projectId) => {
 
   const data = getData(load, sub);
 
-  return {
+  const value = {
+    projectId,
     isReady: !!data,
     isLoading: load.loading || sub.loading,
-    id: projectId,
     lastUpdate: data ? data.project.updated_at : null,
     data: data ? data.project.data : null
   };
+
+  return <ProjectCacheContext.Provider value={value} children={children} />;
 };
 
+export const useProjectCache = () => useContext(ProjectCacheContext);
 export default useProjectCache;
