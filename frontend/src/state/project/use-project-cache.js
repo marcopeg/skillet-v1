@@ -1,5 +1,5 @@
 import React, { useContext, createContext } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useSubscription } from "@apollo/client";
 
 export const LOAD_PROJECT_BY_ID = gql`
   query getProjectById($projectId: String!) {
@@ -48,15 +48,26 @@ export const LOAD_PROJECT_BY_ID = gql`
           }
         }
       }
+      lastUpdate: entries(
+        limit: 1
+        order_by: { updated_at: desc }
+        where: { project_id: { _eq: $projectId } }
+      ) {
+        updated_at
+      }
     }
   }
 `;
 
-const getData = (load, sub) => {
-  if (sub.data) return sub.data;
-  if (load.data) return load.data;
-  return null;
-};
+const SUBSCRIBE_PROJECT_CACHE = gql`
+  subscription getProjectCache($projectId: String!) {
+    project: projects_cache_by_pk(project_id: $projectId) {
+      data
+      project_id
+      updated_at
+    }
+  }
+`;
 
 const ProjectCacheContext = createContext();
 
@@ -77,12 +88,47 @@ export const ProjectCacheProvider = ({ projectId, children }) => {
     fetchPolicy: "network-only"
   });
 
+  const sub = useSubscription(SUBSCRIBE_PROJECT_CACHE, {
+    variables: { projectId }
+  });
+
+  const data = (() => {
+    const loadLastUpdate =
+      load.data &&
+      load.data.project.lastUpdate &&
+      load.data.project.lastUpdate.length
+        ? load.data.project.lastUpdate[0].updated_at
+        : null;
+
+    const subLastUpdate =
+      sub.data &&
+      sub.data.project.data.lastUpdate &&
+      sub.data.project.data.lastUpdate.length
+        ? sub.data.project.data.lastUpdate[0].updated_at
+        : null;
+
+    console.log(
+      "load",
+      loadLastUpdate,
+      "sub",
+      subLastUpdate,
+      loadLastUpdate > subLastUpdate,
+      sub.data
+    );
+
+    return loadLastUpdate > subLastUpdate
+      ? load.data
+      : sub.data
+      ? { project: sub.data.project.data }
+      : null;
+  })();
+
   const value = {
     projectId,
-    isReady: !!load.data,
-    isLoading: load.loading,
+    isReady: !!data,
+    isLoading: load.loading || sub.loading,
     lastUpdate: null,
-    data: formatProjectData(load.data)
+    data: formatProjectData(data)
   };
 
   return <ProjectCacheContext.Provider value={value} children={children} />;

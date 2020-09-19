@@ -57,6 +57,13 @@ const getProjectByIdQuery = gql`
           }
         }
       }
+      lastUpdate: entries(
+        limit: 1
+        order_by: { updated_at: desc }
+        where: { project_id: { _eq: $projectId } }
+      ) {
+        updated_at
+      }
     }
   }
 `;
@@ -92,19 +99,7 @@ const buildProjectCache = async (apollo, projectId) => {
       fetchPolicy: "network-only"
     });
 
-    const {
-      prop_groups,
-      prop_values,
-      res_groups,
-      ...project
-    } = res.data.project;
-
-    return {
-      project,
-      prop_groups: prop_groups.map(removeTypename),
-      prop_values: prop_values.map(removeTypename),
-      res_groups: res_groups.map(removeTypename)
-    };
+    return res.data.project;
   } catch (err) {
     throw new Error(
       `Failed build project cache [${projectId}]: ${err.message}`
