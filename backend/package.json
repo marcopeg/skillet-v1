@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "@forrestjs/hooks": "^3.16.1",
+    "@forrestjs/service-apollo": "^3.16.1",
+    "@forrestjs/service-fastify": "^3.16.1",
+    "@forrestjs/service-fastify-apollo": "^3.16.1",
+    "@forrestjs/service-fastify-healthz": "^3.16.1",
+    "@forrestjs/service-fastify-jwt": "^3.16.1",
+    "envalid": "^6.0.2",
+    "fastify-plugin": "^2.3.4",
+    "apollo-server-fastify": "^2.17.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/nodemon -L ./index.js",
+    "compose:start": "npm i && ./node_modules/.bin/nodemon -L ./index.js"
+  }
+}

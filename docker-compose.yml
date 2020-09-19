@@ -1,0 +1,153 @@
+version: "2.1"
+services:
+  ###
+  ### APPLICATION
+  ###
+
+  backend:
+    container_name: backend
+    image: node:12.2
+    ports:
+      - "${BACKEND_PORT:-4000}:4000"
+    volumes:
+      - ./docker-data/backend/node_modules:/usr/src/app/node_modules:cached
+      - ./backend/package.json:/usr/src/app/package.json:delegated
+      - ./backend/package-lock.json:/usr/src/app/package-lock.json:delegated
+      - ./backend/index.js:/usr/src/app/index.js:delegated
+      - ./backend/features:/usr/src/app/features:delegated
+    environment:
+      PORT: 4000
+      HASURA_ENDPOINT: http://hasura:8080
+      HASURA_JWT_SECRET: '{"type":"HS256", "key": "h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk"}'
+    working_dir: /usr/src/app
+    entrypoint: ["npm", "run", "compose:start"]
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "-", "http://backend:4000/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  frontend:
+    container_name: frontend
+    image: node:12.2
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    volumes:
+      - ./docker-data/frontend/node_modules:/usr/src/app/node_modules:cached
+      - ./frontend/package.json:/usr/src/app/package.json:delegated
+      - ./frontend/package-lock.json:/usr/src/app/package-lock.json:delegated
+      - ./frontend/public:/usr/src/app/public:delegated
+      - ./frontend/src:/usr/src/app/src:delegated
+    environment:
+      REACT_APP_HASURA_URL: http://localhost:8080/v1/graphql
+      CHOKIDAR_USEPOLLING: "true"
+    working_dir: /usr/src/app
+    entrypoint: ["npm", "run", "start:compose"]
+    stdin_open: true
+    tty: true
+    depends_on:
+      hasura:
+        condition: service_healthy
+
+  ###
+  ### UTILITIES
+  ###
+
+  migrations:
+    container_name: migrations
+    build:
+      context: ./services/migrations
+    depends_on:
+      hasura:
+        condition: service_healthy
+    volumes:
+      - ./services/migrations/metadata:/metadata:cached
+      - ./services/migrations/migrations:/migrations:cached
+      - ./services/migrations/seeds:/seeds:cached
+    environment:
+      HASURA_ENDPOINT: http://hasura:8080
+      HASURA_ADMIN_SECRET: manners
+      HASURA_GRAPHQL_ENABLE_TELEMETRY: "false"
+    stdin_open: true
+    tty: true
+
+  ###
+  ### INFRASTRUCTURE
+  ###
+
+  hasura:
+    container_name: hasura
+    build:
+      context: ./services/hasura
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    ports:
+      - "${HASURA_PORT:-8080}:8080"
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: "manners"
+      HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256", "key": "h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk"}'
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "anonymous"
+      EVT_PROJECT_CACHE_UPDATE: http://backend:4000/project/cache/update
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "-", "http://hasura:8080/healthz"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  adminer:
+    container_name: adminer
+    image: adminer:4.7
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    links:
+      - postgres:db
+    ports:
+      - "${ADMINER_PORT:-8081}:8080"
+
+  postgres:
+    container_name: postgres
+    build:
+      context: ./services/postgres
+    restart: always
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - ./docker-data/pg:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  postgres-backup-s3:
+    build:
+      context: ./services/postgres-backup-s3
+    links:
+      - postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DATABASE: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_EXTRA_OPTS: "--schema=public --data-only --inserts --disable-trigger"
+      S3_REGION: ${BACKUP_S3_REGION:-"eu-west-1"}
+      S3_ACCESS_KEY_ID: ${BACKUP_S3_KEY:-**None**}
+      S3_SECRET_ACCESS_KEY: ${BACKUP_S3_SECRET:-**None**}
+      S3_BUCKET: ${BACKUP_S3_BUCKET:-**None**}
+      S3_PREFIX: ${BACKUP_S3_PREFIX:-**None**}
+      S3_PASSWORD: ${BACKUP_S3_PASSWORD:-**None**}
+      SCHEDULE: ${BACKUP_SCHEDULE:-"@daily"}
