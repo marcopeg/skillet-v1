@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; // eslint-disable-line
 import { gql, useMutation } from "@apollo/client";
-import useProjectCache from "./use-project-cache";
+import useProjectCache from "../use-project-cache";
 
 import { LOAD_PROPERTIES_LIST } from "./use-properties-list";
 
@@ -35,7 +35,7 @@ const usePropertiesCreateGroup = () => {
   const [values, setValues] = useState({ ...defaultValues });
   const { projectId } = useProjectCache();
 
-  const [createPropGroup, { loading }] = useMutation(CREATE_PROP_GROUP, {
+  const [createPropGroup] = useMutation(CREATE_PROP_GROUP, {
     refetchQueries: [
       {
         query: LOAD_PROPERTIES_LIST,

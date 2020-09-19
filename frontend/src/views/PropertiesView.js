@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React from "react";
 import {
   IonPage,
@@ -25,9 +23,9 @@ import {
 } from "@ionic/react";
 
 import { add } from "ionicons/icons";
-import usePropertiesList from "../state/use-properties-list";
-import usePropertiesCreateGroup from "../state/use-properties-create-group";
-import usePropertiesCreateValue from "../state/use-properties-create-value";
+import usePropertiesList from "../state/properties/use-properties-list";
+import usePropertiesCreateGroup from "../state/properties/use-properties-create-group";
+import usePropertiesCreateValue from "../state/properties/use-properties-create-value";
 
 const PropertiesView = () => {
   const { groups, refresh } = usePropertiesList();

@@ -1,10 +1,10 @@
 import { gql, useQuery } from "@apollo/client";
 
-import useProjectCache from "./use-project-cache";
+import useProjectCache from "../use-project-cache";
 
-export const LOAD_PROPERTIES_LIST = gql`
+export const LOAD_RESOURCES_LIST = gql`
   query propertiesList($projectId: String) {
-    groups: prop_groups(
+    groups: res_groups(
       where: { project_id: { _eq: $projectId } }
       order_by: { order: desc, id: asc }
     ) {
@@ -12,33 +12,22 @@ export const LOAD_PROPERTIES_LIST = gql`
       name
       description
       order
-      values: prop_values(order_by: { order: desc, id: asc }) {
+      values: res_values(order_by: { order: desc, id: asc }) {
         id
-        prop_group_id
+        res_group_id
         name
         description
         tags
         order
       }
     }
-    values: prop_values(
-      where: { project_id: { _eq: $projectId } }
-      order_by: { order: desc, id: asc }
-    ) {
-      id
-      prop_group_id
-      name
-      description
-      tags
-      order
-    }
   }
 `;
 
-const usePropertiesList = () => {
+const useResourcesList = () => {
   const { projectId } = useProjectCache();
 
-  const { loading, data, refetch } = useQuery(LOAD_PROPERTIES_LIST, {
+  const { loading, data, refetch } = useQuery(LOAD_RESOURCES_LIST, {
     variables: { projectId },
     fetchPolicy: "cache-first"
   });
@@ -56,4 +45,4 @@ const usePropertiesList = () => {
   };
 };
 
-export default usePropertiesList;
+export default useResourcesList;

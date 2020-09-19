@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; // eslint-disable-line
 import { gql, useMutation } from "@apollo/client";
-import useProjectCache from "./use-project-cache";
+import useProjectCache from "../use-project-cache";
 
-import { LOAD_PROPERTIES_LIST } from "./use-properties-list";
+import { LOAD_RESOURCES_LIST } from "./use-resources-list";
 
-const CREATE_PROP_VALUE = gql`
-  mutation createPropValue(
+const CREATE_PROP_GROUP = gql`
+  mutation createResGroup(
     $projectId: String!
-    $propGroupId: Int!
     $name: String!
     $description: String!
     $order: Int!
   ) {
-    value: insert_prop_values_one(
+    group: insert_res_groups_one(
       object: {
         project_id: $projectId
-        prop_group_id: $propGroupId
         name: $name
         description: $description
         order: $order
@@ -27,31 +25,29 @@ const CREATE_PROP_VALUE = gql`
 `;
 
 const defaultValues = {
-  propGroupId: null,
   name: "",
   description: "",
   order: 0
 };
 
-const usePropertiesCreateGroup = () => {
+const useResourcesCreateGroup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [values, setValues] = useState({ ...defaultValues });
   const { projectId } = useProjectCache();
 
-  const [createPropGroup, { loading }] = useMutation(CREATE_PROP_VALUE, {
+  const [createPropGroup] = useMutation(CREATE_PROP_GROUP, {
     refetchQueries: [
       {
-        query: LOAD_PROPERTIES_LIST,
+        query: LOAD_RESOURCES_LIST,
         variables: { projectId }
       }
     ]
   });
 
-  const resetValues = (propGroupId = null) =>
-    setValues({ ...defaultValues, propGroupId });
+  const resetValues = () => setValues({ ...defaultValues });
 
-  const openModal = (propGroupId) => {
-    resetValues(propGroupId);
+  const openModal = () => {
+    resetValues();
     setIsModalOpen(true);
   };
 
@@ -92,4 +88,4 @@ const usePropertiesCreateGroup = () => {
   };
 };
 
-export default usePropertiesCreateGroup;
+export default useResourcesCreateGroup;
