@@ -20,8 +20,6 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
-import "./App.css";
-
 import App from "./App";
 import { AuthProvider } from "./hooks/use-auth";
 import { I18NProvider } from "./hooks/use-i18n";

@@ -45,22 +45,29 @@ const Cell = ({ propValue, resource, onUpdate }) => {
 
   if (isEditing) {
     return (
-      <td>
-        <IonInput
-          type="number"
-          value={currValue}
-          onIonChange={updateValue}
-          min={0}
-          max={100}
-          size={4}
-          step={20}
-          onKeyUp={handleGestoures}
-        />
+      <td className="skm-body-cell-mode-edit">
+        <span className="skm-body-cell-mode-edit-content">
+          <IonInput
+            autofocus
+            type="number"
+            value={currValue}
+            onIonChange={updateValue}
+            min={0}
+            max={100}
+            size={4}
+            step={20}
+            onKeyUp={handleGestoures}
+          />
+        </span>
       </td>
     );
   }
 
-  return <td onClick={startEdit}>{entry ? entry.value : "-"}</td>;
+  return (
+    <td onClick={startEdit} className="skm-body-cell-mode-view">
+      {entry ? entry.value : "-"}
+    </td>
+  );
 };
 
 export default Cell;

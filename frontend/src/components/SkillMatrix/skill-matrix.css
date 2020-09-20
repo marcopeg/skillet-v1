@@ -1,0 +1,58 @@
+.skm-table,
+.skm-table th,
+.skm-table td {
+  border: 1px solid #aaa;
+  margin: 20px;
+  z-index: 999;
+}
+
+.skm-table tr:hover {
+  background-color: #ffa;
+}
+
+.skm-header-prop-group {
+  font-weight: normal;
+  font-size: 0.7em;
+  background: #ddd;
+}
+
+.skm-header-prop-value {
+  font-weight: normal;
+  font-size: 0.8em;
+  vertical-align: bottom;
+}
+
+.skm-header-prop-value span {
+  -ms-writing-mode: tb-rl;
+  -webkit-writing-mode: vertical-rl;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  font-weight: normal;
+}
+
+.skm-body-res-group {
+  text-align: left;
+  font-weight: normal;
+  background: #ddd;
+  padding: 5px 10px;
+}
+
+.skm-body-res-value {
+  text-align: left;
+  font-weight: normal;
+  padding: 5px 10px;
+  font-size: 0.8em;
+}
+
+.skm-body-cell-mode-view {
+  vertical-align: middle;
+  text-align: center;
+  font-size: 0.8em;
+  padding: 5px;
+}
+
+.skm-body-cell-mode-edit-content {
+  display: inline-block;
+  background-color: #fafafa;
+}

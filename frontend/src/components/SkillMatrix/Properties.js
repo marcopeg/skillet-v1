@@ -12,9 +12,9 @@ const Properties = ({ data }) => {
             <th
               key={`gr-${group.id}`}
               colSpan={group.prop_values.length}
-              className="cell-value"
+              className="skm-header-prop-group"
             >
-              <span className={"vertical-text"}>{group.name}</span>
+              {group.name}
             </th>
           );
         })}
@@ -23,8 +23,11 @@ const Properties = ({ data }) => {
         {data.prop_groups.map((group) => {
           return group.prop_values.map((value) => {
             return (
-              <th key={`gr-${group.id}-${value.id}`} className="cell-value">
-                <span className={"vertical-text"}>{value.name}</span>
+              <th
+                key={`gr-${group.id}-${value.id}`}
+                className="skm-header-prop-value"
+              >
+                <span>{value.name}</span>
               </th>
             );
           });
