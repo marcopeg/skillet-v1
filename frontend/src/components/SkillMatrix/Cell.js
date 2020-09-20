@@ -13,7 +13,7 @@ import CellEdit from "./CellEdit";
 
 const noop = () => {};
 
-const Cell = ({ propValue, resValue, onUpdate }) => {
+const Cell = ({ propGroup, propValue, resGroup, resValue, onUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(null);
   const [currValue, setCurrValue] = useState(null);
@@ -69,6 +69,10 @@ const Cell = ({ propValue, resValue, onUpdate }) => {
         onDidDismiss={requestCancel}
       >
         <CellEdit
+          propGroup={propGroup}
+          propValue={propValue}
+          resGroup={resGroup}
+          resValue={resValue}
           isEditing={!!isEditing}
           isLoading={isLoading}
           value={currValue}

@@ -1,8 +1,21 @@
 import React from "react";
 
-import { IonInput } from "@ionic/react";
+import {
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonContent,
+  IonRange,
+  IonButton,
+  IonIcon
+} from "@ionic/react";
+import { checkmarkOutline } from "ionicons/icons";
 
 const CellEdit = ({
+  propGroup,
+  propValue,
+  resGroup,
+  resValue,
   isEditing,
   isLoading,
   value,
@@ -15,30 +28,43 @@ const CellEdit = ({
 
   const onChange = (evt) => setValue(evt.target.value);
 
-  const onKeyUp = (evt) => {
-    // ESC to cancel
-    if (evt.keyCode === 27) {
-      requestCancel();
-    }
-
-    // Enter to submit
-    if (evt.keyCode === 13) {
-      requestSubmit();
-    }
-  };
-
   return (
-    <IonInput
-      autofocus
-      type="number"
-      value={value}
-      onIonChange={onChange}
-      min={0}
-      max={100}
-      size={4}
-      step={20}
-      onKeyUp={onKeyUp}
-    />
+    <IonContent className={"ion-padding"}>
+      <p className={"skm-body-cell-mode-edit-info"}>
+        <b>{resValue.name}</b> on <b>{propValue.name}</b>
+        <br />
+        <small>
+          {resGroup.name} / {propGroup.name}
+        </small>
+      </p>
+      <IonRange
+        min={0}
+        max={100}
+        step={20}
+        snaps={true}
+        value={value}
+        onIonChange={onChange}
+      />
+      <IonGrid>
+        <IonRow>
+          <IonCol size={6}>
+            <IonButton
+              size={"small"}
+              fill={"clear"}
+              expand={"block"}
+              onClick={requestCancel}
+            >
+              cancel
+            </IonButton>
+          </IonCol>
+          <IonCol size={6}>
+            <IonButton size={"small"} expand={"block"} onClick={requestSubmit}>
+              <IonIcon icon={checkmarkOutline} slot={"end"} /> Save
+            </IonButton>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+    </IonContent>
   );
 };
 

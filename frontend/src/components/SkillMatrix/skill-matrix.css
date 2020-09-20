@@ -56,3 +56,11 @@
   display: inline-block;
   background-color: #fafafa;
 }
+
+/**
+ *
+ */
+
+.skm-body-cell-mode-edit-info {
+  font-size: 0.8em;
+}
