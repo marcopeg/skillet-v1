@@ -4,9 +4,11 @@ const Properties = ({ data }) => {
   // console.log(data);
 
   return (
-    <thead>
+    <>
       <tr>
-        <th rowSpan={2}>x</th>
+        <th rowSpan={2} className="skm-header-c1">
+          x
+        </th>
         {data.prop_groups.map((group) => {
           return (
             <th
@@ -33,7 +35,7 @@ const Properties = ({ data }) => {
           });
         })}
       </tr>
-    </thead>
+    </>
   );
 };
 

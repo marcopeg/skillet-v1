@@ -1,13 +1,34 @@
+.skm-container {
+  margin: 20px;
+}
+
 .skm-table,
 .skm-table th,
 .skm-table td {
   border: 1px solid #aaa;
-  margin: 20px;
   z-index: 999;
 }
 
-.skm-table tr:hover {
-  background-color: #ffa;
+.skm-table-headers {
+  border-bottom: 0px solid #fff;
+}
+
+.skm-table-body {
+  display: inline-block;
+  height: 450px;
+  overflow: scroll;
+  border: 0px solid #fff;
+  border-bottom: 1px solid #aaa;
+
+  text-align: left;
+  position: relative;
+  border-collapse: collapse;
+}
+
+/* the first empty one */
+.skm-header-c1 {
+  width: 100px;
+  overflow: hidden;
 }
 
 .skm-header-prop-group {
@@ -20,6 +41,12 @@
   font-weight: normal;
   font-size: 0.8em;
   vertical-align: bottom;
+}
+
+.skm-header-prop-value span {
+  display: inline-block;
+  width: 30px;
+  overflow: hidden;
 }
 
 .skm-header-prop-value span {
@@ -36,11 +63,16 @@
   font-weight: normal;
   background: #ddd;
   padding: 5px 10px;
+  position: sticky;
+  top: 0;
 }
 
-.skm-body-res-value {
-  text-align: right;
+.skm-body-res-value span {
+  display: inline-block;
+  width: 100px;
+  overflow: hidden;
   font-weight: normal;
+  text-align: right;
   padding: 5px 10px;
   font-size: 0.8em;
   white-space: nowrap;
@@ -50,12 +82,11 @@
   vertical-align: middle;
   text-align: center;
   font-size: 0.8em;
-  padding: 0 5px;
 }
 
 .skm-body-cell-mode-view span {
   display: inline-block;
-  width: 25px;
+  width: 30px;
   overflow: hidden;
 }
 

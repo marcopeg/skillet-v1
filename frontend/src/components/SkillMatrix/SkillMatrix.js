@@ -6,10 +6,14 @@ import Resources from "./Resources";
 
 const SkillMatrix = ({ data, onUpdate }) => {
   return (
-    <table className="skm-table">
-      <Properties data={data} />
-      <Resources data={data} onUpdate={onUpdate} />
-    </table>
+    <div class="skm-container">
+      <table className="skm-table skm-table-headers">
+        <Properties data={data} />
+      </table>
+      <table className="skm-table skm-table-body">
+        <Resources data={data} onUpdate={onUpdate} />
+      </table>
+    </div>
   );
 };
 

@@ -6,7 +6,7 @@ import ResourceValues from "./ResourceValues";
 
 const Resources = ({ data, onUpdate }) => {
   return (
-    <tbody>
+    <>
       {data.res_groups.map((resGroup) => {
         return (
           <React.Fragment key={`rg-${resGroup.id}`}>
@@ -21,7 +21,9 @@ const Resources = ({ data, onUpdate }) => {
             {resGroup.res_values.map((resValue) => {
               return (
                 <tr key={`rg-${resGroup.id}-${resValue.id}`}>
-                  <th className="skm-body-res-value">{resValue.name}</th>
+                  <th className="skm-body-res-value">
+                    <span>{resValue.name}</span>
+                  </th>
                   <ResourceValues
                     data={data}
                     resGroup={resGroup}
@@ -34,7 +36,7 @@ const Resources = ({ data, onUpdate }) => {
           </React.Fragment>
         );
       })}
-    </tbody>
+    </>
   );
 };
 
