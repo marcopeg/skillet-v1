@@ -26,6 +26,7 @@ const wsBaseUrl = process.env.REACT_APP_HASURA_WS
 
 export const ApolloProvider = ({ children }) => {
   const { token } = useAuth();
+  console.log("@@token", token);
   const headers =
     token && typeof token === "object"
       ? token

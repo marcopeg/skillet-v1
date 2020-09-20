@@ -1,23 +1,12 @@
 import React, { useState } from "react"; // eslint-disable-line
 import { gql, useMutation } from "@apollo/client";
-import useProject from "../project/use-project";
 
 import { LOAD_RESOURCES_LIST } from "./use-resources-list";
 
 const CREATE_PROP_GROUP = gql`
-  mutation createResGroup(
-    $projectId: String!
-    $name: String!
-    $description: String!
-    $order: Int!
-  ) {
+  mutation createResGroup($name: String!, $description: String!, $order: Int!) {
     group: insert_res_groups_one(
-      object: {
-        project_id: $projectId
-        name: $name
-        description: $description
-        order: $order
-      }
+      object: { name: $name, description: $description, order: $order }
     ) {
       id
     }
@@ -33,13 +22,11 @@ const defaultValues = {
 const useResourcesCreateGroup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [values, setValues] = useState({ ...defaultValues });
-  const { projectId } = useProject();
 
   const [createPropGroup] = useMutation(CREATE_PROP_GROUP, {
     refetchQueries: [
       {
-        query: LOAD_RESOURCES_LIST,
-        variables: { projectId }
+        query: LOAD_RESOURCES_LIST
       }
     ]
   });
@@ -63,7 +50,7 @@ const useResourcesCreateGroup = () => {
     });
 
   const submitForm = () => {
-    createPropGroup({ variables: { ...values, projectId } })
+    createPropGroup({ variables: values })
       .then((res) => {
         closeModal();
       })

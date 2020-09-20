@@ -14,7 +14,7 @@ export const LOAD_PROJECTS_LIST = gql`
 
 const useProjectsList = () => {
   const { data, error, loading, refetch } = useQuery(LOAD_PROJECTS_LIST, {
-    fetchPolicy: "cache-first"
+    fetchPolicy: "network-only"
   });
 
   return {

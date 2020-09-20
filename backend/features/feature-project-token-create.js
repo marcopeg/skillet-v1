@@ -30,7 +30,7 @@ const handler = async (req, reply) => {
       "https://hasura.io/jwt/claims": {
         "x-hasura-allowed-roles": ["project"],
         "x-hasura-default-role": "project",
-        "x-hasura-user-id": req.body.input.projectId
+        "x-hasura-project-id": req.body.input.projectId
       }
     })
   });

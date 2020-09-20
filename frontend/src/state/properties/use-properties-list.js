@@ -1,13 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
 
-import useProject from "../project/use-project";
-
 export const LOAD_PROPERTIES_LIST = gql`
-  query propertiesList($projectId: String) {
-    groups: prop_groups(
-      where: { project_id: { _eq: $projectId } }
-      order_by: { order: desc, id: asc }
-    ) {
+  query propertiesList {
+    groups: prop_groups(order_by: { order: desc, id: asc }) {
       id
       name
       description
@@ -25,11 +20,8 @@ export const LOAD_PROPERTIES_LIST = gql`
 `;
 
 const usePropertiesList = () => {
-  const { projectId } = useProject();
-
   const { loading, data, refetch } = useQuery(LOAD_PROPERTIES_LIST, {
-    variables: { projectId },
-    fetchPolicy: "cache-first"
+    fetchPolicy: "network-only"
   });
 
   const refresh = (event) => {

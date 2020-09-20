@@ -2,28 +2,19 @@
     schema: public
     name: entries
   insert_permissions:
-  - role: anonymous
+  - role: project
     permission:
       check: {}
+      set:
+        project_id: x-hasura-project-id
       columns:
       - description
-      - project_id
-      - prop_value_id
-      - res_value_id
-      - value
-      backend_only: false
-  select_permissions:
-  - role: anonymous
-    permission:
-      columns:
-      - project_id
       - prop_value_id
       - res_value_id
       - updated_at
-      - description
       - value
-      filter: {}
-      limit: 5000
+      backend_only: false
+  select_permissions:
   - role: backend
     permission:
       columns:
@@ -34,13 +25,31 @@
       - updated_at
       - value
       filter: {}
+  - role: project
+    permission:
+      columns:
+      - value
+      - prop_value_id
+      - res_value_id
+      - description
+      - updated_at
+      - project_id
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      limit: 1000
   update_permissions:
-  - role: anonymous
+  - role: project
     permission:
       columns:
       - description
+      - prop_value_id
+      - res_value_id
+      - updated_at
       - value
-      filter: {}
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
       check: null
   event_triggers:
   - name: project_cache_by_entries
@@ -129,6 +138,18 @@
       - title
       - updated_at
       filter: {}
+  - role: project
+    permission:
+      columns:
+      - id
+      - title
+      - description
+      - created_at
+      - updated_at
+      filter:
+        id:
+          _eq: x-hasura-project-id
+      limit: 0
   event_triggers:
   - name: project_cache_by_projects
     definition:
@@ -190,27 +211,19 @@
           project_id: project_id
           id: prop_group_id
   insert_permissions:
-  - role: anonymous
+  - role: project
     permission:
       check: {}
-      columns:
-      - description
-      - name
-      - order
-      - project_id
-      backend_only: false
-  select_permissions:
-  - role: anonymous
-    permission:
+      set:
+        project_id: x-hasura-project-id
       columns:
       - description
       - id
       - name
       - order
-      - project_id
       - updated_at
-      filter: {}
-      limit: 20
+      backend_only: false
+  select_permissions:
   - role: backend
     permission:
       columns:
@@ -220,6 +233,19 @@
       - description
       - order
       filter: {}
+  - role: project
+    permission:
+      columns:
+      - id
+      - order
+      - description
+      - updated_at
+      - name
+      - project_id
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      limit: 50
   event_triggers:
   - name: project_cache_by_prop_groups
     definition:
@@ -244,31 +270,21 @@
     schema: public
     name: prop_values
   insert_permissions:
-  - role: anonymous
+  - role: project
     permission:
       check: {}
-      columns:
-      - description
-      - name
-      - order
-      - project_id
-      - prop_group_id
-      - tags
-      backend_only: false
-  select_permissions:
-  - role: anonymous
-    permission:
+      set:
+        project_id: x-hasura-project-id
       columns:
       - description
       - id
       - name
       - order
-      - project_id
       - prop_group_id
       - tags
       - updated_at
-      filter: {}
-      limit: 500
+      backend_only: false
+  select_permissions:
   - role: backend
     permission:
       columns:
@@ -280,6 +296,21 @@
       - tags
       - order
       filter: {}
+  - role: project
+    permission:
+      columns:
+      - id
+      - project_id
+      - prop_group_id
+      - name
+      - description
+      - tags
+      - order
+      - updated_at
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      limit: 500
   event_triggers:
   - name: project_cache_by_prop_values
     definition:
@@ -316,27 +347,19 @@
           project_id: project_id
           id: res_group_id
   insert_permissions:
-  - role: anonymous
+  - role: project
     permission:
       check: {}
-      columns:
-      - description
-      - name
-      - order
-      - project_id
-      backend_only: false
-  select_permissions:
-  - role: anonymous
-    permission:
+      set:
+        project_id: x-hasura-project-id
       columns:
       - description
       - id
       - name
       - order
-      - project_id
       - updated_at
-      filter: {}
-      limit: 20
+      backend_only: false
+  select_permissions:
   - role: backend
     permission:
       columns:
@@ -346,6 +369,19 @@
       - description
       - order
       filter: {}
+  - role: project
+    permission:
+      columns:
+      - id
+      - project_id
+      - name
+      - description
+      - order
+      - updated_at
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      limit: 50
   event_triggers:
   - name: project_cache_by_res_groups
     definition:
@@ -378,31 +414,21 @@
           schema: public
           name: entries
   insert_permissions:
-  - role: anonymous
+  - role: project
     permission:
       check: {}
-      columns:
-      - description
-      - name
-      - order
-      - project_id
-      - res_group_id
-      - tags
-      backend_only: false
-  select_permissions:
-  - role: anonymous
-    permission:
+      set:
+        project_id: x-hasura-project-id
       columns:
       - description
       - id
       - name
       - order
-      - project_id
       - res_group_id
       - tags
       - updated_at
-      filter: {}
-      limit: 50
+      backend_only: false
+  select_permissions:
   - role: backend
     permission:
       columns:
@@ -414,6 +440,21 @@
       - tags
       - order
       filter: {}
+  - role: project
+    permission:
+      columns:
+      - id
+      - project_id
+      - res_group_id
+      - name
+      - description
+      - tags
+      - order
+      - updated_at
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      limit: 500
   event_triggers:
   - name: project_cache_by_res_values
     definition:

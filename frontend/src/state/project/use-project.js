@@ -6,11 +6,12 @@
  * likely need to simplify this query to reduce load on Postgres.
  */
 
-import React, { useContext, createContext } from "react";
-import { gql, useSubscription } from "@apollo/client";
+import React, { useContext, createContext, useEffect } from "react";
+import { gql, useMutation, useQuery } from "@apollo/client";
+import useAuth from "../../hooks/use-auth";
 
 export const GET_PROJECT_BY_ID = gql`
-  subscription getProjectById($projectId: String!) {
+  query getProjectById($projectId: String!) {
     project: projects_by_pk(id: $projectId) {
       id
       title
@@ -67,6 +68,14 @@ export const GET_PROJECT_BY_ID = gql`
   }
 `;
 
+export const CREATE_PROJECT_TOKEN = gql`
+  mutation createProjectToken($projectId: String!) {
+    project: createProjectToken(projectId: $projectId) {
+      accessToken
+    }
+  }
+`;
+
 const ProjectContext = createContext();
 
 const formatProjectData = (data) => {
@@ -81,9 +90,15 @@ const formatProjectData = (data) => {
 };
 
 export const ProjectProvider = ({ projectId, children }) => {
-  const { data, loading } = useSubscription(GET_PROJECT_BY_ID, {
+  const { setToken } = useAuth();
+
+  const { data, loading } = useQuery(GET_PROJECT_BY_ID, {
     variables: { projectId },
     fetchPolicy: "network-only"
+  });
+
+  const [createProjectToken] = useMutation(CREATE_PROJECT_TOKEN, {
+    variables: { projectId }
   });
 
   const value = {
@@ -96,6 +111,18 @@ export const ProjectProvider = ({ projectId, children }) => {
         : null,
     data: formatProjectData(data)
   };
+
+  // Generate the project's token to scope the data access
+  useEffect(() => {
+    createProjectToken()
+      .then((res) => setToken(res.data.project.accessToken))
+      .catch((err) => {
+        console.error("Could not generate the project token");
+        console.error(err.message);
+      });
+
+    return () => setToken(null);
+  }, [createProjectToken, setToken]);
 
   return <ProjectContext.Provider value={value} children={children} />;
 };
