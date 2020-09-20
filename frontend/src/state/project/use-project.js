@@ -7,7 +7,7 @@
  */
 
 import React, { useContext, createContext, useEffect } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import useAuth from "../../hooks/use-auth";
 
 export const GET_PROJECT_BY_ID = gql`
@@ -76,6 +76,14 @@ export const CREATE_PROJECT_TOKEN = gql`
   }
 `;
 
+export const GET_PROJECT_UPDATES = gql`
+  subscription projectUpdates($projectId: String!) {
+    projects_cache_by_pk(project_id: $projectId) {
+      updated_at
+    }
+  }
+`;
+
 const ProjectContext = createContext();
 
 const formatProjectData = (data) => {
@@ -90,15 +98,20 @@ const formatProjectData = (data) => {
 };
 
 export const ProjectProvider = ({ projectId, children }) => {
-  const { setToken } = useAuth();
+  const { token, setToken } = useAuth();
 
-  const { data, loading } = useQuery(GET_PROJECT_BY_ID, {
+  const { data, loading, refetch: loadProject } = useQuery(GET_PROJECT_BY_ID, {
     variables: { projectId },
     fetchPolicy: "network-only"
   });
 
   const [createProjectToken] = useMutation(CREATE_PROJECT_TOKEN, {
     variables: { projectId }
+  });
+
+  const { data: subData } = useSubscription(GET_PROJECT_UPDATES, {
+    variables: { projectId },
+    fetchPolicy: "network-only"
   });
 
   const value = {
@@ -115,7 +128,10 @@ export const ProjectProvider = ({ projectId, children }) => {
   // Generate the project's token to scope the data access
   useEffect(() => {
     createProjectToken()
-      .then((res) => setToken(res.data.project.accessToken))
+      .then((res) => {
+        setToken(res.data.project.accessToken);
+        return loadProject();
+      })
       .catch((err) => {
         console.error("Could not generate the project token");
         console.error(err.message);
@@ -124,7 +140,12 @@ export const ProjectProvider = ({ projectId, children }) => {
     return () => setToken(null);
   }, [createProjectToken, setToken]);
 
-  return <ProjectContext.Provider value={value} children={children} />;
+  useEffect(() => {
+    loadProject();
+  }, [subData, loadProject]);
+
+  const renderEl = token ? children : "Loading project...";
+  return <ProjectContext.Provider value={value} children={renderEl} />;
 };
 
 export const useProject = () => useContext(ProjectContext);
