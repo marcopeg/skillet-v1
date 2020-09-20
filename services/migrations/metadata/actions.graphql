@@ -1,2 +1,13 @@
+type Mutation {
+  createProjectToken (
+    projectId: String!
+  ): ProjectToken
+}
 
+
+
+
+type ProjectToken {
+  accessToken : String!
+}
 

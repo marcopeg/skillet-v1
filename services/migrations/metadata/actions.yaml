@@ -1,6 +1,13 @@
-actions: []
+actions:
+- name: createProjectToken
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/project/token/create'
+  permissions:
+  - role: anonymous
 custom_types:
   enums: []
   input_objects: []
-  objects: []
+  objects:
+  - name: ProjectToken
   scalars: []

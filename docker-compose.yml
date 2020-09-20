@@ -95,6 +95,7 @@ services:
       HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256", "key": "h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk"}'
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "anonymous"
       EVT_PROJECT_CACHE_UPDATE: http://backend:4000/project/cache/update
+      ACTION_BASE_URL: http://backend:4000
     healthcheck:
       test: ["CMD", "wget", "-qO", "-", "http://hasura:8080/healthz"]
       interval: 5s

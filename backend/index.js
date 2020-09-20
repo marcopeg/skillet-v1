@@ -19,6 +19,7 @@ const envalid = require("envalid");
 const jwt = require("jsonwebtoken");
 
 const featureProjectCacheUpdate = require("./features/feature-project-cache-update");
+const featureProjectTokenCreate = require("./features/feature-project-token-create");
 
 // Validate Environment:
 const env = envalid.cleanEnv(process.env, {
@@ -76,5 +77,5 @@ runHookApp({
     serviceFastifyJwt,
     serviceFastifyApollo
   ],
-  features: [featureProjectCacheUpdate]
+  features: [featureProjectCacheUpdate, featureProjectTokenCreate]
 });
