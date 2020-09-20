@@ -127,7 +127,9 @@
       - id
       - title
       - updated_at
-      filter: {}
+      filter:
+        is_private:
+          _eq: false
       limit: 50
   - role: backend
     permission:
