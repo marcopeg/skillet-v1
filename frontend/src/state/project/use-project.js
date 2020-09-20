@@ -138,7 +138,7 @@ export const ProjectProvider = ({ projectId, children }) => {
       });
 
     return () => setToken(null);
-  }, [createProjectToken, setToken]);
+  }, [createProjectToken, setToken, loadProject]);
 
   useEffect(() => {
     loadProject();

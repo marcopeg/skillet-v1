@@ -24,9 +24,11 @@ const useEntryUpsert = () => {
 
   return {
     upsertEntry: (variables) => {
-      return upsertEntry({ variables })
-        .then((res) => console.log(res))
-        .catch((err) => console.error(err));
+      return (
+        upsertEntry({ variables })
+          // .then((res) => console.log(res))
+          .catch((err) => console.error(err))
+      );
     }
   };
 };
