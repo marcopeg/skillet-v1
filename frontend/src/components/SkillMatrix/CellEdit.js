@@ -19,6 +19,7 @@ const CellEdit = ({
   isEditing,
   isLoading,
   value,
+  threshold,
   setValue,
   requestSubmit,
   requestCancel
@@ -37,6 +38,7 @@ const CellEdit = ({
           {resGroup.name} / {propGroup.name}
         </small>
       </p>
+      <p className="skm-body-cell-mode-edit-label">{threshold.label}</p>
       <IonRange
         min={0}
         max={100}

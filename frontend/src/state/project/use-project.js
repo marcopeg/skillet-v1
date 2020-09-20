@@ -89,6 +89,7 @@ const ProjectContext = createContext();
 const formatProjectData = (data) => {
   if (!data) return null;
   const { prop_groups, prop_values, res_groups, ...project } = data.project;
+
   return {
     project,
     prop_groups,

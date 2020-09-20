@@ -39,22 +39,24 @@
 }
 
 .skm-body-res-value {
-  text-align: left;
+  text-align: right;
   font-weight: normal;
   padding: 5px 10px;
   font-size: 0.8em;
+  white-space: nowrap;
 }
 
 .skm-body-cell-mode-view {
   vertical-align: middle;
   text-align: center;
   font-size: 0.8em;
-  padding: 5px;
+  padding: 0 5px;
 }
 
-.skm-body-cell-mode-edit-content {
+.skm-body-cell-mode-view span {
   display: inline-block;
-  background-color: #fafafa;
+  width: 25px;
+  overflow: hidden;
 }
 
 /**
@@ -63,4 +65,8 @@
 
 .skm-body-cell-mode-edit-info {
   font-size: 0.8em;
+}
+
+.skm-body-cell-mode-edit-label {
+  margin-bottom: -10px;
 }

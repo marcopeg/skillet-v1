@@ -1,28 +1,98 @@
-/* eslint-disable */
 /**
  * Renders a single entry for the SkillMatrix.
  *
  */
 
 import React, { useState, useMemo } from "react";
+import deepmerge from "deepmerge";
 
-import { IonInput, IonPopover, Popover } from "@ionic/react";
+import { IonPopover } from "@ionic/react";
 
 import CellView from "./CellView";
 import CellEdit from "./CellEdit";
 
-const noop = () => {};
+const defaultSettings = {
+  thresholds: {
+    _null: {
+      style: { backgroundColor: "#f9caca" },
+      label: "Damn it, fill this stuff"
+    },
+    _error: {
+      style: { backgroundColor: "#ff1c1c" },
+      label: "Damn it, fill this stuff"
+    },
+    values: [
+      {
+        value: 0,
+        style: { backgroundColor: "#fff" },
+        label: "I have no idea"
+      },
+      {
+        value: 20,
+        style: { backgroundColor: "#DFEED4" },
+        label: "I know the pourpose of it"
+      },
+      {
+        value: 40,
+        style: { backgroundColor: "#CCE8B5" },
+        label: "I have Hello World experience"
+      },
+      {
+        value: 60,
+        style: { backgroundColor: "#B2DD8B" },
+        label: "I can handle tasks"
+      },
+      {
+        value: 80,
+        style: { backgroundColor: "#97D35E" },
+        label: "I feel I'm an expert"
+      },
+      {
+        value: 100,
+        style: { backgroundColor: "#97D35E" },
+        label: "I'm a master of it"
+      }
+    ]
+  }
+};
 
-const Cell = ({ propGroup, propValue, resGroup, resValue, onUpdate }) => {
+const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(null);
   const [currValue, setCurrValue] = useState(null);
+
+  // Extract the current settings to apply to this cell.
+  const settings = useMemo(
+    () =>
+      deepmerge(
+        defaultSettings,
+        data.settings || {},
+        propGroup.settings || {},
+        propValue.settings || {}
+      ),
+    [propValue.settings, propGroup.settings, data.settings]
+  );
 
   // Extract the entry that is related to this specific cell.
   const entry = useMemo(() => {
     const entryFilter = ($) => $.prop_value_id === propValue.id;
     return resValue.entries.find(entryFilter);
-  }, [resValue.entries]);
+  }, [resValue.entries, propValue.id]);
+
+  // Calculate the current used value to represent while editing
+  const useValue = useMemo(
+    () => (currValue !== null ? currValue : entry ? entry.value : null),
+    [entry, currValue]
+  );
+
+  // Calculate the current threshold of the cell
+  const threshold = useMemo(() => {
+    if (useValue === null) return settings.thresholds._null;
+    const value = settings.thresholds.values.find(($) => $.value >= useValue);
+    return value || settings.thresholds._error;
+  }, [settings.thresholds, useValue]);
+
+  // console.log(threshold);
 
   // Persist the event so the Popover can mount in relation to it.
   const onRequestEdit = (evt) => {
@@ -61,7 +131,13 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, onUpdate }) => {
 
   return (
     <>
-      <CellView entry={entry} value={currValue} requestEdit={onRequestEdit} />
+      <CellView
+        entry={entry}
+        value={useValue}
+        settings={settings}
+        threshold={threshold}
+        requestEdit={onRequestEdit}
+      />
       <IonPopover
         mode={"ios"}
         isOpen={!!isEditing}
@@ -76,6 +152,8 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, onUpdate }) => {
           isEditing={!!isEditing}
           isLoading={isLoading}
           value={currValue}
+          settings={settings}
+          threshold={threshold}
           setValue={setCurrValue}
           requestCancel={requestCancel}
           requestSubmit={requestSubmit}

@@ -5,17 +5,16 @@
  * It is also responsible for the initiation of the editing activity.
  */
 
-import React, { useMemo } from "react";
+import React from "react";
 
-const CellView = ({ entry, value, requestEdit }) => {
-  const showValue = useMemo(() => {
-    if (value !== null) return value;
-    return entry ? entry.value : "-";
-  }, [entry, value]);
-
+const CellView = ({ value, threshold, requestEdit }) => {
   return (
-    <td onClick={requestEdit} className="skm-body-cell-mode-view">
-      {showValue}
+    <td
+      onClick={requestEdit}
+      className="skm-body-cell-mode-view"
+      style={threshold.style}
+    >
+      <span>{value || "-"}</span>
     </td>
   );
 };
