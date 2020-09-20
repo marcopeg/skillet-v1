@@ -1,26 +1,33 @@
+/**
+ * Iterates through the SkillMatrix resources to present groups and lines
+ */
 import React from "react";
-
-import Values from "./Values";
+import ResourceValues from "./ResourceValues";
 
 const Resources = ({ data, onUpdate }) => {
   return (
     <tbody>
-      {data.res_groups.map((group) => {
+      {data.res_groups.map((resGroup) => {
         return (
-          <React.Fragment key={`rg-${group.id}`}>
+          <React.Fragment key={`rg-${resGroup.id}`}>
             <tr>
               <th
                 colSpan={data.prop_values.length + 1}
                 className="skm-body-res-group"
               >
-                {group.name}
+                {resGroup.name}
               </th>
             </tr>
-            {group.res_values.map((value) => {
+            {resGroup.res_values.map((resValue) => {
               return (
-                <tr key={`rg-${group.id}-${value.id}`}>
-                  <th className="skm-body-res-value">{value.name}</th>
-                  <Values data={data} resource={value} onUpdate={onUpdate} />
+                <tr key={`rg-${resGroup.id}-${resValue.id}`}>
+                  <th className="skm-body-res-value">{resValue.name}</th>
+                  <ResourceValues
+                    data={data}
+                    resGroup={resGroup}
+                    resValue={resValue}
+                    onUpdate={onUpdate}
+                  />
                 </tr>
               );
             })}

@@ -1,73 +1,142 @@
-import React, { useState } from "react";
+/* eslint-disable */
+/**
+ * Renders a single entry for the SkillMatrix.
+ *
+ */
 
-import { IonInput } from "@ionic/react";
+import React, { useState, useMemo } from "react";
 
-const Cell = ({ propValue, resource, onUpdate }) => {
+import { IonInput, IonPopover, Popover } from "@ionic/react";
+
+import CellView from "./CellView";
+import CellEdit from "./CellEdit";
+
+const noop = () => {};
+
+const Cell = ({ propValue, resValue, onUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(null);
   const [currValue, setCurrValue] = useState(null);
 
-  const filter = (entry) => entry.prop_value_id === propValue.id;
-  const entry = resource.entries.find(filter);
+  // Extract the entry that is related to this specific cell.
+  const entry = useMemo(() => {
+    const entryFilter = ($) => $.prop_value_id === propValue.id;
+    return resValue.entries.find(entryFilter);
+  }, [resValue.entries]);
 
-  const startEdit = () => {
+  // Persist the event so the Popover can mount in relation to it.
+  const onRequestEdit = (evt) => {
+    evt.persist();
     setCurrValue(entry ? entry.value : 0);
-    setIsEditing(true);
+    setIsEditing(evt);
   };
 
-  const updateValue = (evt) => setCurrValue(evt.target.value);
+  // Reset the current value to null so that the original value
+  // could be represented instead.
+  const requestCancel = () => {
+    setIsLoading(false);
+    setIsEditing(null);
+    setCurrValue(null);
+  };
 
-  const handleGestoures = (evt) => {
-    if (evt.keyCode === 27 || evt.keyCode === 13) {
-      setIsEditing(false);
-    }
-    if (evt.keyCode === 13) {
-      setIsLoading(true);
-      const p = onUpdate({
-        detail: {
-          prop_value_id: propValue.id,
-          res_value_id: resource.id,
-          value: currValue
-        }
-      });
-
-      try {
-        p.finally(() => setIsLoading(false));
-      } catch (err) {
-        setIsLoading(false);
+  const requestSubmit = () => {
+    setIsLoading(true);
+    const p = onUpdate({
+      detail: {
+        prop_value_id: propValue.id,
+        res_value_id: resValue.id,
+        value: currValue
       }
+    });
+
+    // Slow down save time to allow the push update to be
+    // applied to the SkillMatrix.
+    // It's kinda of a cheap trick, but it should do the job.
+    try {
+      p.finally(() => setTimeout(requestCancel, 500));
+    } catch (err) {
+      requestCancel();
     }
   };
-
-  if (isLoading) {
-    return <td>...</td>;
-  }
-
-  if (isEditing) {
-    return (
-      <td className="skm-body-cell-mode-edit">
-        <span className="skm-body-cell-mode-edit-content">
-          <IonInput
-            autofocus
-            type="number"
-            value={currValue}
-            onIonChange={updateValue}
-            min={0}
-            max={100}
-            size={4}
-            step={20}
-            onKeyUp={handleGestoures}
-          />
-        </span>
-      </td>
-    );
-  }
 
   return (
-    <td onClick={startEdit} className="skm-body-cell-mode-view">
-      {entry ? entry.value : "-"}
-    </td>
+    <>
+      <CellView entry={entry} value={currValue} requestEdit={onRequestEdit} />
+      <IonPopover
+        mode={"ios"}
+        isOpen={!!isEditing}
+        event={isEditing}
+        onDidDismiss={requestCancel}
+      >
+        <CellEdit
+          isEditing={!!isEditing}
+          isLoading={isLoading}
+          value={currValue}
+          setValue={setCurrValue}
+          requestCancel={requestCancel}
+          requestSubmit={requestSubmit}
+        />
+      </IonPopover>
+    </>
   );
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [isEditing, setIsEditing] = useState(null);
+  // const [currValue, setCurrValue] = useState(null);
+
+  // const startEdit = (evt) => {
+  //   evt.persist();
+  //   setCurrValue(entry ? entry.value : 0);
+  //   setIsEditing(evt);
+  // };
+
+  // const updateValue = (evt) => setCurrValue(evt.target.value);
+
+  // const handleGestoures = (evt) => {
+  //   if (evt.keyCode === 27 || evt.keyCode === 13) {
+  //     setIsEditing(null);
+  //   }
+  //   if (evt.keyCode === 13) {
+  //     setIsLoading(true);
+  //     const p = onUpdate({
+  //       detail: {
+  //         prop_value_id: propValue.id,
+  //         res_value_id: resValue.id,
+  //         value: currValue
+  //       }
+  //     });
+
+  //     try {
+  //       p.finally(() => setIsLoading(null));
+  //     } catch (err) {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  // };
+
+  // if (isLoading) {
+  //   return <td>...</td>;
+  // }
+
+  // return (
+  //   <>
+  //     <td onClick={startEdit} className="skm-body-cell-mode-view">
+  //       {entry ? entry.value : "-"}
+  //     </td>
+  //     {/* <IonPopover isOpen={isEditing !== null} event={isEditing}>
+  //       <IonInput
+  //         autofocus
+  //         type="number"
+  //         value={currValue}
+  //         onIonChange={updateValue}
+  //         min={0}
+  //         max={100}
+  //         size={4}
+  //         step={20}
+  //         onKeyUp={handleGestoures}
+  //       />
+  //     </IonPopover> */}
+  //   </>
+  // );
 };
 
 export default Cell;
