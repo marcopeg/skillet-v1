@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 
-import useProjectCache from "../project/use-project-cache";
+import useProject from "../project/use-project";
 
 export const LOAD_PROPERTIES_LIST = gql`
   query propertiesList($projectId: String) {
@@ -25,7 +25,7 @@ export const LOAD_PROPERTIES_LIST = gql`
 `;
 
 const usePropertiesList = () => {
-  const { projectId } = useProjectCache();
+  const { projectId } = useProject();
 
   const { loading, data, refetch } = useQuery(LOAD_PROPERTIES_LIST, {
     variables: { projectId },

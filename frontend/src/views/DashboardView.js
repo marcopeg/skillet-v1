@@ -10,13 +10,13 @@ import {
 } from "@ionic/react";
 
 // Hooks
-import useProjectCache from "../state/project/use-project-cache";
+import useProject from "../state/project/use-project";
 import useEntryUpsert from "../state/use-entry-upsert";
 
 import SkillMatrix from "../components/SkillMatrix/SkillMatrix";
 
 const DashboardView = ({ match }) => {
-  const { projectId, isReady, data } = useProjectCache();
+  const { projectId, isReady, data } = useProject();
   const { upsertEntry } = useEntryUpsert();
   const title = isReady ? data.project.title : "Loading skills...";
 

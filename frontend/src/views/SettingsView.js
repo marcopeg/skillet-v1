@@ -12,7 +12,7 @@ import {
 } from "@ionic/react";
 
 // Hooks
-import useProjectCache from "../state/project/use-project-cache";
+import useProject from "../state/project/use-project";
 import useEntryUpsert from "../state/use-entry-upsert";
 
 import SkillMatrix from "../components/SkillMatrix/SkillMatrix";
@@ -20,7 +20,7 @@ import SkillMatrix from "../components/SkillMatrix/SkillMatrix";
 const SettingsView = ({ match }) => {
   //   console.log(match);
   //   const projectId = match.params.projectId;
-  //   const { isReady, data } = useProjectCache(projectId);
+  //   const { isReady, data } = useProject(projectId);
   //   const { upsertEntry } = useEntryUpsert(projectId);
   //   const title = isReady ? data.project.title : "Loading skills...";
 

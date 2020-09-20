@@ -30,7 +30,7 @@ import {
   settingsOutline
 } from "ionicons/icons";
 
-import { ProjectCacheProvider } from "../state/project/use-project-cache";
+import { ProjectProvider } from "../state/project/use-project";
 
 // Views
 import DashboardView from "../views/DashboardView";
@@ -46,7 +46,7 @@ const DesktopLayout = ({ match }) => {
   const projectId = match.params.projectId;
 
   return (
-    <ProjectCacheProvider projectId={projectId}>
+    <ProjectProvider projectId={projectId}>
       <IonPage>
         <IonSplitPane contentId="desktop-project" when="md">
           <IonMenu contentId="desktop-project" type="overlay">
@@ -146,7 +146,7 @@ const DesktopLayout = ({ match }) => {
           </IonRouterOutlet>
         </IonSplitPane>
       </IonPage>
-    </ProjectCacheProvider>
+    </ProjectProvider>
   );
 };
 

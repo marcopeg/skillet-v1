@@ -67,7 +67,7 @@ export const GET_PROJECT_BY_ID = gql`
   }
 `;
 
-const ProjectCacheContext = createContext();
+const ProjectContext = createContext();
 
 const formatProjectData = (data) => {
   if (!data) return null;
@@ -80,7 +80,7 @@ const formatProjectData = (data) => {
   };
 };
 
-export const ProjectCacheProvider = ({ projectId, children }) => {
+export const ProjectProvider = ({ projectId, children }) => {
   const { data, loading } = useSubscription(GET_PROJECT_BY_ID, {
     variables: { projectId },
     fetchPolicy: "network-only"
@@ -97,8 +97,8 @@ export const ProjectCacheProvider = ({ projectId, children }) => {
     data: formatProjectData(data)
   };
 
-  return <ProjectCacheContext.Provider value={value} children={children} />;
+  return <ProjectContext.Provider value={value} children={children} />;
 };
 
-export const useProjectCache = () => useContext(ProjectCacheContext);
-export default useProjectCache;
+export const useProject = () => useContext(ProjectContext);
+export default useProject;
