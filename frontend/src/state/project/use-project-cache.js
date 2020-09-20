@@ -1,8 +1,16 @@
-import React, { useContext, createContext } from "react";
-import { gql, useQuery, useSubscription } from "@apollo/client";
+/**
+ * Loads a Project's full data set and keeps it in sync
+ * with the server when changes happen in the current client or others.
+ *
+ * It keeps a subscription to a complex query and in the future we will
+ * likely need to simplify this query to reduce load on Postgres.
+ */
 
-export const LOAD_PROJECT_BY_ID = gql`
-  query getProjectById($projectId: String!) {
+import React, { useContext, createContext } from "react";
+import { gql, useSubscription } from "@apollo/client";
+
+export const GET_PROJECT_BY_ID = gql`
+  subscription getProjectById($projectId: String!) {
     project: projects_by_pk(id: $projectId) {
       id
       title
@@ -59,16 +67,6 @@ export const LOAD_PROJECT_BY_ID = gql`
   }
 `;
 
-const SUBSCRIBE_PROJECT_CACHE = gql`
-  subscription getProjectCache($projectId: String!) {
-    project: projects_cache_by_pk(project_id: $projectId) {
-      data
-      project_id
-      updated_at
-    }
-  }
-`;
-
 const ProjectCacheContext = createContext();
 
 const formatProjectData = (data) => {
@@ -83,51 +81,19 @@ const formatProjectData = (data) => {
 };
 
 export const ProjectCacheProvider = ({ projectId, children }) => {
-  const load = useQuery(LOAD_PROJECT_BY_ID, {
+  const { data, loading } = useSubscription(GET_PROJECT_BY_ID, {
     variables: { projectId },
     fetchPolicy: "network-only"
   });
 
-  const sub = useSubscription(SUBSCRIBE_PROJECT_CACHE, {
-    variables: { projectId }
-  });
-
-  const data = (() => {
-    const loadLastUpdate =
-      load.data &&
-      load.data.project.lastUpdate &&
-      load.data.project.lastUpdate.length
-        ? load.data.project.lastUpdate[0].updated_at
-        : null;
-
-    const subLastUpdate =
-      sub.data &&
-      sub.data.project.data.lastUpdate &&
-      sub.data.project.data.lastUpdate.length
-        ? sub.data.project.data.lastUpdate[0].updated_at
-        : null;
-
-    console.log(
-      "load",
-      loadLastUpdate,
-      "sub",
-      subLastUpdate,
-      loadLastUpdate > subLastUpdate,
-      sub.data
-    );
-
-    return loadLastUpdate > subLastUpdate
-      ? load.data
-      : sub.data
-      ? { project: sub.data.project.data }
-      : null;
-  })();
-
   const value = {
     projectId,
     isReady: !!data,
-    isLoading: load.loading || sub.loading,
-    lastUpdate: null,
+    isLoading: loading,
+    lastUpdate:
+      data && data.project.lastUpdate.length
+        ? data.project.lastUpdate[0].updated_at
+        : null,
     data: formatProjectData(data)
   };
 
