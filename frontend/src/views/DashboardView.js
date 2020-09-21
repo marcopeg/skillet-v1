@@ -33,7 +33,7 @@ const DashboardView = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent scrollX={true}>
-        {data && <SkillMatrix data={data} onUpdate={onUpdate} />}
+        {isReady && <SkillMatrix data={data} onUpdate={onUpdate} />}
       </IonContent>
     </IonPage>
   );

@@ -7,7 +7,12 @@
  */
 
 import React, { useContext, createContext, useEffect, useMemo } from "react";
-import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
+import {
+  gql,
+  useMutation,
+  useLazyQuery,
+  useSubscription
+} from "@apollo/client";
 import useAuth from "../../hooks/use-auth";
 import { formatProjectData } from "./format-project-data";
 
@@ -68,10 +73,13 @@ const ProjectContext = createContext();
 export const ProjectProvider = ({ projectId, children }) => {
   const { token, setToken } = useAuth();
 
-  const { data, loading, refetch } = useQuery(GET_PROJECT_BY_ID, {
-    variables: { projectId },
-    fetchPolicy: "network-only"
-  });
+  const [loadProject, { data, loading, refetch }] = useLazyQuery(
+    GET_PROJECT_BY_ID,
+    {
+      variables: { projectId },
+      fetchPolicy: "network-only"
+    }
+  );
 
   const [createProjectToken] = useMutation(CREATE_PROJECT_TOKEN, {
     variables: { projectId }
@@ -92,14 +100,15 @@ export const ProjectProvider = ({ projectId, children }) => {
     [data, loading, projectId]
   );
 
-  console.log(value);
+  // console.log(value);
 
   // Generate the project's token to scope the data access
   useEffect(() => {
     createProjectToken()
       .then((res) => {
         setToken(res.data.project.accessToken);
-        return refetch();
+        // return refetch();
+        return loadProject();
       })
       .catch((err) => {
         console.error("Could not generate the project token");
@@ -107,11 +116,12 @@ export const ProjectProvider = ({ projectId, children }) => {
       });
 
     return () => setToken(null);
-  }, [createProjectToken, setToken, refetch]);
+  }, [createProjectToken, setToken, loadProject]);
 
   // Forces to reload the SkillMatrix when it detects a change from the websocket
   useEffect(() => {
-    refetch();
+    console.log("@refetch", refetch);
+    refetch && refetch();
   }, [subData, refetch]);
 
   const renderEl = token ? children : "Loading project...";

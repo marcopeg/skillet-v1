@@ -5,6 +5,7 @@ import Header from "./Header";
 import Body from "./Body";
 
 const SkillMatrix = ({ data, onUpdate }) => {
+  // console.log(data.entries);
   const style = {
     // width: 100 + data.propValues.length * 31
   };

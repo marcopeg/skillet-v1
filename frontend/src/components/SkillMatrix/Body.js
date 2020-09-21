@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import BodyGroup from "./BodyGroup";
 
 const Body = ({ data, onUpdate }) => {
