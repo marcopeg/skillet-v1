@@ -7,7 +7,8 @@ import {
   IonContent,
   IonRange,
   IonButton,
-  IonIcon
+  IonIcon,
+  IonSpinner
 } from "@ionic/react";
 import { checkmarkOutline } from "ionicons/icons";
 
@@ -25,7 +26,12 @@ const CellEdit = ({
   requestCancel
 }) => {
   if (!isEditing) return null;
-  if (isLoading) return "saving...";
+  if (isLoading)
+    return (
+      <div className="skm-saving">
+        <IonSpinner name="dots" />
+      </div>
+    );
 
   const onChange = (evt) => setValue(evt.target.value);
 

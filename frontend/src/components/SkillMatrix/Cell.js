@@ -74,7 +74,7 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
   );
 
   // TODO: filter by "point of view"?
-  const entry = propValue.entries.shift();
+  const entry = propValue.entries[0];
 
   // Calculate the current used value to represent while editing
   const useValue = useMemo(
@@ -136,7 +136,6 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
         requestEdit={onRequestEdit}
       />
       <IonPopover
-        mode={"ios"}
         isOpen={!!isEditing}
         event={isEditing}
         onDidDismiss={requestCancel}

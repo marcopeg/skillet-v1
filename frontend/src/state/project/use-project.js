@@ -120,7 +120,6 @@ export const ProjectProvider = ({ projectId, children }) => {
 
   // Forces to reload the SkillMatrix when it detects a change from the websocket
   useEffect(() => {
-    console.log("@refetch", refetch);
     refetch && refetch();
   }, [subData, refetch]);
 
