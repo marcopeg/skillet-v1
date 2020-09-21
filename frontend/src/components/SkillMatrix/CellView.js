@@ -9,7 +9,7 @@ import React from "react";
 
 const CellView = ({ value, threshold, requestEdit }) => {
   return (
-    <td onClick={requestEdit} style={threshold.style}>
+    <td onClick={requestEdit} className="skm-body-cell" style={threshold.style}>
       <span>{value || "-"}</span>
     </td>
   );

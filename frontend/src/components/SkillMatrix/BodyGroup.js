@@ -1,29 +1,22 @@
-import React, { useMemo } from "react";
+import React from "react";
 import BodyResource from "./BodyResource";
 
-const BodyGroup = ({ group }) => {
+const BodyGroup = ({ data, group, onUpdate }) => {
   return (
     <>
       <tr>
-        <td className="skm-body-group">
+        <td className="skm-body-group" colSpan={data.propValues.length + 1}>
           <span>{group.name}</span>
         </td>
       </tr>
-      <tr>
-        <td>
-          <table>
-            <tbody>
-              {group.resources.map(($resource) => (
-                <BodyResource
-                  key={`skm-body-resource-${$resource.id}`}
-                  resource={$resource}
-                  group={group}
-                />
-              ))}
-            </tbody>
-          </table>
-        </td>
-      </tr>
+      {group.resources.map(($resource) => (
+        <BodyResource
+          key={`skm-body-resource-${$resource.id}`}
+          data={data}
+          resource={$resource}
+          onUpdate={onUpdate}
+        />
+      ))}
     </>
   );
 };

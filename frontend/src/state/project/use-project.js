@@ -9,6 +9,7 @@
 import React, { useContext, createContext, useEffect, useMemo } from "react";
 import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import useAuth from "../../hooks/use-auth";
+import { formatProjectData } from "./format-project-data";
 
 export const GET_PROJECT_BY_ID = gql`
   query getProjectById($projectId: String!) {
@@ -64,28 +65,6 @@ export const GET_PROJECT_UPDATES = gql`
 
 const ProjectContext = createContext();
 
-// Filtering utilities to remove the "__typename" from the received data
-const filterTypename = ["__typename"];
-const removeProps = (data = {}, props = []) =>
-  Object.keys(data)
-    .filter((key) => !props.includes(key))
-    .reduce((acc, key) => ({ ...acc, [key]: data[key] }), {});
-const removeTypename = ($) => removeProps($, filterTypename);
-
-const formatProjectData = (data) => {
-  if (!data) return null;
-
-  return {
-    project: removeProps(data.project, filterTypename),
-    lastUpdate: removeProps(data.lastUpdate, filterTypename),
-    propGroups: data.propGroups.map(removeTypename),
-    propValues: data.propValues.map(removeTypename),
-    resGroups: data.resGroups.map(removeTypename),
-    resValues: data.resValues.map(removeTypename),
-    entries: data.entries.map(removeTypename)
-  };
-};
-
 export const ProjectProvider = ({ projectId, children }) => {
   const { token, setToken } = useAuth();
 
@@ -110,8 +89,10 @@ export const ProjectProvider = ({ projectId, children }) => {
       isLoading: loading,
       data: formatProjectData(data)
     }),
-    [data]
+    [data, loading, projectId]
   );
+
+  console.log(value);
 
   // Generate the project's token to scope the data access
   useEffect(() => {

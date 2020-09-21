@@ -33,10 +33,10 @@ const DashboardView = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent scrollX={true}>
-        {isReady && <SkillMatrix data={data} onUpdate={onUpdate} />}
+        {data && <SkillMatrix data={data} onUpdate={onUpdate} />}
       </IonContent>
     </IonPage>
   );
 };
 
-export default React.memo(DashboardView);
+export default DashboardView;
