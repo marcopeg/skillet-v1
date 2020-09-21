@@ -6,7 +6,7 @@
  * likely need to simplify this query to reduce load on Postgres.
  */
 
-import React, { useContext, createContext, useEffect } from "react";
+import React, { useContext, createContext, useEffect, useMemo } from "react";
 import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 import useAuth from "../../hooks/use-auth";
 
@@ -15,55 +15,33 @@ export const GET_PROJECT_BY_ID = gql`
     project: projects_by_pk(id: $projectId) {
       id
       title
-      updated_at
-      prop_groups(order_by: { order: desc, id: asc }) {
-        id
-        name
-        description
-        order
-        prop_values(order_by: { order: desc, id: asc }) {
-          id
-          name
-          description
-          order
-          tags
-        }
-      }
-      prop_values(order_by: { order: desc, id: asc }) {
-        id
-        prop_group_id
-        name
-        description
-        order
-        tags
-      }
-      res_groups(order_by: { order: desc, id: asc }) {
-        id
-        name
-        description
-        order
-        res_values(order_by: { order: desc, id: asc }) {
-          id
-          name
-          description
-          order
-          tags
-          entries {
-            prop_value_id
-            res_value_id
-            updated_at
-            description
-            value
-          }
-        }
-      }
-      lastUpdate: entries(
-        limit: 1
-        order_by: { updated_at: desc }
-        where: { project_id: { _eq: $projectId } }
-      ) {
-        updated_at
-      }
+      description
+    }
+    lastUpdate: projects_cache_by_pk(project_id: $projectId) {
+      date: updated_at
+    }
+    propGroups: prop_groups(order_by: { order: desc, id: asc }) {
+      id
+      name
+    }
+    propValues: prop_values(order_by: { order: desc, id: asc }) {
+      id
+      name
+      groupId: prop_group_id
+    }
+    resGroups: res_groups(order_by: { order: desc, id: asc }) {
+      id
+      name
+    }
+    resValues: res_values(order_by: { order: desc, id: asc }) {
+      id
+      name
+      groupId: res_group_id
+    }
+    entries {
+      propId: prop_value_id
+      resId: res_value_id
+      value
     }
   }
 `;
@@ -86,22 +64,32 @@ export const GET_PROJECT_UPDATES = gql`
 
 const ProjectContext = createContext();
 
+// Filtering utilities to remove the "__typename" from the received data
+const filterTypename = ["__typename"];
+const removeProps = (data = {}, props = []) =>
+  Object.keys(data)
+    .filter((key) => !props.includes(key))
+    .reduce((acc, key) => ({ ...acc, [key]: data[key] }), {});
+const removeTypename = ($) => removeProps($, filterTypename);
+
 const formatProjectData = (data) => {
   if (!data) return null;
-  const { prop_groups, prop_values, res_groups, ...project } = data.project;
 
   return {
-    project,
-    prop_groups,
-    prop_values,
-    res_groups
+    project: removeProps(data.project, filterTypename),
+    lastUpdate: removeProps(data.lastUpdate, filterTypename),
+    propGroups: data.propGroups.map(removeTypename),
+    propValues: data.propValues.map(removeTypename),
+    resGroups: data.resGroups.map(removeTypename),
+    resValues: data.resValues.map(removeTypename),
+    entries: data.entries.map(removeTypename)
   };
 };
 
 export const ProjectProvider = ({ projectId, children }) => {
   const { token, setToken } = useAuth();
 
-  const { data, loading, refetch: loadProject } = useQuery(GET_PROJECT_BY_ID, {
+  const { data, loading, refetch } = useQuery(GET_PROJECT_BY_ID, {
     variables: { projectId },
     fetchPolicy: "network-only"
   });
@@ -115,23 +103,22 @@ export const ProjectProvider = ({ projectId, children }) => {
     fetchPolicy: "network-only"
   });
 
-  const value = {
-    projectId,
-    isReady: !!data,
-    isLoading: loading,
-    lastUpdate:
-      data && data.project.lastUpdate.length
-        ? data.project.lastUpdate[0].updated_at
-        : null,
-    data: formatProjectData(data)
-  };
+  const value = useMemo(
+    () => ({
+      projectId,
+      isReady: !!data,
+      isLoading: loading,
+      data: formatProjectData(data)
+    }),
+    [data]
+  );
 
   // Generate the project's token to scope the data access
   useEffect(() => {
     createProjectToken()
       .then((res) => {
         setToken(res.data.project.accessToken);
-        return loadProject();
+        return refetch();
       })
       .catch((err) => {
         console.error("Could not generate the project token");
@@ -139,11 +126,12 @@ export const ProjectProvider = ({ projectId, children }) => {
       });
 
     return () => setToken(null);
-  }, [createProjectToken, setToken, loadProject]);
+  }, [createProjectToken, setToken, refetch]);
 
+  // Forces to reload the SkillMatrix when it detects a change from the websocket
   useEffect(() => {
-    loadProject();
-  }, [subData, loadProject]);
+    refetch();
+  }, [subData, refetch]);
 
   const renderEl = token ? children : "Loading project...";
   return <ProjectContext.Provider value={value} children={renderEl} />;

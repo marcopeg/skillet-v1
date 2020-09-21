@@ -39,4 +39,4 @@ const DashboardView = () => {
   );
 };
 
-export default DashboardView;
+export default React.memo(DashboardView);

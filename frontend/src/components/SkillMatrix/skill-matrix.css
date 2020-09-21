@@ -1,14 +1,98 @@
 .skm-container {
   margin: 20px;
+  font-size: 0.8em;
 }
 
 .skm-table,
-.skm-table th,
-.skm-table td {
+.skm-table > thead > tr > th,
+.skm-table > thead > tr > td,
+.skm-table > tbody > tr > th,
+.skm-table > tbody > tr > td {
   border: 1px solid #aaa;
-  z-index: 999;
+  margin: 0;
+  padding: 0;
 }
 
+/**
+ * HEADER
+ */
+
+.skm-header-total {
+  vertical-align: middle;
+}
+
+.skm-header-total span {
+  display: inline-block;
+  width: 100px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.skm-header-group {
+  vertical-align: middle;
+  text-align: center;
+  background: #ddd;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.skm-header-group span {
+  display: inline-block;
+  overflow: hidden;
+  padding: 5px 5px;
+}
+
+.skm-header-skill {
+  vertical-align: bottom;
+  text-align: center;
+  width: 30px;
+  overflow: hidden;
+}
+
+.skm-header-skill span {
+  display: inline-block;
+  overflow: hidden;
+  margin: 5px 0;
+
+  /* text rotate */
+  -ms-writing-mode: tb-rl;
+  -webkit-writing-mode: vertical-rl;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+/**
+ * BODY
+ */
+
+.skm-table-body {
+  position: relative;
+  display: block;
+  height: 250px;
+  overflow: scroll;
+  border-collapse: collapse;
+}
+
+.skm-body-group {
+  text-align: left;
+  background: #ddd;
+  /* position: sticky;
+  top: 0; */
+}
+
+.skm-body-group span {
+  display: inline-block;
+  margin: 5px 10px;
+  font-weight: bold;
+}
+
+/**
+ * RESOURCES TABLE
+ * (inside group)
+ */
+
+/* 
 .skm-table-headers {
   border-bottom: 0px solid #fff;
 }
@@ -23,40 +107,14 @@
   text-align: left;
   position: relative;
   border-collapse: collapse;
-}
+} */
 
 /* the first empty one */
-.skm-header-c1 {
-  width: 100px;
-  overflow: hidden;
-}
+/* 
 
-.skm-header-prop-group {
-  font-weight: normal;
-  font-size: 0.7em;
-  background: #ddd;
-}
 
-.skm-header-prop-value {
-  font-weight: normal;
-  font-size: 0.8em;
-  vertical-align: bottom;
-}
 
-.skm-header-prop-value span {
-  display: inline-block;
-  width: 30px;
-  overflow: hidden;
-}
 
-.skm-header-prop-value span {
-  -ms-writing-mode: tb-rl;
-  -webkit-writing-mode: vertical-rl;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  white-space: nowrap;
-  font-weight: normal;
-}
 
 .skm-body-res-group {
   text-align: left;
@@ -88,16 +146,16 @@
   display: inline-block;
   width: 30px;
   overflow: hidden;
-}
+} */
 
 /**
  *
  */
 
-.skm-body-cell-mode-edit-info {
+/* .skm-body-cell-mode-edit-info {
   font-size: 0.8em;
 }
 
 .skm-body-cell-mode-edit-label {
   margin-bottom: -10px;
-}
+} */
