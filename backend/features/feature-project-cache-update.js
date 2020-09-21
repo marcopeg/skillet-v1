@@ -6,6 +6,9 @@
  *       with a stored procedure, saving multiple roundtrips that are
  *       required by the webook. Such prodecure could be applied as
  *       trigger to the raw data tables.
+ *
+ * NOTE: We may do not even need to cache anything as we subscribe only
+ *       to the "updated_at" field.
  */
 
 const { gql } = require("apollo-server-fastify");
@@ -86,11 +89,6 @@ const getProjectId = (tableName, data) => {
   return data.project_id;
 };
 
-const removeTypename = (data) => {
-  const { __typename, ...rest } = data;
-  return rest;
-};
-
 const buildProjectCache = async (apollo, projectId) => {
   try {
     const res = await apollo.query({
@@ -131,9 +129,9 @@ const handler = async (req) => {
     return "+ok";
 
   // Retrieve projectId and run the cache update procedure
-  const eventData = getEventData(req.body.event.data);
-  const projectId = getProjectId(req.body.table.name, eventData);
-  await upsertProjectCache(req.apollo, projectId);
+  // const eventData = getEventData(req.body.event.data);
+  // const projectId = getProjectId(req.body.table.name, eventData);
+  // await upsertProjectCache(req.apollo, projectId);
 
   return `+ok - ${projectId}`;
 };
