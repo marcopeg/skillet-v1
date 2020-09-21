@@ -23,9 +23,6 @@ export const GET_PROJECT_BY_ID = gql`
       title
       description
     }
-    lastUpdate: projects_cache_by_pk(project_id: $projectId) {
-      date: updated_at
-    }
     propGroups: prop_groups(order_by: { order: desc, id: asc }) {
       id
       name

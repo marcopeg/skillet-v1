@@ -18,7 +18,9 @@ import SkillMatrix from "../components/SkillMatrix/SkillMatrix";
 const DashboardView = () => {
   const { isReady, data } = useProject();
   const { upsertEntry } = useEntryUpsert();
+
   const title = isReady ? data.project.title : "Loading skills...";
+  const showMatrix = isReady && data.entries.length;
 
   const onUpdate = (evt) => upsertEntry(evt.detail);
 
@@ -32,8 +34,17 @@ const DashboardView = () => {
           <IonTitle>{title}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent scrollX={true}>
-        {isReady && <SkillMatrix data={data} onUpdate={onUpdate} />}
+      <IonContent scrollX={true} className="ion-padding">
+        {showMatrix ? (
+          <SkillMatrix data={data} onUpdate={onUpdate} />
+        ) : (
+          <div>
+            Welcome to a new Skill Matrix project,
+            <br />
+            please navigate to <b>resources</b> and <b>properties</b> to
+            populate the structure of this project.
+          </div>
+        )}
       </IonContent>
     </IonPage>
   );

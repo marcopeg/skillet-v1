@@ -13,7 +13,6 @@ export const formatProjectData = (data) => {
   if (!data) return null;
 
   const project = removeProps(data.project, filterTypename);
-  const lastUpdate = removeProps(data.lastUpdate, filterTypename);
   const propGroups = data.propGroups.map(removeTypename);
   const propValues = data.propValues.map(removeTypename);
   const resGroups = data.resGroups.map(removeTypename);
@@ -91,7 +90,6 @@ export const formatProjectData = (data) => {
 
   const decoratedData = {
     project,
-    lastUpdate,
     propGroups: propGroups.map(($) => map.propGroups[$.id]),
     propValues: propValues.map(($) => map.propValues[$.id]),
     resGroups: resGroups.map(($) => map.resGroups[$.id]),
