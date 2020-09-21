@@ -1,17 +1,21 @@
 import React from "react";
 import "./skill-matrix.css";
 
-import Properties from "./Properties";
-import Resources from "./Resources";
+import Header from "./Header";
+import Body from "./Body";
 
 const SkillMatrix = ({ data, onUpdate }) => {
+  const style = {
+    width: 130 + data.propValues.length * 31
+  };
+
   return (
-    <div class="skm-container">
+    <div className="skm-container" style={style}>
       <table className="skm-table skm-table-headers">
-        <Properties data={data} />
+        <Header data={data} />
       </table>
       <table className="skm-table skm-table-body">
-        <Resources data={data} onUpdate={onUpdate} />
+        <Body data={data} onUpdate={onUpdate} />
       </table>
     </div>
   );

@@ -1,103 +1,135 @@
-.skm-container {
-  margin: 20px;
+:root {
+  --skm-col1-width: 130px;
+  --skm-cell-size: 30px;
 }
 
-.skm-table,
+.skm-container {
+  position: relative;
+  display: inline-block;
+  margin: 20px;
+  font-size: 0.8em;
+}
+
 .skm-table th,
 .skm-table td {
-  border: 1px solid #aaa;
-  z-index: 999;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #666;
 }
+
+.skm-table-body > tbody > tr:first-child > td {
+  border-top: 0px solid #fff;
+}
+
+/**
+ * HEADER
+ */
 
 .skm-table-headers {
-  border-bottom: 0px solid #fff;
-}
-
-.skm-table-body {
-  display: inline-block;
-  height: 450px;
-  overflow: scroll;
-  border: 0px solid #fff;
-  border-bottom: 1px solid #aaa;
-
-  text-align: left;
   position: relative;
-  border-collapse: collapse;
 }
 
-/* the first empty one */
-.skm-header-c1 {
-  width: 100px;
+.skm-header-total {
+  vertical-align: middle;
+  width: var(--skm-col1-width);
+}
+
+.skm-header-total span {
+  display: block;
   overflow: hidden;
+  text-align: center;
 }
 
-.skm-header-prop-group {
-  font-weight: normal;
-  font-size: 0.7em;
+.skm-header-group {
+  vertical-align: middle;
+  text-align: center;
   background: #ddd;
+  font-weight: bold;
+  white-space: nowrap;
 }
 
-.skm-header-prop-value {
-  font-weight: normal;
-  font-size: 0.8em;
-  vertical-align: bottom;
-}
-
-.skm-header-prop-value span {
+.skm-header-group span {
   display: inline-block;
-  width: 30px;
+  overflow: hidden;
+  padding: 5px 5px;
+}
+
+.skm-header-skill {
+  vertical-align: bottom;
+  text-align: center;
+  width: var(--skm-cell-size);
   overflow: hidden;
 }
 
-.skm-header-prop-value span {
+.skm-header-skill span {
+  display: inline-block;
+  overflow: hidden;
+  margin: 5px 0;
+
+  /* text rotate */
   -ms-writing-mode: tb-rl;
   -webkit-writing-mode: vertical-rl;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   white-space: nowrap;
-  font-weight: normal;
 }
 
-.skm-body-res-group {
+/**
+ * BODY
+ */
+
+.skm-table-body {
+  position: relative;
+  display: block;
+  overflow: scroll;
+  height: 450px;
+}
+
+.skm-body-group {
   text-align: left;
-  font-weight: normal;
   background: #ddd;
-  padding: 5px 10px;
   position: sticky;
   top: 0;
 }
 
-.skm-body-res-value span {
-  display: inline-block;
-  width: 100px;
-  overflow: hidden;
-  font-weight: normal;
-  text-align: right;
+.skm-body-group span {
+  display: block;
   padding: 5px 10px;
-  font-size: 0.8em;
-  white-space: nowrap;
-}
-
-.skm-body-cell-mode-view {
-  vertical-align: middle;
-  text-align: center;
-  font-size: 0.8em;
-}
-
-.skm-body-cell-mode-view span {
-  display: inline-block;
-  width: 30px;
-  overflow: hidden;
+  font-weight: bold;
 }
 
 /**
- *
+ * RESOURCES
  */
 
-.skm-body-cell-mode-edit-info {
+.skm-body-resource {
+  text-align: right;
+  vertical-align: middle;
+  white-space: nowrap;
+  height: var(--skm-cell-size);
+}
+
+.skm-body-resource > span {
+  width: var(--skm-col1-width);
+  display: inline-block;
+  overflow: hidden;
+  padding: 5px 10px;
+}
+
+.skm-body-cell {
+  width: var(--skm-cell-size);
+  overflow: hidden;
+  text-align: center;
+  vertical-align: middle;
   font-size: 0.8em;
 }
 
-.skm-body-cell-mode-edit-label {
-  margin-bottom: -10px;
+/**
+ * UTILITIES
+ */
+.skm-saving {
+  display: block;
+  text-align: center;
+  margin: 10px;
+  height: 30px;
 }

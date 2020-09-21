@@ -73,11 +73,8 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
     [propValue.settings, propGroup.settings, data.settings]
   );
 
-  // Extract the entry that is related to this specific cell.
-  const entry = useMemo(() => {
-    const entryFilter = ($) => $.prop_value_id === propValue.id;
-    return resValue.entries.find(entryFilter);
-  }, [resValue.entries, propValue.id]);
+  // TODO: filter by "point of view"?
+  const entry = propValue.entries[0];
 
   // Calculate the current used value to represent while editing
   const useValue = useMemo(
@@ -139,7 +136,6 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
         requestEdit={onRequestEdit}
       />
       <IonPopover
-        mode={"ios"}
         isOpen={!!isEditing}
         event={isEditing}
         onDidDismiss={requestCancel}
@@ -161,64 +157,6 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
       </IonPopover>
     </>
   );
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [isEditing, setIsEditing] = useState(null);
-  // const [currValue, setCurrValue] = useState(null);
-
-  // const startEdit = (evt) => {
-  //   evt.persist();
-  //   setCurrValue(entry ? entry.value : 0);
-  //   setIsEditing(evt);
-  // };
-
-  // const updateValue = (evt) => setCurrValue(evt.target.value);
-
-  // const handleGestoures = (evt) => {
-  //   if (evt.keyCode === 27 || evt.keyCode === 13) {
-  //     setIsEditing(null);
-  //   }
-  //   if (evt.keyCode === 13) {
-  //     setIsLoading(true);
-  //     const p = onUpdate({
-  //       detail: {
-  //         prop_value_id: propValue.id,
-  //         res_value_id: resValue.id,
-  //         value: currValue
-  //       }
-  //     });
-
-  //     try {
-  //       p.finally(() => setIsLoading(null));
-  //     } catch (err) {
-  //       setIsLoading(false);
-  //     }
-  //   }
-  // };
-
-  // if (isLoading) {
-  //   return <td>...</td>;
-  // }
-
-  // return (
-  //   <>
-  //     <td onClick={startEdit} className="skm-body-cell-mode-view">
-  //       {entry ? entry.value : "-"}
-  //     </td>
-  //     {/* <IonPopover isOpen={isEditing !== null} event={isEditing}>
-  //       <IonInput
-  //         autofocus
-  //         type="number"
-  //         value={currValue}
-  //         onIonChange={updateValue}
-  //         min={0}
-  //         max={100}
-  //         size={4}
-  //         step={20}
-  //         onKeyUp={handleGestoures}
-  //       />
-  //     </IonPopover> */}
-  //   </>
-  // );
 };
 
 export default Cell;
