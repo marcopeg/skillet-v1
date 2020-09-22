@@ -1,3 +1,49 @@
+const defaultSettings = {
+  baseline: 70,
+  thresholds: {
+    _null: {
+      style: { backgroundColor: "#f9caca" },
+      label: "Damn it, fill this stuff"
+    },
+    _error: {
+      style: { backgroundColor: "#ff1c1c" },
+      label: "Damn it, fill this stuff"
+    },
+    values: [
+      {
+        value: 0,
+        style: { backgroundColor: "#fff" },
+        label: "I have no idea"
+      },
+      {
+        value: 20,
+        style: { backgroundColor: "#DFEED4" },
+        label: "I know the pourpose of it"
+      },
+      {
+        value: 40,
+        style: { backgroundColor: "#CCE8B5" },
+        label: "I have Hello World experience"
+      },
+      {
+        value: 60,
+        style: { backgroundColor: "#B2DD8B" },
+        label: "I can handle tasks"
+      },
+      {
+        value: 80,
+        style: { backgroundColor: "#97D35E" },
+        label: "I feel I'm an expert"
+      },
+      {
+        value: 100,
+        style: { backgroundColor: "#70c619" },
+        label: "I'm a master of it"
+      }
+    ]
+  }
+};
+
 // Filtering utilities to remove the "__typename" from the received data
 const filterTypename = ["__typename"];
 const removeProps = (data = {}, props = []) =>
@@ -12,12 +58,18 @@ const mapById = (list) =>
 export const formatProjectData = (data) => {
   if (!data) return null;
 
+  // console.log(data);
+
   const project = removeProps(data.project, filterTypename);
   const propGroups = data.propGroups.map(removeTypename);
   const propValues = data.propValues.map(removeTypename);
   const resGroups = data.resGroups.map(removeTypename);
   const resValues = data.resValues.map(removeTypename);
   const entries = data.entries.map(removeTypename);
+  const settings = { ...defaultSettings };
+
+  const cellCount = propValues.length * resValues.length;
+  const projectTotal = entries.reduce((acc, curr) => acc + curr.value, 0);
 
   const map = {
     propGroups: mapById(propGroups),
@@ -59,6 +111,17 @@ export const formatProjectData = (data) => {
     map.resGroups[$item.id].resources = resValues
       .filter(($) => $.groupId === $item.id)
       .map(($) => map.resValues[$.id]);
+
+    // Calculate group's stats
+    const entries = map.resGroups[$item.id].entries;
+    const cellCount =
+      propValues.length * map.resGroups[$item.id].resources.length;
+    const projectTotal = entries.reduce((acc, curr) => acc + curr.value, 0);
+    map.resGroups[$item.id].efficiency = {
+      fill: entries.length / cellCount,
+      real: projectTotal / (entries.length * settings.baseline),
+      theoric: projectTotal / (cellCount * settings.baseline)
+    };
   });
 
   propValues.forEach(($item) => {
@@ -89,14 +152,22 @@ export const formatProjectData = (data) => {
   });
 
   const decoratedData = {
-    project,
+    project: {
+      ...project,
+      efficiency: {
+        fill: entries.length / cellCount,
+        real: projectTotal / (entries.length * settings.baseline),
+        theoric: projectTotal / (cellCount * settings.baseline)
+      }
+    },
     propGroups: propGroups.map(($) => map.propGroups[$.id]),
     propValues: propValues.map(($) => map.propValues[$.id]),
     resGroups: resGroups.map(($) => map.resGroups[$.id]),
     resValues: resValues.map(($) => map.resValues[$.id]),
-    entries: decoratedEntries
+    entries: decoratedEntries,
+    settings
   };
 
-  // console.log(decoratedData);
+  console.log(decoratedData);
   return decoratedData;
 };

@@ -20,7 +20,7 @@ const DashboardView = () => {
   const { upsertEntry } = useEntryUpsert();
 
   const title = isReady ? data.project.title : "Loading skills...";
-  const showMatrix = isReady && data.entries.length;
+  const showMatrix = isReady && data.propValues.length && data.resValues.length;
 
   const onUpdate = (evt) => upsertEntry(evt.detail);
 

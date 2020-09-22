@@ -11,50 +11,8 @@ import { IonPopover } from "@ionic/react";
 import CellView from "./CellView";
 import CellEdit from "./CellEdit";
 
-const defaultSettings = {
-  thresholds: {
-    _null: {
-      style: { backgroundColor: "#f9caca" },
-      label: "Damn it, fill this stuff"
-    },
-    _error: {
-      style: { backgroundColor: "#ff1c1c" },
-      label: "Damn it, fill this stuff"
-    },
-    values: [
-      {
-        value: 0,
-        style: { backgroundColor: "#fff" },
-        label: "I have no idea"
-      },
-      {
-        value: 20,
-        style: { backgroundColor: "#DFEED4" },
-        label: "I know the pourpose of it"
-      },
-      {
-        value: 40,
-        style: { backgroundColor: "#CCE8B5" },
-        label: "I have Hello World experience"
-      },
-      {
-        value: 60,
-        style: { backgroundColor: "#B2DD8B" },
-        label: "I can handle tasks"
-      },
-      {
-        value: 80,
-        style: { backgroundColor: "#97D35E" },
-        label: "I feel I'm an expert"
-      },
-      {
-        value: 100,
-        style: { backgroundColor: "#97D35E" },
-        label: "I'm a master of it"
-      }
-    ]
-  }
-};
+// Static default settings are now part of the data model
+const defaultSettings = {};
 
 const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
