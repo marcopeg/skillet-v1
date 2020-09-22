@@ -6,16 +6,22 @@ import {
   IonTitle,
   IonContent,
   IonButtons,
-  IonMenuButton
+  IonMenuButton,
+  IonButton,
+  IonIcon
 } from "@ionic/react";
 
+import { homeOutline } from "ionicons/icons";
+
 // Hooks
+import useIsMobile from "../hooks/use-is-mobile";
 import useProject from "../state/project/use-project";
 import useEntryUpsert from "../state/use-entry-upsert";
 
 import SkillMatrix from "../components/SkillMatrix/SkillMatrix";
 
 const DashboardView = () => {
+  const isMobile = useIsMobile();
   const { isReady, data } = useProject();
   const { upsertEntry } = useEntryUpsert();
 
@@ -29,7 +35,13 @@ const DashboardView = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonMenuButton />
+            {isMobile ? (
+              <IonButton routerLink="/" routerDirection="back">
+                <IonIcon icon={homeOutline} />
+              </IonButton>
+            ) : (
+              <IonMenuButton />
+            )}
           </IonButtons>
           <IonTitle>{title}</IonTitle>
         </IonToolbar>
