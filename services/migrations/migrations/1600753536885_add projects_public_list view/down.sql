@@ -1,0 +1,1 @@
+drop view if exists public.projects_public_list;

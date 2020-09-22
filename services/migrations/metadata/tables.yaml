@@ -119,18 +119,6 @@
       - title
       backend_only: false
   select_permissions:
-  - role: anonymous
-    permission:
-      columns:
-      - created_at
-      - description
-      - id
-      - title
-      - updated_at
-      filter:
-        is_private:
-          _eq: false
-      limit: 50
   - role: backend
     permission:
       columns:
@@ -208,6 +196,19 @@
       - data
       filter: {}
       check: null
+- table:
+    schema: public
+    name: projects_public_list
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - title
+      - description
+      - created_at
+      - updated_at
+      filter: {}
 - table:
     schema: public
     name: prop_groups

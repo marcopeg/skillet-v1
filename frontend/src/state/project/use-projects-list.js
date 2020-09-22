@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 
 export const LOAD_PROJECTS_LIST = gql`
   query projectsList {
-    projects(order_by: { updated_at: desc }) {
+    projects: projects_public_list {
       id
       created_at
       description
