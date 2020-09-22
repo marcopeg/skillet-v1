@@ -13,8 +13,6 @@ import {
   IonLabel,
   IonButton,
   IonIcon,
-  IonFab,
-  IonFabButton,
   IonModal,
   IonInput,
   IonTextarea,
@@ -32,6 +30,8 @@ const PropertiesView = () => {
   const createGroup = useResourcesCreateGroup();
   const createValue = useResourcesCreateValue();
 
+  const showList = groups && groups.length;
+
   return (
     <IonPage>
       <IonHeader>
@@ -39,15 +39,18 @@ const PropertiesView = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
+          <IonButtons slot="end">
+            <IonButton onClick={createGroup.openModal}>New Group</IonButton>
+          </IonButtons>
           <IonTitle>{"Resources"}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent className={showList ? null : "ion-padding"}>
         <IonRefresher slot="fixed" onIonRefresh={refresh}>
           <IonRefresherContent></IonRefresherContent>
         </IonRefresher>
 
-        {groups && (
+        {showList ? (
           <IonList lines="full">
             {groups.map((group, idx) => {
               return (
@@ -55,13 +58,13 @@ const PropertiesView = () => {
                   <IonListHeader className={idx > 0 ? "ion-padding-top" : null}>
                     <IonToolbar>
                       <h3>{group.name}</h3>
-                      <IonButtons slot="end">
+                      {/* <IonButtons slot="end">
                         <IonButton
                           onClick={() => createValue.openModal(group.id)}
                         >
                           <IonIcon icon={add}></IonIcon>
                         </IonButton>
-                      </IonButtons>
+                      </IonButtons> */}
                     </IonToolbar>
                   </IonListHeader>
 
@@ -72,17 +75,37 @@ const PropertiesView = () => {
                       </IonItem>
                     );
                   })}
+
+                  <IonButton
+                    expand="full"
+                    fill="clear"
+                    size="small"
+                    className="ion-margin"
+                    onClick={() => createValue.openModal(group.id)}
+                  >
+                    <IonIcon icon={add} />
+                    Add new resource
+                  </IonButton>
                 </React.Fragment>
               );
             })}
           </IonList>
+        ) : (
+          <>
+            <h4>What is a Resource?</h4>
+            <p>
+              Think a resource in terms of a <b>team member</b> and a group in
+              terms of a <b>team</b>.
+            </p>
+            <IonButton
+              expand="full"
+              size="small"
+              onClick={createGroup.openModal}
+            >
+              <IonIcon icon={add} /> Create the first group
+            </IonButton>
+          </>
         )}
-
-        <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton onClick={createGroup.openModal}>
-            <IonIcon icon={add} />
-          </IonFabButton>
-        </IonFab>
 
         {/**
          * Create Group Modal
@@ -94,7 +117,7 @@ const PropertiesView = () => {
           <IonPage>
             <IonHeader>
               <IonToolbar>
-                <IonTitle>New Skill Group</IonTitle>
+                <IonTitle>New Resource Group</IonTitle>
                 <IonButtons slot="end">
                   <IonButton onClick={createGroup.closeModal}>Cancel</IonButton>
                 </IonButtons>
@@ -146,7 +169,7 @@ const PropertiesView = () => {
           <IonPage>
             <IonHeader>
               <IonToolbar>
-                <IonTitle>New Skill</IonTitle>
+                <IonTitle>New Resource</IonTitle>
                 <IonButtons slot="end">
                   <IonButton onClick={createValue.closeModal}>Cancel</IonButton>
                 </IonButtons>
