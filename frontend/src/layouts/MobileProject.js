@@ -55,7 +55,7 @@ const MobileProject = ({ match }) => {
           />
           <Route path="" component={PageNotFoundView} />
         </IonRouterOutlet>
-        <IonTabBar slot="bottom" style={{ marginBottom: 10 }}>
+        <IonTabBar slot="bottom" style={{ marginBottom: 5 }}>
           <IonTabButton
             key={"dashboard"}
             tab={"dashboard"}
