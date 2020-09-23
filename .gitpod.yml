@@ -7,8 +7,8 @@ tasks:
     command: HASURA_GRAPHQL_ADMIN_SECRET="skillet"
       HASURA_GRAPHQL_JWT_SECRET="{\"type\":\"HS256\",\"key\":\"h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk\"}"
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE="anonymous"
-      EVT_PROJECT_CACHE_UPDATE: http://localhost:4000/project/cache/update
-      ACTION_BASE_URL: http://localhost:4000
+      EVT_PROJECT_CACHE_UPDATE=http://localhost:4000/project/cache/update
+      ACTION_BASE_URL=http://localhost:4000
       hasura_start
     openIn: right
 
@@ -24,7 +24,6 @@ tasks:
       HASURA_JWT_SECRET="{\"type\":\"HS256\",\"key\":\"h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk\"}"
       npm start
     openIn: right
-
 
   # Frontend Process
   # ================
