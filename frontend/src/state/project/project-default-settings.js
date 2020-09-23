@@ -38,7 +38,7 @@ export const PROJECT_DEFAULTS = {
         label: "I have no idea"
       },
       {
-        value: 50,
+        value: 20,
         style: { backgroundColor: "#DFEED4" },
         label: "I know the pourpose of it"
       },
