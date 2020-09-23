@@ -10,10 +10,6 @@ const CREATE_PROJECT = gql`
       object: { title: $title, description: $description }
     ) {
       id
-      title
-      description
-      created_at
-      updated_at
     }
   }
 `;

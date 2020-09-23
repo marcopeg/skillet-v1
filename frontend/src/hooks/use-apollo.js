@@ -24,6 +24,8 @@ const wsBaseUrl = process.env.REACT_APP_HASURA_WS
   ? process.env.REACT_APP_HASURA_WS
   : httpBaseUrl.replace("https://", "wss://").replace("http://", "ws://");
 
+// console.log({ httpBaseUrl, wsBaseUrl });
+
 export const ApolloProvider = ({ children }) => {
   const { token } = useAuth();
   const headers =

@@ -122,6 +122,12 @@
       - title
       backend_only: false
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      filter: {}
+      limit: 1
   - role: backend
     permission:
       columns:

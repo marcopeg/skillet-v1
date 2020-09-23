@@ -9,6 +9,7 @@
  * https://forrestjs.github.io/
  */
 
+const process = require("process");
 const { runHookApp } = require("@forrestjs/hooks");
 const serviceApollo = require("@forrestjs/service-apollo");
 const serviceFastify = require("@forrestjs/service-fastify");
@@ -78,4 +79,12 @@ runHookApp({
     serviceFastifyApollo
   ],
   features: [featureProjectCacheUpdate, featureProjectTokenCreate]
+});
+
+// Let Docker exit on Ctrl+C
+process.on("SIGINT", function () {
+  process.exit();
+});
+process.on("SIGTERM", function () {
+  process.exit();
 });

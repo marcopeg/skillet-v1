@@ -1,0 +1,93 @@
+version: "2.1"
+services:
+  ###
+  ### APPLICATION
+  ###
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_HASURA_URL: http://localhost:9877/v1/graphql
+    ports:
+      - "${FRONTEND_PORT:-9876}:80"
+    environment:
+      PROXY_PASS: http://hasura:8080
+      CHOKIDAR_USEPOLLING: "true"
+    depends_on:
+      hasura:
+        condition: service_healthy
+
+  backend:
+    restart: always
+    build:
+      context: ./backend
+    environment:
+      PORT: 4000
+      HASURA_ENDPOINT: http://hasura:8080
+      HASURA_JWT_SECRET: '{"type":"HS256", "key": "${HASURA_JWT_SECRET:-h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk}"}'
+    entrypoint: ["node", "index.js"]
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "-", "http://backend:4000/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  ###
+  ### INFRASTRUCTURE
+  ###
+
+  hasura:
+    restart: always
+    build:
+      context: ./services/hasura
+    depends_on:
+      postgres:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    ports:
+      - "${HASURA_PORT:-9877}:8080"
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+      HASURA_GRAPHQL_DEV_MODE: "false"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_ADMIN_SECRET:-skillet}:8080"
+      HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256", "key": "${HASURA_JWT_SECRET:-h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk}"}'
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "anonymous"
+      EVT_PROJECT_CACHE_UPDATE: http://backend:4000/project/cache/update
+      ACTION_BASE_URL: http://backend:4000
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "-", "http://hasura:8080/healthz"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  postgres:
+    restart: always
+    build:
+      context: ./services/postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  ###
+  ### UTILITIES
+  ###
+
+  migrations:
+    build:
+      context: ./services/migrations
+    depends_on:
+      hasura:
+        condition: service_healthy
+    environment:
+      HASURA_ENDPOINT: http://hasura:8080
+      HASURA_ADMIN_SECRET: ${HASURA_ADMIN_SECRET:-skillet}:8080
+      HASURA_GRAPHQL_ENABLE_TELEMETRY: "false"
+    stdin_open: true
+    tty: true
