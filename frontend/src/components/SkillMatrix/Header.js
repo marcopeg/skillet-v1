@@ -3,12 +3,12 @@ import React from "react";
 import HeaderGroup from "./HeaderGroup";
 import HeaderSkill from "./HeaderSkill";
 
-const perc = (val) => `${Math.round(val * 100)}%`;
+const perc = (val) => Math.round(val * 100);
 
 const Header = ({ data }) => {
   const {
     propGroups,
-    project: { efficiency }
+    project: { stats }
   } = data;
 
   return (
@@ -16,11 +16,13 @@ const Header = ({ data }) => {
       <tr>
         <td rowSpan={2} className="skm-header-total">
           <span>
-            rated: {perc(efficiency.real)}
+            <b>{perc(stats.score)}</b>
             <br />
-            <small>full: {perc(efficiency.theoric)}</small>
+            <small>board: {perc(stats.boardScore)}%</small>
             <br />
-            <small>filled: {perc(efficiency.fill)}</small>
+            <small>entries: {perc(stats.entriesScore)}%</small>
+            <br />
+            <small>completion: {perc(stats.completionRate)}%</small>
           </span>
         </td>
         {propGroups.map(($group) => (

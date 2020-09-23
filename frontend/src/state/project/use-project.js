@@ -45,6 +45,7 @@ export const GET_PROJECT_BY_ID = gql`
       propId: prop_value_id
       resId: res_value_id
       value
+      updatedAt: updated_at
     }
   }
 `;
@@ -92,7 +93,7 @@ export const ProjectProvider = ({ projectId, children }) => {
       projectId,
       isReady: !!data,
       isLoading: loading,
-      data: formatProjectData(data)
+      data: formatProjectData(data) // does all the calculations, could get SLOW!
     }),
     [data, loading, projectId]
   );

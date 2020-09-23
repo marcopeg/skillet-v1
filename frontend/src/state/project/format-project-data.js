@@ -1,48 +1,5 @@
-const defaultSettings = {
-  baseline: 70,
-  thresholds: {
-    _null: {
-      style: { backgroundColor: "#f9caca" },
-      label: "Damn it, fill this stuff"
-    },
-    _error: {
-      style: { backgroundColor: "#ff1c1c" },
-      label: "Damn it, fill this stuff"
-    },
-    values: [
-      {
-        value: 0,
-        style: { backgroundColor: "#fff" },
-        label: "I have no idea"
-      },
-      {
-        value: 20,
-        style: { backgroundColor: "#DFEED4" },
-        label: "I know the pourpose of it"
-      },
-      {
-        value: 40,
-        style: { backgroundColor: "#CCE8B5" },
-        label: "I have Hello World experience"
-      },
-      {
-        value: 60,
-        style: { backgroundColor: "#B2DD8B" },
-        label: "I can handle tasks"
-      },
-      {
-        value: 80,
-        style: { backgroundColor: "#97D35E" },
-        label: "I feel I'm an expert"
-      },
-      {
-        value: 100,
-        style: { backgroundColor: "#70c619" },
-        label: "I'm a master of it"
-      }
-    ]
-  }
-};
+import { PROJECT_DEFAULTS } from "./project-default-settings";
+import { calculateStats } from "./calculate-stats";
 
 // Filtering utilities to remove the "__typename" from the received data
 const filterTypename = ["__typename"];
@@ -66,10 +23,7 @@ export const formatProjectData = (data) => {
   const resGroups = data.resGroups.map(removeTypename);
   const resValues = data.resValues.map(removeTypename);
   const entries = data.entries.map(removeTypename);
-  const settings = { ...defaultSettings };
-
-  const cellCount = propValues.length * resValues.length;
-  const projectTotal = entries.reduce((acc, curr) => acc + curr.value, 0);
+  const settings = { ...PROJECT_DEFAULTS };
 
   const map = {
     propGroups: mapById(propGroups),
@@ -87,6 +41,7 @@ export const formatProjectData = (data) => {
 
     return {
       ...$entry,
+      updatedAt: new Date($entry.updatedAt),
       prop,
       propGroup,
       res,
@@ -113,15 +68,11 @@ export const formatProjectData = (data) => {
       .map(($) => map.resValues[$.id]);
 
     // Calculate group's stats
-    const entries = map.resGroups[$item.id].entries;
-    const cellCount =
-      propValues.length * map.resGroups[$item.id].resources.length;
-    const projectTotal = entries.reduce((acc, curr) => acc + curr.value, 0);
-    map.resGroups[$item.id].efficiency = {
-      fill: entries.length / cellCount,
-      real: projectTotal / (entries.length * settings.baseline),
-      theoric: projectTotal / (cellCount * settings.baseline)
-    };
+    // map.resGroups[$item.id].stats = calculateStats(
+    //   map.resGroups[$item.id].entries,
+    //   propValues.length * map.resGroups[$item.id].resources.length,
+    //   settings
+    // );
   });
 
   propValues.forEach(($item) => {
@@ -169,11 +120,11 @@ export const formatProjectData = (data) => {
   const decoratedData = {
     project: {
       ...project,
-      efficiency: {
-        fill: entries.length / cellCount,
-        real: projectTotal / (entries.length * settings.baseline),
-        theoric: projectTotal / (cellCount * settings.baseline)
-      }
+      stats: calculateStats(
+        decoratedEntries,
+        propValues.length * resValues.length,
+        settings
+      )
     },
     propGroups: propGroups.map(($) => map.propGroups[$.id]),
     propValues: propValues.map(($) => map.propValues[$.id]),
