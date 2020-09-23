@@ -73,6 +73,9 @@
     webhook_from_env: EVT_PROJECT_CACHE_UPDATE
 - table:
     schema: public
+    name: entries_history
+- table:
+    schema: public
     name: projects
   array_relationships:
   - name: entries
