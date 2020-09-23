@@ -1,0 +1,55 @@
+image: marcopeg/gitpod-workspace-hasura:1.3.0
+
+tasks:
+  # Hasura Engine
+  # =============
+  - name: Hasura
+    command: HASURA_GRAPHQL_ADMIN_SECRET="skillet"
+      HASURA_GRAPHQL_JWT_SECRET="{\"type\":\"HS256\",\"key\":\"h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk\"}"
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE="anonymous"
+      EVT_PROJECT_CACHE_UPDATE: http://localhost:4000/project/cache/update
+      ACTION_BASE_URL: http://localhost:4000
+      hasura_start
+    openIn: right
+
+  # Backend Process
+  # ===============
+  # it is used to perform triggered based transformations on the todos
+  # after they are created.
+  - name: Backend
+    before: cd backend
+    init: npm install
+    command: PORT=4000
+      HASURA_ENDPOINT=$(gp url 8080)
+      HASURA_JWT_SECRET="{\"type\":\"HS256\",\"key\":\"h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk\"}"
+      npm start
+    openIn: right
+
+
+  # Frontend Process
+  # ================
+  # it runs the CreateReactApp setup that consumes Hasura Engine's API.
+  - name: Frontend
+    before: cd frontend
+    init: npm install
+    command: REACT_APP_HASURA_URL=$(gp url 8080)/v1/graphql npm start
+    openIn: right
+
+ports:
+  - port: 5432
+    onOpen: ignore
+  - port: 8080
+    onOpen: ignore
+  - port: 3000
+    onOpen: open-preview
+  - port: 4000
+    onOpen: ignore
+  - port: 8008
+    onOpen: ignore
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint@2.1.1:DO6k4GCpqhwZcKo+jY9xjQ==
+    - esbenp.prettier-vscode@3.20.0:37/f4uBlE287wUjENFq1aA==
+    - mikestead.dotenv@1.0.1:SSXjr5hZcbqSF7nMIhTNnA==
+    - wayou.vscode-todo-highlight@1.0.4:8IqxuxCVol2WnScJc5xVzg==
