@@ -142,12 +142,27 @@ export const formatProjectData = (data) => {
   });
 
   // Decorate each resource with the list of skills and filtered entries
+  // This also must be divided by groups so to achieve a correct visualization order
   resValues.forEach(($item) => {
-    $item.props = propValues.map(($value) => {
-      return {
-        ...$value,
-        entries: $item.entries.filter(($) => $.propId === $value.id)
+    // Group entries by proprGroup to match the visualization order
+    $item.propGroups = propGroups.map(($group) => {
+      const groupEntries$ = ($) => $.propGroup.id === $group.id;
+      const groupEntries = $item.entries.filter(groupEntries$);
+      const group = {
+        ...map.propGroups[$group.id],
+        entries: groupEntries
       };
+
+      // Apply group's values with filtered entries
+      group.values = group.values.map(($value) => {
+        const valueEntries$ = ($) => $.propId === $value.id;
+        return {
+          ...$value,
+          entries: groupEntries.filter(valueEntries$)
+        };
+      });
+
+      return group;
     });
   });
 

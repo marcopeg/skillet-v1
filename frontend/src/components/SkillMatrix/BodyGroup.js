@@ -1,17 +1,17 @@
 import React from "react";
 import BodyResource from "./BodyResource";
 
-const perc = (val) => `${Math.round(val * 100)}%`;
+// const perc = (val) => `${Math.round(val * 100)}%`;
 
 const BodyGroup = ({ data, group, onUpdate }) => {
-  const { efficiency } = group;
+  // const { efficiency } = group;
 
   return (
     <>
       <tr>
         <td className="skm-body-group" colSpan={data.propValues.length + 1}>
           <span>{group.name}</span>
-          <span>
+          {/* <span>
             <small>
               rated: {perc(efficiency.real)}
               {"; "}
@@ -19,7 +19,7 @@ const BodyGroup = ({ data, group, onUpdate }) => {
             <small>full: {perc(efficiency.theoric)}</small>
             {"; "}
             <small>filled: {perc(efficiency.fill)}</small>
-          </span>
+          </span> */}
         </td>
       </tr>
       {group.resources.map(($resource) => (

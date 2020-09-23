@@ -7,7 +7,6 @@ const perc = (val) => `${Math.round(val * 100)}%`;
 
 const Header = ({ data }) => {
   const {
-    propValues,
     propGroups,
     project: { efficiency }
   } = data;
@@ -29,9 +28,11 @@ const Header = ({ data }) => {
         ))}
       </tr>
       <tr>
-        {propValues.map(($skill) => (
-          <HeaderSkill key={`skm-header-skill-${$skill.id}`} skill={$skill} />
-        ))}
+        {propGroups.map(($group) =>
+          $group.values.map(($skill) => (
+            <HeaderSkill key={`skm-header-skill-${$skill.id}`} skill={$skill} />
+          ))
+        )}
       </tr>
     </thead>
   );
