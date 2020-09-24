@@ -20,7 +20,8 @@ import {
   IonTextarea,
   IonRefresher,
   IonRefresherContent,
-  IonSpinner
+  IonSpinner,
+  IonAlert
 } from "@ionic/react";
 
 import { add } from "ionicons/icons";
@@ -123,6 +124,15 @@ const PropertiesView = () => {
             </IonContent>
           </IonPage>
         </IonModal>
+
+        <IonAlert
+          isOpen={true}
+          onDidDismiss={() => {}}
+          header={"foobar"}
+          subHeader={"hohoho"}
+          message={"hihihi"}
+          buttons={["Cancel", "Confirm"]}
+        />
       </IonContent>
     </IonPage>
   );
