@@ -4,7 +4,8 @@ tasks:
   # Hasura Engine
   # =============
   - name: Hasura
-    command: HASURA_GRAPHQL_ADMIN_SECRET="skillet"
+    command: HELLO=world
+      HASURA_GRAPHQL_ADMIN_SECRET="skillet"
       HASURA_GRAPHQL_JWT_SECRET="{\"type\":\"HS256\",\"key\":\"h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk\"}"
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE="anonymous"
       EVT_PROJECT_CACHE_UPDATE=http://localhost:4000/project/cache/update
@@ -19,7 +20,8 @@ tasks:
   - name: Backend
     before: cd backend
     init: npm install
-    command: PORT=4000
+    command: HELLO=world
+      PORT=4000
       HASURA_ENDPOINT=$(gp url 8080)
       HASURA_JWT_SECRET="{\"type\":\"HS256\",\"key\":\"h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk\"}"
       npm start
@@ -31,7 +33,10 @@ tasks:
   - name: Frontend
     before: cd frontend
     init: npm install
-    command: REACT_APP_HASURA_URL=$(gp url 8080)/v1/graphql npm start
+    command: HELLO=world
+      REACT_APP_HASURA_URL=$(gp url 8080)/v1/graphql
+      DANGEROUSLY_DISABLE_HOST_CHECK=true
+      npm start
     openIn: right
 
   # Hasura Migrations
