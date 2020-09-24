@@ -306,19 +306,55 @@
           - updated_at
         backend_only: false
   select_permissions:
-    - role: backend
-      permission:
-        columns:
-          - id
-          - project_id
-          - prop_group_id
-          - name
-          - description
-          - tags
-          - order
-        filter: {}
-    - role: project
-      permission:
+  - role: backend
+    permission:
+      columns:
+      - id
+      - project_id
+      - prop_group_id
+      - name
+      - description
+      - tags
+      - order
+      filter: {}
+  - role: project
+    permission:
+      columns:
+      - id
+      - project_id
+      - prop_group_id
+      - name
+      - description
+      - tags
+      - order
+      - updated_at
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      limit: 500
+  update_permissions:
+  - role: project
+    permission:
+      columns:
+      - description
+      - name
+      - order
+      - tags
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      check:
+        project_id:
+          _eq: x-hasura-project-id
+  event_triggers:
+  - name: project_cache_by_prop_values
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      delete:
+        columns: '*'
+      update:
         columns:
           - id
           - project_id
