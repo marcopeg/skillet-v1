@@ -25,7 +25,7 @@ import usePropertiesList from "../state/properties/use-properties-list";
 import usePropertiesCreateGroup from "../state/properties/use-properties-create-group";
 import usePropertiesCreateValue from "../state/properties/use-properties-create-value";
 
-const PropertiesView = () => {
+const PropertiesView = ({ match }) => {
   const { groups, refresh } = usePropertiesList();
   const createGroup = usePropertiesCreateGroup();
   const createValue = usePropertiesCreateValue();
@@ -70,7 +70,10 @@ const PropertiesView = () => {
 
                   {group.values.map((value) => {
                     return (
-                      <IonItem key={`gr-${group.id}-${value.id}`}>
+                      <IonItem
+                        key={`gr-${group.id}-${value.id}`}
+                        routerLink={`${match.url}/v/${value.id}`}
+                      >
                         <IonLabel>{value.name}</IonLabel>
                       </IonItem>
                     );
