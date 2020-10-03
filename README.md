@@ -14,6 +14,8 @@ the codebase and make your own contribution.
 
 ## Run Local Production
 
+> **NOTE:** if you run this on Windows, please use [Git for Windows](https://gitforwindows.org/).
+
 > Skillet uses ports `9876, 9877` as default settings to serve the App and the Hasura API.
 > You can customize those values setting `FRONTEND_PORT=3000` and `HASURA_PORT=8080`
 
@@ -22,6 +24,8 @@ docker-compose -f docker-copmpose.prod.yml up
 ```
 
 ## Run Local Development
+
+> **NOTE:** if you run this on Windows, please use [Git for Windows](https://gitforwindows.org/).
 
 First start the backend and run the migrations:
 

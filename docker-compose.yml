@@ -5,7 +5,6 @@ services:
   ###
 
   backend:
-    container_name: backend
     image: node:12.2
     ports:
       - "${BACKEND_PORT:-4000}:4000"
@@ -28,7 +27,6 @@ services:
       retries: 20
 
   frontend:
-    container_name: frontend
     image: node:12.2
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
@@ -54,7 +52,6 @@ services:
   ###
 
   migrations:
-    container_name: migrations
     build:
       context: ./services/migrations
     depends_on:
@@ -76,7 +73,6 @@ services:
   ###
 
   hasura:
-    container_name: hasura
     build:
       context: ./services/hasura
     restart: always
@@ -103,7 +99,6 @@ services:
       retries: 20
 
   adminer:
-    container_name: adminer
     image: adminer:4.7
     restart: always
     depends_on:
@@ -115,7 +110,6 @@ services:
       - "${ADMINER_PORT:-8081}:8080"
 
   postgres:
-    container_name: postgres
     build:
       context: ./services/postgres
     restart: always
