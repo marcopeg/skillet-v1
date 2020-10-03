@@ -17,13 +17,11 @@ import {
   IonHeader,
   IonFooter,
   IonToolbar,
-  IonTitle,
-  IonButtons,
-  IonButton
+  IonTitle
 } from "@ionic/react";
 
 import {
-  chevronBackOutline,
+  homeOutline,
   appsOutline,
   personCircleOutline,
   fingerPrintOutline,
@@ -54,15 +52,6 @@ const DesktopLayout = ({ match }) => {
           <IonMenu contentId="desktop-project" type="overlay">
             <IonHeader>
               <IonToolbar>
-                <IonButtons slot="start">
-                  <IonButton
-                    routerLink="/"
-                    routerAnimation="none"
-                    routerDirection="none"
-                  >
-                    <IonIcon slot="start" icon={chevronBackOutline} />
-                  </IonButton>
-                </IonButtons>
                 <IonTitle>SkillMatrix</IonTitle>
               </IonToolbar>
             </IonHeader>
@@ -113,6 +102,18 @@ const DesktopLayout = ({ match }) => {
                     >
                       <IonIcon slot="start" icon={settingsOutline} />
                       <IonLabel>Settings</IonLabel>
+                    </IonItem>
+                    <IonItemDivider>
+                      <IonLabel>Other</IonLabel>
+                    </IonItemDivider>
+                    <IonItem
+                      routerLink="/"
+                      routerDirection={"root"}
+                      lines="none"
+                      detail={false}
+                    >
+                      <IonIcon slot="start" icon={homeOutline} />
+                      <IonLabel>Go to projects list</IonLabel>
                     </IonItem>
                   </IonItemGroup>
                 </IonMenuToggle>
