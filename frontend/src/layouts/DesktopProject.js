@@ -36,6 +36,7 @@ import { ProjectProvider } from "../state/project/use-project";
 import DashboardView from "../views/DashboardView";
 import PropertiesView from "../views/PropertiesView";
 import PropertyDetailsView from "../views/PropertyDetailsView";
+import PropertyEditView from "../views/PropertyEditView";
 import ResourcesView from "../views/ResourcesView";
 import SettingsView from "../views/SettingsView";
 import PageNotFoundView from "../views/PageNotFoundView";
@@ -127,6 +128,11 @@ const DesktopLayout = ({ match }) => {
               exact
               path="/p/:projectId/resources"
               component={ResourcesView}
+            />
+            <Route
+              exact
+              path="/p/:projectId/properties/v/:propertyId/edit"
+              component={PropertyEditView}
             />
             <Route
               exact

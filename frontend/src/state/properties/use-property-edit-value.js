@@ -1,21 +1,13 @@
 /* eslint-disable */
 
 import React, { useState, useEffect } from "react"; // eslint-disable-line
-import { gql, useMutation, useLazyQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { gql, useMutation } from "@apollo/client";
+import { useParams, useHistory } from "react-router-dom";
 
 import { LOAD_PROPERTIES_LIST } from "./use-properties-list";
-
-const LOAD_VALUE = gql`
-  query loadValue($id: Int!) {
-    value: prop_values_by_pk(id: $id) {
-      name
-      description
-      order
-      tags
-    }
-  }
-`;
+import usePropertyDetails, {
+  LOAD_PROPERTY_DETAILS
+} from "./use-property-details";
 
 const UPDATE_VALUE = gql`
   mutation updatePropValue($id: Int!, $name: String!, $description: String) {
@@ -30,25 +22,40 @@ const UPDATE_VALUE = gql`
   }
 `;
 
+const DELETE_VALUE = gql`
+  mutation deletePropValue($id: Int!) {
+    delete_prop_values_by_pk(id: $id) {
+      id
+    }
+  }
+`;
+
 const defaultValues = {
   name: "",
   description: ""
 };
 
 const useResourcesEditValue = () => {
-  const { propertyId } = useParams();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const history = useHistory();
+  const { propertyId, projectId } = useParams();
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [values, setValues] = useState({ ...defaultValues });
 
-  const [loadValue, { data, loading: isDataLoading }] = useLazyQuery(
-    LOAD_VALUE,
-    {
-      variables: { id: propertyId },
-      fetchPolicy: "network-only"
-    }
-  );
+  const { data, isDataLoading } = usePropertyDetails();
 
   const [updateValue] = useMutation(UPDATE_VALUE, {
+    refetchQueries: [
+      {
+        query: LOAD_PROPERTIES_LIST
+      },
+      {
+        query: LOAD_PROPERTY_DETAILS,
+        variables: { id: propertyId }
+      }
+    ]
+  });
+
+  const [deleteValue] = useMutation(DELETE_VALUE, {
     refetchQueries: [
       {
         query: LOAD_PROPERTIES_LIST
@@ -59,15 +66,12 @@ const useResourcesEditValue = () => {
   const resetValues = (values = {}) =>
     setValues({ ...defaultValues, ...values });
 
-  const openModal = (resGroupId) => {
-    resetValues(resGroupId);
-    setIsModalOpen(true);
-    loadValue();
+  const openConfirm = () => {
+    setIsConfirmOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    resetValues();
+  const closeConfirm = (evt) => {
+    setIsConfirmOpen(false);
   };
 
   const setValue = (prop, value) =>
@@ -77,9 +81,20 @@ const useResourcesEditValue = () => {
     });
 
   const submitForm = () => {
-    updateValue({ variables: { ...values, id: propertyId } })
+    updateValue({ variables: { ...values, id: propertyId } }).catch((err) => {
+      console.error(err);
+    });
+  };
+
+  const submitDelete = (confirm) => {
+    if (confirm.name !== data.name) {
+      alert("Wrong name");
+      return;
+    }
+    deleteValue({ variables: { id: propertyId } })
       .then(() => {
-        closeModal();
+        closeConfirm();
+        history.push(`/p/${projectId}/properties`);
       })
       .catch((err) => {
         console.error(err);
@@ -89,26 +104,27 @@ const useResourcesEditValue = () => {
   useEffect(() => {
     if (data) {
       resetValues({
-        name: data.value.name,
-        description: data.value.description
+        name: data.name,
+        description: data.description
       });
     }
   }, [data]);
 
-  React.useEffect(() => {
-    setTimeout(openModal, 250);
-  }, []);
-
   return {
-    isModalOpen,
     isDataLoading,
-    values,
+    isConfirmOpen,
     isFormDisabled: values.name.length < 3,
     isFormLoading: false,
+    projectId,
+    propertyId,
+    data,
+    values,
     setValue,
-    openModal,
-    closeModal,
-    submitForm
+    closeConfirm,
+    openConfirm,
+    closeConfirm,
+    submitForm,
+    submitDelete
   };
 };
 

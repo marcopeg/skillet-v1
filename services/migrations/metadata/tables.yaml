@@ -2,75 +2,75 @@
     schema: public
     name: entries
   insert_permissions:
-    - role: project
-      permission:
-        check: {}
-        set:
-          project_id: x-hasura-project-id
-        columns:
-          - description
-          - prop_value_id
-          - res_value_id
-          - updated_at
-          - value
-        backend_only: false
+  - role: project
+    permission:
+      check: {}
+      set:
+        project_id: x-hasura-project-id
+      columns:
+      - description
+      - prop_value_id
+      - res_value_id
+      - updated_at
+      - value
+      backend_only: false
   select_permissions:
-    - role: backend
-      permission:
-        columns:
-          - description
-          - project_id
-          - prop_value_id
-          - res_value_id
-          - updated_at
-          - value
-        filter: {}
-    - role: project
-      permission:
-        columns:
-          - value
-          - prop_value_id
-          - res_value_id
-          - description
-          - updated_at
-          - project_id
-        filter:
-          project_id:
-            _eq: x-hasura-project-id
-        limit: 50000
+  - role: backend
+    permission:
+      columns:
+      - description
+      - project_id
+      - prop_value_id
+      - res_value_id
+      - updated_at
+      - value
+      filter: {}
+  - role: project
+    permission:
+      columns:
+      - value
+      - prop_value_id
+      - res_value_id
+      - description
+      - updated_at
+      - project_id
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      limit: 50000
   update_permissions:
-    - role: project
-      permission:
-        columns:
-          - description
-          - prop_value_id
-          - res_value_id
-          - updated_at
-          - value
-        filter:
-          project_id:
-            _eq: x-hasura-project-id
-        check: null
+  - role: project
+    permission:
+      columns:
+      - description
+      - prop_value_id
+      - res_value_id
+      - updated_at
+      - value
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      check: null
   event_triggers:
-    - name: project_cache_by_entries
-      definition:
-        enable_manual: false
-        insert:
-          columns: "*"
-        delete:
-          columns: "*"
-        update:
-          columns:
-            - prop_value_id
-            - res_value_id
-            - description
-            - updated_at
-            - project_id
-      retry_conf:
-        num_retries: 0
-        interval_sec: 10
-        timeout_sec: 60
-      webhook_from_env: EVT_PROJECT_CACHE_UPDATE
+  - name: project_cache_by_entries
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      delete:
+        columns: '*'
+      update:
+        columns:
+        - prop_value_id
+        - res_value_id
+        - description
+        - updated_at
+        - project_id
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: EVT_PROJECT_CACHE_UPDATE
 - table:
     schema: public
     name: entries_history
@@ -78,233 +78,237 @@
     schema: public
     name: projects
   array_relationships:
-    - name: entries
-      using:
-        foreign_key_constraint_on:
-          column: project_id
-          table:
-            schema: public
-            name: entries
-    - name: prop_groups
-      using:
-        foreign_key_constraint_on:
-          column: project_id
-          table:
-            schema: public
-            name: prop_groups
-    - name: prop_values
-      using:
-        foreign_key_constraint_on:
-          column: project_id
-          table:
-            schema: public
-            name: prop_values
-    - name: res_groups
-      using:
-        foreign_key_constraint_on:
-          column: project_id
-          table:
-            schema: public
-            name: res_groups
-    - name: res_values
-      using:
-        foreign_key_constraint_on:
-          column: project_id
-          table:
-            schema: public
-            name: res_values
+  - name: entries
+    using:
+      foreign_key_constraint_on:
+        column: project_id
+        table:
+          schema: public
+          name: entries
+  - name: prop_groups
+    using:
+      foreign_key_constraint_on:
+        column: project_id
+        table:
+          schema: public
+          name: prop_groups
+  - name: prop_values
+    using:
+      foreign_key_constraint_on:
+        column: project_id
+        table:
+          schema: public
+          name: prop_values
+  - name: res_groups
+    using:
+      foreign_key_constraint_on:
+        column: project_id
+        table:
+          schema: public
+          name: res_groups
+  - name: res_values
+    using:
+      foreign_key_constraint_on:
+        column: project_id
+        table:
+          schema: public
+          name: res_values
   insert_permissions:
-    - role: anonymous
-      permission:
-        check: {}
-        columns:
-          - description
-          - title
-        backend_only: false
+  - role: anonymous
+    permission:
+      check: {}
+      columns:
+      - description
+      - title
+      backend_only: false
   select_permissions:
-    - role: anonymous
-      permission:
-        columns:
-          - id
-        filter: {}
-        limit: 1
-    - role: backend
-      permission:
-        columns:
-          - created_at
-          - description
-          - id
-          - title
-          - updated_at
-        filter: {}
-    - role: project
-      permission:
-        columns:
-          - id
-          - title
-          - description
-          - created_at
-          - updated_at
-        filter:
-          id:
-            _eq: x-hasura-project-id
-        limit: 0
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      filter: {}
+      limit: 1
+  - role: backend
+    permission:
+      columns:
+      - created_at
+      - description
+      - id
+      - title
+      - updated_at
+      filter: {}
+  - role: project
+    permission:
+      columns:
+      - id
+      - title
+      - description
+      - created_at
+      - updated_at
+      filter:
+        id:
+          _eq: x-hasura-project-id
+      limit: 0
   event_triggers:
-    - name: project_cache_by_projects
-      definition:
-        enable_manual: false
-        insert:
-          columns: "*"
-        delete:
-          columns: "*"
-        update:
-          columns:
-            - description
-            - title
-            - created_at
-            - updated_at
-            - id
-      retry_conf:
-        num_retries: 0
-        interval_sec: 10
-        timeout_sec: 60
-      webhook_from_env: EVT_PROJECT_CACHE_UPDATE
+  - name: project_cache_by_projects
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      delete:
+        columns: '*'
+      update:
+        columns:
+        - description
+        - title
+        - created_at
+        - updated_at
+        - id
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: EVT_PROJECT_CACHE_UPDATE
 - table:
     schema: public
     name: projects_cache
   insert_permissions:
-    - role: backend
-      permission:
-        check: {}
-        columns:
-          - data
-          - project_id
-        backend_only: false
+  - role: backend
+    permission:
+      check: {}
+      columns:
+      - data
+      - project_id
+      backend_only: false
   select_permissions:
-    - role: anonymous
-      permission:
-        columns:
-          - data
-          - project_id
-          - updated_at
-        filter: {}
-        limit: 1
-    - role: project
-      permission:
-        columns:
-          - data
-          - updated_at
-        filter:
-          project_id:
-            _eq: x-hasura-project-id
-        limit: 1
+  - role: anonymous
+    permission:
+      columns:
+      - data
+      - project_id
+      - updated_at
+      filter: {}
+      limit: 1
+  - role: project
+    permission:
+      columns:
+      - data
+      - updated_at
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      limit: 1
   update_permissions:
-    - role: backend
-      permission:
-        columns:
-          - data
-        filter: {}
-        check: null
+  - role: backend
+    permission:
+      columns:
+      - data
+      filter: {}
+      check: null
 - table:
     schema: public
     name: projects_public_list
   select_permissions:
-    - role: anonymous
-      permission:
-        columns:
-          - id
-          - title
-          - description
-          - created_at
-          - updated_at
-        filter: {}
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - title
+      - description
+      - created_at
+      - updated_at
+      filter: {}
 - table:
     schema: public
     name: prop_groups
   array_relationships:
-    - name: prop_values
-      using:
-        manual_configuration:
-          remote_table:
-            schema: public
-            name: prop_values
-          column_mapping:
-            project_id: project_id
-            id: prop_group_id
+  - name: prop_values
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: prop_values
+        column_mapping:
+          project_id: project_id
+          id: prop_group_id
   insert_permissions:
-    - role: project
-      permission:
-        check: {}
-        set:
-          project_id: x-hasura-project-id
-        columns:
-          - description
-          - id
-          - name
-          - order
-          - updated_at
-        backend_only: false
+  - role: project
+    permission:
+      check: {}
+      set:
+        project_id: x-hasura-project-id
+      columns:
+      - description
+      - id
+      - name
+      - order
+      - updated_at
+      backend_only: false
   select_permissions:
-    - role: backend
-      permission:
-        columns:
-          - id
-          - project_id
-          - name
-          - description
-          - order
-        filter: {}
-    - role: project
-      permission:
-        columns:
-          - id
-          - order
-          - description
-          - updated_at
-          - name
-          - project_id
-        filter:
-          project_id:
-            _eq: x-hasura-project-id
-        limit: 50
+  - role: backend
+    permission:
+      columns:
+      - id
+      - project_id
+      - name
+      - description
+      - order
+      filter: {}
+  - role: project
+    permission:
+      columns:
+      - id
+      - order
+      - description
+      - updated_at
+      - name
+      - project_id
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      limit: 50
   event_triggers:
-    - name: project_cache_by_prop_groups
-      definition:
-        enable_manual: false
-        insert:
-          columns: "*"
-        delete:
-          columns: "*"
-        update:
-          columns:
-            - id
-            - order
-            - description
-            - name
-            - project_id
-      retry_conf:
-        num_retries: 0
-        interval_sec: 10
-        timeout_sec: 60
-      webhook_from_env: EVT_PROJECT_CACHE_UPDATE
+  - name: project_cache_by_prop_groups
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      delete:
+        columns: '*'
+      update:
+        columns:
+        - id
+        - order
+        - description
+        - name
+        - project_id
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: EVT_PROJECT_CACHE_UPDATE
 - table:
     schema: public
     name: prop_values
+  object_relationships:
+  - name: prop_group
+    using:
+      foreign_key_constraint_on: prop_group_id
   insert_permissions:
-    - role: project
-      permission:
-        check: {}
-        set:
-          project_id: x-hasura-project-id
-        columns:
-          - description
-          - id
-          - name
-          - order
-          - prop_group_id
-          - tags
-          - updated_at
-        backend_only: false
+  - role: project
+    permission:
+      check: {}
+      set:
+        project_id: x-hasura-project-id
+      columns:
+      - description
+      - id
+      - name
+      - order
+      - prop_group_id
+      - tags
+      - updated_at
+      backend_only: false
   select_permissions:
   - role: backend
     permission:
@@ -346,6 +350,12 @@
       check:
         project_id:
           _eq: x-hasura-project-id
+  delete_permissions:
+  - role: project
+    permission:
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
   event_triggers:
   - name: project_cache_by_prop_values
     definition:
@@ -356,181 +366,159 @@
         columns: '*'
       update:
         columns:
-          - id
-          - project_id
-          - prop_group_id
-          - name
-          - description
-          - tags
-          - order
-          - updated_at
-        filter:
-          project_id:
-            _eq: x-hasura-project-id
-        limit: 500
-  event_triggers:
-    - name: project_cache_by_prop_values
-      definition:
-        enable_manual: false
-        insert:
-          columns: "*"
-        delete:
-          columns: "*"
-        update:
-          columns:
-            - id
-            - order
-            - prop_group_id
-            - tags
-            - description
-            - name
-            - project_id
-      retry_conf:
-        num_retries: 0
-        interval_sec: 10
-        timeout_sec: 60
-      webhook_from_env: EVT_PROJECT_CACHE_UPDATE
+        - id
+        - order
+        - prop_group_id
+        - tags
+        - description
+        - name
+        - project_id
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: EVT_PROJECT_CACHE_UPDATE
 - table:
     schema: public
     name: res_groups
   array_relationships:
-    - name: res_values
-      using:
-        manual_configuration:
-          remote_table:
-            schema: public
-            name: res_values
-          column_mapping:
-            project_id: project_id
-            id: res_group_id
+  - name: res_values
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: res_values
+        column_mapping:
+          project_id: project_id
+          id: res_group_id
   insert_permissions:
-    - role: project
-      permission:
-        check: {}
-        set:
-          project_id: x-hasura-project-id
-        columns:
-          - description
-          - id
-          - name
-          - order
-          - updated_at
-        backend_only: false
+  - role: project
+    permission:
+      check: {}
+      set:
+        project_id: x-hasura-project-id
+      columns:
+      - description
+      - id
+      - name
+      - order
+      - updated_at
+      backend_only: false
   select_permissions:
-    - role: backend
-      permission:
-        columns:
-          - id
-          - project_id
-          - name
-          - description
-          - order
-        filter: {}
-    - role: project
-      permission:
-        columns:
-          - id
-          - project_id
-          - name
-          - description
-          - order
-          - updated_at
-        filter:
-          project_id:
-            _eq: x-hasura-project-id
-        limit: 50
+  - role: backend
+    permission:
+      columns:
+      - id
+      - project_id
+      - name
+      - description
+      - order
+      filter: {}
+  - role: project
+    permission:
+      columns:
+      - id
+      - project_id
+      - name
+      - description
+      - order
+      - updated_at
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      limit: 50
   event_triggers:
-    - name: project_cache_by_res_groups
-      definition:
-        enable_manual: false
-        insert:
-          columns: "*"
-        delete:
-          columns: "*"
-        update:
-          columns:
-            - id
-            - order
-            - description
-            - name
-            - project_id
-      retry_conf:
-        num_retries: 0
-        interval_sec: 10
-        timeout_sec: 60
-      webhook_from_env: EVT_PROJECT_CACHE_UPDATE
+  - name: project_cache_by_res_groups
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      delete:
+        columns: '*'
+      update:
+        columns:
+        - id
+        - order
+        - description
+        - name
+        - project_id
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: EVT_PROJECT_CACHE_UPDATE
 - table:
     schema: public
     name: res_values
   array_relationships:
-    - name: entries
-      using:
-        foreign_key_constraint_on:
-          column: res_value_id
-          table:
-            schema: public
-            name: entries
+  - name: entries
+    using:
+      foreign_key_constraint_on:
+        column: res_value_id
+        table:
+          schema: public
+          name: entries
   insert_permissions:
-    - role: project
-      permission:
-        check: {}
-        set:
-          project_id: x-hasura-project-id
-        columns:
-          - description
-          - id
-          - name
-          - order
-          - res_group_id
-          - tags
-          - updated_at
-        backend_only: false
+  - role: project
+    permission:
+      check: {}
+      set:
+        project_id: x-hasura-project-id
+      columns:
+      - description
+      - id
+      - name
+      - order
+      - res_group_id
+      - tags
+      - updated_at
+      backend_only: false
   select_permissions:
-    - role: backend
-      permission:
-        columns:
-          - id
-          - project_id
-          - res_group_id
-          - name
-          - description
-          - tags
-          - order
-        filter: {}
-    - role: project
-      permission:
-        columns:
-          - id
-          - project_id
-          - res_group_id
-          - name
-          - description
-          - tags
-          - order
-          - updated_at
-        filter:
-          project_id:
-            _eq: x-hasura-project-id
-        limit: 500
+  - role: backend
+    permission:
+      columns:
+      - id
+      - project_id
+      - res_group_id
+      - name
+      - description
+      - tags
+      - order
+      filter: {}
+  - role: project
+    permission:
+      columns:
+      - id
+      - project_id
+      - res_group_id
+      - name
+      - description
+      - tags
+      - order
+      - updated_at
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      limit: 500
   event_triggers:
-    - name: project_cache_by_res_values
-      definition:
-        enable_manual: false
-        insert:
-          columns: "*"
-        delete:
-          columns: "*"
-        update:
-          columns:
-            - id
-            - order
-            - res_group_id
-            - tags
-            - description
-            - name
-            - project_id
-      retry_conf:
-        num_retries: 0
-        interval_sec: 10
-        timeout_sec: 60
-      webhook_from_env: EVT_PROJECT_CACHE_UPDATE
+  - name: project_cache_by_res_values
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      delete:
+        columns: '*'
+      update:
+        columns:
+        - id
+        - order
+        - res_group_id
+        - tags
+        - description
+        - name
+        - project_id
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook_from_env: EVT_PROJECT_CACHE_UPDATE
