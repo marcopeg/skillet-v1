@@ -25,6 +25,8 @@ import PropertiesView from "../views/PropertiesView";
 import PropertyDetailsView from "../views/PropertyDetailsView";
 import PropertyEditView from "../views/PropertyEditView";
 import ResourcesView from "../views/ResourcesView";
+import ResourceDetailsView from "../views/ResourceDetailsView";
+import ResourceEditView from "../views/ResourceEditView";
 import SettingsView from "../views/SettingsView";
 import PageNotFoundView from "../views/PageNotFoundView";
 
@@ -38,6 +40,16 @@ const MobileProject = ({ match }) => {
             exact
             path="/p/:projectId/dashboard"
             component={DashboardView}
+          />
+          <Route
+            exact
+            path={`/p/:projectId/resources/v/:resourceId/edit`}
+            component={ResourceEditView}
+          />
+          <Route
+            exact
+            path={`/p/:projectId/resources/v/:resourceId`}
+            component={ResourceDetailsView}
           />
           <Route
             exact
