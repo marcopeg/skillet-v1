@@ -19,13 +19,13 @@ import {
   IonAlert
 } from "@ionic/react";
 
-import usePropertyEditValue from "../state/properties/use-property-edit-value";
+import useResourceEditValue from "../state/resources/use-resource-edit-value";
 
-const PropertyEditView = () => {
-  const editValue = usePropertyEditValue();
+const ResourceEditView = () => {
+  const editValue = useResourceEditValue();
   const {
     projectId,
-    propertyId,
+    resourceId,
     isDataLoading,
     isFormDisabled,
     isConfirmOpen,
@@ -54,9 +54,7 @@ const PropertyEditView = () => {
             )}
           </IonTitle>
           <IonButtons slot="end">
-            <IonButton
-              routerLink={`/p/${projectId}/properties/v/${propertyId}`}
-            >
+            <IonButton routerLink={`/p/${projectId}/resources/v/${resourceId}`}>
               Close
             </IonButton>
           </IonButtons>
@@ -113,7 +111,7 @@ const PropertyEditView = () => {
           onDidDismiss={closeConfirm}
           header={"👉 Please think twice"}
           subHeader={"This action can NOT be undone!"}
-          message={`Type the property name to confirm you understand what you are doing:`}
+          message={`Type the resource name to confirm you understand what you are doing:`}
           buttons={[
             {
               text: "Cancel",
@@ -139,4 +137,4 @@ const PropertyEditView = () => {
   );
 };
 
-export default PropertyEditView;
+export default ResourceEditView;

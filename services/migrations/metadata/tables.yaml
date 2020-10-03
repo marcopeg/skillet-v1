@@ -450,6 +450,10 @@
 - table:
     schema: public
     name: res_values
+  object_relationships:
+  - name: res_group
+    using:
+      foreign_key_constraint_on: res_group_id
   array_relationships:
   - name: entries
     using:
@@ -500,6 +504,26 @@
         project_id:
           _eq: x-hasura-project-id
       limit: 500
+  update_permissions:
+  - role: project
+    permission:
+      columns:
+      - description
+      - name
+      - order
+      - tags
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      check:
+        project_id:
+          _eq: x-hasura-project-id
+  delete_permissions:
+  - role: project
+    permission:
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
   event_triggers:
   - name: project_cache_by_res_values
     definition:

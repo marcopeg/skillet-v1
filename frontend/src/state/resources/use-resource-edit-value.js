@@ -4,14 +4,14 @@ import React, { useState, useEffect } from "react"; // eslint-disable-line
 import { gql, useMutation } from "@apollo/client";
 import { useParams, useHistory } from "react-router-dom";
 
-import { LOAD_PROPERTIES_LIST } from "./use-properties-list";
-import usePropertyDetails, {
-  LOAD_PROPERTY_DETAILS
-} from "./use-property-details";
+import { LOAD_RESOURCES_LIST } from "./use-resources-list";
+import useResourceDetails, {
+  LOAD_RESOURCE_DETAILS
+} from "./use-resource-details";
 
 const UPDATE_VALUE = gql`
-  mutation updatePropValue($id: Int!, $name: String!, $description: String) {
-    update_prop_values_by_pk(
+  mutation updateResValue($id: Int!, $name: String!, $description: String) {
+    update_res_values_by_pk(
       pk_columns: { id: $id }
       _set: { name: $name, description: $description }
     ) {
@@ -23,8 +23,8 @@ const UPDATE_VALUE = gql`
 `;
 
 const DELETE_VALUE = gql`
-  mutation deletePropValue($id: Int!) {
-    delete_prop_values_by_pk(id: $id) {
+  mutation deleteResValue($id: Int!) {
+    delete_res_values_by_pk(id: $id) {
       id
     }
   }
@@ -35,22 +35,22 @@ const defaultValues = {
   description: ""
 };
 
-const usePropertyEditValue = () => {
+const useResourceEditValue = () => {
   const history = useHistory();
-  const { propertyId, projectId } = useParams();
+  const { resourceId, projectId } = useParams();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [values, setValues] = useState({ ...defaultValues });
 
-  const { data, isDataLoading } = usePropertyDetails();
+  const { data, isDataLoading } = useResourceDetails();
 
   const [updateValue] = useMutation(UPDATE_VALUE, {
     refetchQueries: [
       {
-        query: LOAD_PROPERTIES_LIST
+        query: LOAD_RESOURCES_LIST
       },
       {
-        query: LOAD_PROPERTY_DETAILS,
-        variables: { id: propertyId }
+        query: LOAD_RESOURCE_DETAILS,
+        variables: { id: resourceId }
       }
     ]
   });
@@ -58,7 +58,7 @@ const usePropertyEditValue = () => {
   const [deleteValue] = useMutation(DELETE_VALUE, {
     refetchQueries: [
       {
-        query: LOAD_PROPERTIES_LIST
+        query: LOAD_RESOURCES_LIST
       }
     ]
   });
@@ -81,7 +81,7 @@ const usePropertyEditValue = () => {
     });
 
   const submitForm = () => {
-    updateValue({ variables: { ...values, id: propertyId } }).catch((err) => {
+    updateValue({ variables: { ...values, id: resourceId } }).catch((err) => {
       console.error(err);
     });
   };
@@ -91,7 +91,7 @@ const usePropertyEditValue = () => {
       alert("Wrong name");
       return;
     }
-    deleteValue({ variables: { id: propertyId } })
+    deleteValue({ variables: { id: resourceId } })
       .then(() => {
         closeConfirm();
         history.push(`/p/${projectId}/resources`);
@@ -116,7 +116,7 @@ const usePropertyEditValue = () => {
     isFormDisabled: values.name.length < 3,
     isFormLoading: false,
     projectId,
-    propertyId,
+    resourceId,
     data,
     values,
     setValue,
@@ -128,4 +128,4 @@ const usePropertyEditValue = () => {
   };
 };
 
-export default usePropertyEditValue;
+export default useResourceEditValue;
