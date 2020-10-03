@@ -74,7 +74,8 @@ const DesktopLayout = ({ match }) => {
                       <IonLabel>Data Visualization</IonLabel>
                     </IonItemDivider>
                     <IonItem
-                      routerLink={`/p/${projectId}/dashboard`}
+                      routerLink={`${match.url}/dashboard`}
+                      routerDirection={"root"}
                       lines="none"
                       detail={false}
                     >
@@ -87,7 +88,8 @@ const DesktopLayout = ({ match }) => {
                       <IonLabel>Edit Skill Matrix Structure</IonLabel>
                     </IonItemDivider>
                     <IonItem
-                      routerLink={`/p/${projectId}/resources`}
+                      routerLink={`${match.url}/resources`}
+                      routerDirection={"root"}
                       lines="none"
                       detail={false}
                     >
@@ -95,7 +97,8 @@ const DesktopLayout = ({ match }) => {
                       <IonLabel>Resources</IonLabel>
                     </IonItem>
                     <IonItem
-                      routerLink={`/p/${projectId}/properties`}
+                      routerLink={`${match.url}/properties`}
+                      routerDirection={"root"}
                       lines="none"
                       detail={false}
                     >
@@ -103,7 +106,8 @@ const DesktopLayout = ({ match }) => {
                       <IonLabel>Properties</IonLabel>
                     </IonItem>
                     <IonItem
-                      routerLink={`/p/${projectId}/settings`}
+                      routerLink={`${match.url}/settings`}
+                      routerDirection={"root"}
                       lines="none"
                       detail={false}
                     >
@@ -121,38 +125,38 @@ const DesktopLayout = ({ match }) => {
           <IonRouterOutlet id="desktop-project">
             <Route
               exact
-              path="/p/:projectId/dashboard"
+              path={`/p/:projectId/dashboard`}
               component={DashboardView}
             />
             <Route
               exact
-              path="/p/:projectId/resources"
+              path={`/p/:projectId/resources`}
               component={ResourcesView}
             />
             <Route
               exact
-              path="/p/:projectId/properties/v/:propertyId/edit"
+              path={`/p/:projectId/properties/v/:propertyId/edit`}
               component={PropertyEditView}
             />
             <Route
               exact
-              path="/p/:projectId/properties/v/:propertyId"
+              path={`/p/:projectId/properties/v/:propertyId`}
               component={PropertyDetailsView}
             />
             <Route
               exact
-              path="/p/:projectId/properties"
+              path={`/p/:projectId/properties`}
               component={PropertiesView}
             />
             <Route
               exact
-              path="/p/:projectId/settings"
+              path={`/p/:projectId/settings`}
               component={SettingsView}
             />
             <Route
               exact
-              path="/p/:projectId"
-              render={() => <Redirect to={`/p/${projectId}/dashboard`} />}
+              path={`${match.url}`}
+              render={() => <Redirect to={`${match.url}/dashboard`} />}
             />
             <Route path="" component={PageNotFoundView} />
           </IonRouterOutlet>
