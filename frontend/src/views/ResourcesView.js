@@ -18,7 +18,8 @@ import {
   IonTextarea,
   IonRefresher,
   IonRefresherContent,
-  IonSpinner
+  IonSpinner,
+  IonText
 } from "@ionic/react";
 
 import { add } from "ionicons/icons";
@@ -39,6 +40,15 @@ const WelcomeMsg = ({ createGroup }) => (
   </>
 );
 
+const GroupWelcomeMsg = ({ createResource }) => (
+  <IonItem lines="none" type="button" onClick={createResource}>
+    <IonLabel style={{ cursor: "pointer" }}>
+      This group is empty, please <IonText color="primary">click here</IonText>{" "}
+      to add new resources to it.
+    </IonLabel>
+  </IonItem>
+);
+
 const GroupsList = ({ groups, baseUrl, createResource }) => (
   <IonList lines="full">
     {groups.map((group, idx) => {
@@ -50,27 +60,32 @@ const GroupsList = ({ groups, baseUrl, createResource }) => (
             </IonToolbar>
           </IonListHeader>
 
-          {group.values.map((value) => {
-            return (
-              <IonItem
-                key={`gr-${group.id}-${value.id}`}
-                routerLink={`${baseUrl}/v/${value.id}`}
+          {group.values.length ? (
+            <>
+              {group.values.map((value) => {
+                return (
+                  <IonItem
+                    key={`gr-${group.id}-${value.id}`}
+                    routerLink={`${baseUrl}/v/${value.id}`}
+                  >
+                    <IonLabel>{value.name}</IonLabel>
+                  </IonItem>
+                );
+              })}
+              <IonButton
+                expand="full"
+                fill="clear"
+                size="small"
+                className="ion-margin"
+                onClick={() => createResource(group.id)}
               >
-                <IonLabel>{value.name}</IonLabel>
-              </IonItem>
-            );
-          })}
-
-          <IonButton
-            expand="full"
-            fill="clear"
-            size="small"
-            className="ion-margin"
-            onClick={() => createResource(group.id)}
-          >
-            <IonIcon icon={add} />
-            Add new resource
-          </IonButton>
+                <IonIcon icon={add} />
+                Add new resource
+              </IonButton>
+            </>
+          ) : (
+            <GroupWelcomeMsg createResource={() => createResource(group.id)} />
+          )}
         </React.Fragment>
       );
     })}
