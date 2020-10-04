@@ -1,6 +1,13 @@
 - table:
     schema: public
     name: entries
+  object_relationships:
+  - name: prop_value
+    using:
+      foreign_key_constraint_on: prop_value_id
+  - name: res_value
+    using:
+      foreign_key_constraint_on: res_value_id
   insert_permissions:
   - role: project
     permission:
@@ -148,7 +155,7 @@
       filter:
         id:
           _eq: x-hasura-project-id
-      limit: 0
+      limit: 1
   event_triggers:
   - name: project_cache_by_projects
     definition:
