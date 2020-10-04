@@ -17,7 +17,8 @@ import {
   IonInput,
   IonTextarea,
   IonRefresher,
-  IonRefresherContent
+  IonRefresherContent,
+  IonSpinner
 } from "@ionic/react";
 
 import { add } from "ionicons/icons";
@@ -25,12 +26,81 @@ import usePropertiesList from "../state/properties/use-properties-list";
 import usePropertiesCreateGroup from "../state/properties/use-properties-create-group";
 import usePropertiesCreateValue from "../state/properties/use-properties-create-value";
 
+const WelcomeMsg = ({ createGroup }) => (
+  <>
+    <h4>What is a Property?</h4>
+    <p>
+      A <b>property</b> is something you want to track, such as{" "}
+      <i>weight lifting</i> or <i>guitar playing</i>.
+    </p>
+    <p>
+      Skillet organizes properties into <b>groups</b> for simpler organization
+      and data visualization. <br />
+      Create your first group using the button below, then add properties to it.
+    </p>
+    <IonButton expand="full" size="small" onClick={createGroup}>
+      <IonIcon icon={add} /> Create the first group
+    </IonButton>
+  </>
+);
+
+const GroupsList = ({ groups, baseUrl, createProperty }) => (
+  <IonList lines="full">
+    {groups.map((group, idx) => {
+      return (
+        <React.Fragment key={`gr-${group.id}`}>
+          <IonListHeader className={idx > 0 ? "ion-padding-top" : null}>
+            <IonToolbar>
+              <h3>{group.name}</h3>
+            </IonToolbar>
+          </IonListHeader>
+
+          {group.values.map((value) => {
+            return (
+              <IonItem
+                key={`gr-${group.id}-${value.id}`}
+                routerLink={`${baseUrl}/v/${value.id}`}
+              >
+                <IonLabel>{value.name}</IonLabel>
+              </IonItem>
+            );
+          })}
+
+          <IonButton
+            expand="full"
+            fill="clear"
+            size="small"
+            className="ion-margin"
+            onClick={() => createProperty(group.id)}
+          >
+            <IonIcon icon={add} />
+            Add new property
+          </IonButton>
+        </React.Fragment>
+      );
+    })}
+  </IonList>
+);
+
 const PropertiesView = ({ match }) => {
-  const { groups, refresh } = usePropertiesList();
+  const { isLoading, groups, refresh } = usePropertiesList();
   const createGroup = usePropertiesCreateGroup();
   const createValue = usePropertiesCreateValue();
 
-  const showList = groups && groups.length;
+  const usePadding = isLoading || !groups || !groups.length;
+  const content = (() => {
+    if (groups && groups.length) {
+      return (
+        <GroupsList
+          groups={groups}
+          baseUrl={match.url}
+          createProperty={createValue.openModal}
+        />
+      );
+    }
+
+    return <WelcomeMsg createGroup={createGroup.openModal} />;
+  })();
 
   return (
     <IonPage>
@@ -45,76 +115,14 @@ const PropertiesView = ({ match }) => {
           <IonTitle>{"Properties"}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className={showList ? null : "ion-padding"}>
-        <IonRefresher slot="fixed" onIonRefresh={refresh}>
-          <IonRefresherContent></IonRefresherContent>
-        </IonRefresher>
-
-        {showList ? (
-          <IonList lines="full">
-            {groups.map((group, idx) => {
-              return (
-                <React.Fragment key={`gr-${group.id}`}>
-                  <IonListHeader className={idx > 0 ? "ion-padding-top" : null}>
-                    <IonToolbar>
-                      <h3>{group.name}</h3>
-                      {/* <IonButtons slot="end">
-                        <IonButton
-                          onClick={() => createValue.openModal(group.id)}
-                        >
-                          <IonIcon icon={add}></IonIcon>
-                        </IonButton>
-                      </IonButtons> */}
-                    </IonToolbar>
-                  </IonListHeader>
-
-                  {group.values.map((value) => {
-                    return (
-                      <IonItem
-                        key={`gr-${group.id}-${value.id}`}
-                        routerLink={`${match.url}/v/${value.id}`}
-                      >
-                        <IonLabel>{value.name}</IonLabel>
-                      </IonItem>
-                    );
-                  })}
-
-                  <IonButton
-                    expand="full"
-                    fill="clear"
-                    size="small"
-                    className="ion-margin"
-                    onClick={() => createValue.openModal(group.id)}
-                  >
-                    <IonIcon icon={add} />
-                    Add new property
-                  </IonButton>
-                </React.Fragment>
-              );
-            })}
-          </IonList>
-        ) : (
-          <>
-            <h4>What is a Property?</h4>
-            <p>
-              A <b>property</b> is something you want to track, such as{" "}
-              <i>weight lifting</i> or <i>guitar playing</i>.
-            </p>
-            <p>
-              Skillet organizes properties into <b>groups</b> for simpler
-              organization and data visualization. <br />
-              Create your first group using the button below, then add
-              properties to it.
-            </p>
-            <IonButton
-              expand="full"
-              size="small"
-              onClick={createGroup.openModal}
-            >
-              <IonIcon icon={add} /> Create the first group
-            </IonButton>
-          </>
+      <IonContent className={usePadding ? "ion-padding" : null}>
+        {isLoading ? null : (
+          <IonRefresher slot="fixed" onIonRefresh={refresh}>
+            <IonRefresherContent></IonRefresherContent>
+          </IonRefresher>
         )}
+
+        {isLoading ? <IonSpinner name="dots" /> : content}
 
         {/**
          * Create Group Modal
