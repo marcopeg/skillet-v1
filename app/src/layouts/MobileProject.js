@@ -83,8 +83,9 @@ const MobileProject = ({ match }) => {
           <IonTabButton
             key={"dashboard"}
             tab={"dashboard"}
-            href={`/p/${projectId}/dashboard`}
             layout="label-hide"
+            href={`/p/${projectId}/dashboard`}
+            routerDirection="root"
           >
             <IonIcon icon={appsOutline} />
             <IonLabel>dashboard</IonLabel>
@@ -92,8 +93,9 @@ const MobileProject = ({ match }) => {
           <IonTabButton
             key={"resources"}
             tab={"resources"}
-            href={`/p/${projectId}/resources`}
             layout="label-hide"
+            href={`/p/${projectId}/resources`}
+            routerDirection="root"
           >
             <IonIcon icon={personCircleOutline} />
             <IonLabel>resources</IonLabel>
@@ -101,8 +103,9 @@ const MobileProject = ({ match }) => {
           <IonTabButton
             key={"properties"}
             tab={"properties"}
-            href={`/p/${projectId}/properties`}
             layout="label-hide"
+            href={`/p/${projectId}/properties`}
+            routerDirection="root"
           >
             <IonIcon icon={fingerPrintOutline} />
             <IonLabel>properties</IonLabel>
@@ -110,8 +113,9 @@ const MobileProject = ({ match }) => {
           <IonTabButton
             key={"settings"}
             tab={"settings"}
-            href={`/p/${projectId}/settings`}
             layout="label-hide"
+            href={`/p/${projectId}/settings`}
+            routerDirection="root"
           >
             <IonIcon icon={settingsOutline} />
             <IonLabel>settings</IonLabel>
