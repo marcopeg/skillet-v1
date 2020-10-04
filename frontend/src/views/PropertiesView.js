@@ -18,7 +18,8 @@ import {
   IonTextarea,
   IonRefresher,
   IonRefresherContent,
-  IonSpinner
+  IonSpinner,
+  IonText
 } from "@ionic/react";
 
 import { add } from "ionicons/icons";
@@ -44,6 +45,15 @@ const WelcomeMsg = ({ createGroup }) => (
   </>
 );
 
+const GroupWelcomeMsg = ({ createProperty }) => (
+  <IonItem lines="none" type="button" onClick={createProperty}>
+    <IonLabel style={{ cursor: "pointer" }}>
+      This group is empty, please <IonText color="primary">click here</IonText>{" "}
+      to add new property to it.
+    </IonLabel>
+  </IonItem>
+);
+
 const GroupsList = ({ groups, baseUrl, createProperty }) => (
   <IonList lines="full">
     {groups.map((group, idx) => {
@@ -55,27 +65,33 @@ const GroupsList = ({ groups, baseUrl, createProperty }) => (
             </IonToolbar>
           </IonListHeader>
 
-          {group.values.map((value) => {
-            return (
-              <IonItem
-                key={`gr-${group.id}-${value.id}`}
-                routerLink={`${baseUrl}/v/${value.id}`}
-              >
-                <IonLabel>{value.name}</IonLabel>
-              </IonItem>
-            );
-          })}
+          {group.values.length ? (
+            <>
+              {group.values.map((value) => {
+                return (
+                  <IonItem
+                    key={`gr-${group.id}-${value.id}`}
+                    routerLink={`${baseUrl}/v/${value.id}`}
+                  >
+                    <IonLabel>{value.name}</IonLabel>
+                  </IonItem>
+                );
+              })}
 
-          <IonButton
-            expand="full"
-            fill="clear"
-            size="small"
-            className="ion-margin"
-            onClick={() => createProperty(group.id)}
-          >
-            <IonIcon icon={add} />
-            Add new property
-          </IonButton>
+              <IonButton
+                expand="full"
+                fill="clear"
+                size="small"
+                className="ion-margin"
+                onClick={() => createProperty(group.id)}
+              >
+                <IonIcon icon={add} />
+                Add new property
+              </IonButton>
+            </>
+          ) : (
+            <GroupWelcomeMsg createProperty={() => createProperty(group.id)} />
+          )}
         </React.Fragment>
       );
     })}
