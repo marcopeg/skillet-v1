@@ -18,7 +18,7 @@ tasks:
   # it is used to perform triggered based transformations on the todos
   # after they are created.
   - name: Backend
-    before: cd services/backend
+    before: cd backend
     init: npm install
     command: HELLO=world
       PORT=4000
@@ -31,7 +31,7 @@ tasks:
   # ================
   # it runs the CreateReactApp setup that consumes Hasura Engine's API.
   - name: Frontend
-    before: cd frontend
+    before: cd app
     init: npm install
     command: HELLO=world
       REACT_APP_HASURA_URL=$(gp url 8080)/v1/graphql

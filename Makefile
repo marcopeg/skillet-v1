@@ -8,7 +8,7 @@ start-hasura:
 	docker-compose logs -f hasura
 
 start-app:
-	(cd frontend && npm i && npm start)
+	(cd app && npm i && npm start)
 
 start-console:
 	(cd services/migrations && hasura console)

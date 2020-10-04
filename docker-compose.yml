@@ -9,11 +9,11 @@ services:
     ports:
       - "${BACKEND_PORT:-4000}:4000"
     volumes:
-      - ./docker-data/backend/node_modules:/usr/src/app/node_modules:cached
-      - ./services/backend/package.json:/usr/src/app/package.json:delegated
-      - ./services/backend/package-lock.json:/usr/src/app/package-lock.json:delegated
-      - ./services/backend/index.js:/usr/src/app/index.js:delegated
-      - ./services/backend/features:/usr/src/app/features:delegated
+      - ./.docker-data/backend/node_modules:/usr/src/app/node_modules:cached
+      - ./backend/package.json:/usr/src/app/package.json:delegated
+      - ./backend/package-lock.json:/usr/src/app/package-lock.json:delegated
+      - ./backend/index.js:/usr/src/app/index.js:delegated
+      - ./backend/features:/usr/src/app/features:delegated
     environment:
       PORT: 4000
       HASURA_ENDPOINT: http://hasura:8080
@@ -26,16 +26,16 @@ services:
       timeout: 5s
       retries: 20
 
-  frontend:
+  app:
     image: node:12.2
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
     volumes:
-      - ./docker-data/frontend/node_modules:/usr/src/app/node_modules:cached
-      - ./frontend/package.json:/usr/src/app/package.json:delegated
-      - ./frontend/package-lock.json:/usr/src/app/package-lock.json:delegated
-      - ./frontend/public:/usr/src/app/public:delegated
-      - ./frontend/src:/usr/src/app/src:delegated
+      - ./.docker-data/app/node_modules:/usr/src/app/node_modules:cached
+      - ./app/package.json:/usr/src/app/package.json:delegated
+      - ./app/package-lock.json:/usr/src/app/package-lock.json:delegated
+      - ./app/public:/usr/src/app/public:delegated
+      - ./app/src:/usr/src/app/src:delegated
     environment:
       REACT_APP_HASURA_URL: http://localhost:8080/v1/graphql
       CHOKIDAR_USEPOLLING: "true"
@@ -85,7 +85,7 @@ services:
       - "${HASURA_PORT:-8080}:8080"
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@postgres:5432/postgres
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_ADMIN_SECRET:-skillet}"
       HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256", "key": "${HASURA_JWT_SECRET:-h2leOvdgjwpV0As5L8rZlV3VDVOsOmwk}"}'
@@ -116,7 +116,7 @@ services:
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
-      - ./docker-data/pg:/var/lib/postgresql/data
+      - ./.docker-data/pg:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     healthcheck:

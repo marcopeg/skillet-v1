@@ -4,9 +4,9 @@ services:
   ### APPLICATION
   ###
 
-  frontend:
+  app:
     build:
-      context: ./frontend
+      context: ./app
       args:
         REACT_APP_HASURA_URL: http://localhost:9877/v1/graphql
     ports:
