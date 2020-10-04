@@ -16,9 +16,55 @@ import {
 import useAuth from "../../hooks/use-auth";
 import { formatProjectData } from "./format-project-data";
 
+/*
+Gets only part of a Skill Matrix isolating data by listing the visible groups.
+
+Good article about EXPLAIN/ANALYZE
+http://www.louisemeta.com/blog/explain-2/
+
+QUERY:
+query MyQuery($propGroups: [Int!], $resGroups: [Int!]) {
+  projects {
+    id
+    title
+    description
+  }
+  propGroups: prop_groups(where: {id: {_in: $propGroups}}, order_by: {order: desc, id: asc}) {
+    id
+    name
+  }
+  propValues: prop_values(order_by: {order: desc, id: asc}, where: {prop_group: {id: {_in: $propGroups}}}) {
+    id
+    name
+    groupId: prop_group_id
+  }
+  resGroups: res_groups(order_by: {order: desc, id: asc}, where: {id: {_in: $resGroups}}) {
+    id
+    name
+  }
+  resValues: res_values(order_by: {order: desc, id: asc}, where: {res_group: {id: {_in: $resGroups}}}) {
+    id
+    name
+    groupId: res_group_id
+  }
+  entries(where: {_and: {prop_value: {prop_group: {id: {_in: $propGroups}}}, res_value: {res_group: {id: {_in: $resGroups}}}}}) {
+    propId: prop_value_id
+    resId: res_value_id
+    value
+    updatedAt: updated_at
+  }
+}
+
+VARIABLES:
+{
+  "propGroups": [21],
+  "resGroups":[6, 7]
+}
+*/
+
 export const GET_PROJECT_BY_ID = gql`
-  query getProjectById($projectId: String!) {
-    project: projects_by_pk(id: $projectId) {
+  query getProjectById {
+    projects {
       id
       title
       description
@@ -74,7 +120,6 @@ export const ProjectProvider = ({ projectId, children }) => {
   const [loadProject, { data, loading, refetch }] = useLazyQuery(
     GET_PROJECT_BY_ID,
     {
-      variables: { projectId },
       fetchPolicy: "network-only"
     }
   );
@@ -105,7 +150,6 @@ export const ProjectProvider = ({ projectId, children }) => {
     createProjectToken()
       .then((res) => {
         setToken(res.data.project.accessToken);
-        // return refetch();
         return loadProject();
       })
       .catch((err) => {

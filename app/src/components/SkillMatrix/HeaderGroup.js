@@ -1,12 +1,14 @@
 import React from "react";
+import ScoreProgressBar from "./ScoreProgressBar";
 
-const HeaderGroup = ({ group }) => {
+const HeaderGroup = ({ propGroup }) => {
   const style = {
-    width: 30 * group.values.length
+    width: 30 * propGroup.values.length
   };
   return (
-    <td colSpan={group.values.length} className="skm-header-group">
-      <span style={style}>{group.name}</span>
+    <td colSpan={propGroup.values.length} className="skm-header-group">
+      <span style={style}>{propGroup.name}</span>
+      <ScoreProgressBar value={propGroup.stats.score} color="medium" />
     </td>
   );
 };

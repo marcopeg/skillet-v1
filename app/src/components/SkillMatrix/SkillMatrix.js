@@ -6,7 +6,7 @@ import Body from "./Body";
 
 const SkillMatrix = ({ data, onUpdate }) => {
   const style = {
-    width: 130 + data.propValues.length * 31
+    width: 130 + data.prop.values.length * 31
   };
 
   return (

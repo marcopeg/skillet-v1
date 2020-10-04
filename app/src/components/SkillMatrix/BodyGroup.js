@@ -1,32 +1,22 @@
 import React from "react";
 import BodyResource from "./BodyResource";
+import ScoreProgressBar from "./ScoreProgressBar";
 
-// const perc = (val) => `${Math.round(val * 100)}%`;
-
-const BodyGroup = ({ data, group, onUpdate }) => {
-  // const { efficiency } = group;
-
+const BodyGroup = ({ data, resGroup, onUpdate }) => {
   return (
     <>
       <tr>
-        <td className="skm-body-group" colSpan={data.propValues.length + 1}>
-          <span>{group.name}</span>
-          {/* <span>
-            <small>
-              rated: {perc(efficiency.real)}
-              {"; "}
-            </small>
-            <small>full: {perc(efficiency.theoric)}</small>
-            {"; "}
-            <small>filled: {perc(efficiency.fill)}</small>
-          </span> */}
+        <td className="skm-body-group" colSpan={data.prop.values.length + 1}>
+          <span>{resGroup.name}</span>
+          <ScoreProgressBar value={resGroup.stats.score} color="medium" />
         </td>
       </tr>
-      {group.resources.map(($resource) => (
+      {resGroup.values.map((resValue) => (
         <BodyResource
-          key={`skm-body-resource-${$resource.id}`}
+          key={`skm-body-resValue-${resValue.id}`}
           data={data}
-          resource={$resource}
+          resGroup={resGroup}
+          resValue={resValue}
           onUpdate={onUpdate}
         />
       ))}

@@ -4,11 +4,11 @@ import BodyGroup from "./BodyGroup";
 const Body = ({ data, onUpdate }) => {
   return (
     <tbody>
-      {data.resGroups.map(($group) => (
+      {data.res.groups.map(($resGroup) => (
         <BodyGroup
-          key={`skm-body-group-${$group.id}`}
+          key={`skm-body-group-${$resGroup.id}`}
           data={data}
-          group={$group}
+          resGroup={$resGroup}
           onUpdate={onUpdate}
         />
       ))}

@@ -1,0 +1,1145 @@
+{
+  "test1": {
+    "projects": [
+      {
+        "__typename": "projects",
+        "id": "RteQiO",
+        "title": "Test1",
+        "description": ""
+      }
+    ],
+    "propGroups": [
+      {
+        "__typename": "prop_groups",
+        "id": 23,
+        "name": "Skillset1"
+      }
+    ],
+    "propValues": [
+      {
+        "__typename": "prop_values",
+        "id": 31,
+        "name": "Skill1",
+        "groupId": 23
+      },
+      {
+        "__typename": "prop_values",
+        "id": 32,
+        "name": "Skill2",
+        "groupId": 23
+      },
+      {
+        "__typename": "prop_values",
+        "id": 58,
+        "name": "Skill3",
+        "groupId": 23
+      }
+    ],
+    "resGroups": [
+      {
+        "__typename": "res_groups",
+        "id": 12,
+        "name": "Team1"
+      }
+    ],
+    "resValues": [
+      {
+        "__typename": "res_values",
+        "id": 33,
+        "name": "Dev1",
+        "groupId": 12
+      },
+      {
+        "__typename": "res_values",
+        "id": 34,
+        "name": "Dev2",
+        "groupId": 12
+      },
+      {
+        "__typename": "res_values",
+        "id": 53,
+        "name": "Dev3",
+        "groupId": 12
+      },
+      {
+        "__typename": "res_values",
+        "id": 54,
+        "name": "Dev4",
+        "groupId": 12
+      },
+      {
+        "__typename": "res_values",
+        "id": 55,
+        "name": "Dev5",
+        "groupId": 12
+      }
+    ],
+    "entries": [
+      {
+        "__typename": "entries",
+        "propId": 58,
+        "resId": 33,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:10:21.412935+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 31,
+        "resId": 33,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:13:44.086815+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 32,
+        "resId": 33,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:13:46.886308+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 32,
+        "resId": 54,
+        "value": 0,
+        "updatedAt": "2020-10-04T07:19:36.711336+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 31,
+        "resId": 54,
+        "value": 0,
+        "updatedAt": "2020-10-04T07:18:14.693368+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 31,
+        "resId": 53,
+        "value": 20,
+        "updatedAt": "2020-10-04T07:24:28.600759+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 58,
+        "resId": 53,
+        "value": 20,
+        "updatedAt": "2020-10-04T07:24:25.011585+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 58,
+        "resId": 54,
+        "value": 0,
+        "updatedAt": "2020-10-04T07:19:39.181554+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 58,
+        "resId": 34,
+        "value": 60,
+        "updatedAt": "2020-10-04T07:24:17.322946+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 31,
+        "resId": 34,
+        "value": 60,
+        "updatedAt": "2020-10-04T07:24:11.641295+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 32,
+        "resId": 34,
+        "value": 60,
+        "updatedAt": "2020-10-04T07:24:14.218119+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 32,
+        "resId": 53,
+        "value": 20,
+        "updatedAt": "2020-10-04T07:24:21.687988+00:00"
+      }
+    ]
+  },
+  "test2": {
+    "projects": [
+      {
+        "__typename": "projects",
+        "id": "kVQqUX",
+        "title": "Reviso Tech Stack",
+        "description": "tracks pure tech stack skills"
+      }
+    ],
+    "propGroups": [
+      { "__typename": "prop_groups", "id": 1, "name": "Javascript" },
+      { "__typename": "prop_groups", "id": 3, "name": "PostgreSQL" },
+      { "__typename": "prop_groups", "id": 18, "name": ".NET Core" },
+      { "__typename": "prop_groups", "id": 19, "name": "AWS" },
+      { "__typename": "prop_groups", "id": 21, "name": "Azure" }
+    ],
+    "propValues": [
+      {
+        "__typename": "prop_values",
+        "id": 3,
+        "name": "asynchroicity1",
+        "groupId": 1
+      },
+      {
+        "__typename": "prop_values",
+        "id": 4,
+        "name": "Array API",
+        "groupId": 1
+      },
+      { "__typename": "prop_values", "id": 5, "name": "CRUD", "groupId": 3 },
+      {
+        "__typename": "prop_values",
+        "id": 11,
+        "name": "Indexes",
+        "groupId": 3
+      },
+      {
+        "__typename": "prop_values",
+        "id": 13,
+        "name": "Cursors",
+        "groupId": 3
+      },
+      {
+        "__typename": "prop_values",
+        "id": 15,
+        "name": "Triggers",
+        "groupId": 3
+      },
+      {
+        "__typename": "prop_values",
+        "id": 16,
+        "name": "comparison ope",
+        "groupId": 1
+      },
+      {
+        "__typename": "prop_values",
+        "id": 20,
+        "name": "Basics",
+        "groupId": 18
+      },
+      { "__typename": "prop_values", "id": 21, "name": "EC2", "groupId": 19 },
+      { "__typename": "prop_values", "id": 22, "name": "S3", "groupId": 19 },
+      {
+        "__typename": "prop_values",
+        "id": 23,
+        "name": "Lambda Functions",
+        "groupId": 19
+      },
+      {
+        "__typename": "prop_values",
+        "id": 24,
+        "name": "Dockerize for Production",
+        "groupId": 18
+      },
+      {
+        "__typename": "prop_values",
+        "id": 25,
+        "name": "Azure Functions",
+        "groupId": 21
+      },
+      {
+        "__typename": "prop_values",
+        "id": 26,
+        "name": "Billing",
+        "groupId": 21
+      },
+      {
+        "__typename": "prop_values",
+        "id": 29,
+        "name": "Deploy pipeline",
+        "groupId": 21
+      },
+      { "__typename": "prop_values", "id": 57, "name": "fewfer", "groupId": 1 }
+    ],
+    "resGroups": [
+      { "__typename": "res_groups", "id": 1, "name": "Special Projects" },
+      { "__typename": "res_groups", "id": 2, "name": "ERP Wizards" },
+      { "__typename": "res_groups", "id": 4, "name": "Customer's Feelings" },
+      { "__typename": "res_groups", "id": 6, "name": "New Accounting" },
+      { "__typename": "res_groups", "id": 7, "name": "Management" }
+    ],
+    "resValues": [
+      {
+        "__typename": "res_values",
+        "id": 1,
+        "name": "Janis Ozlin",
+        "groupId": 1
+      },
+      { "__typename": "res_values", "id": 2, "name": "Boris", "groupId": 1 },
+      {
+        "__typename": "res_values",
+        "id": 3,
+        "name": "Francesco Sciuto",
+        "groupId": 2
+      },
+      {
+        "__typename": "res_values",
+        "id": 4,
+        "name": "Laura La Manna",
+        "groupId": 2
+      },
+      {
+        "__typename": "res_values",
+        "id": 7,
+        "name": "Janis Indrans",
+        "groupId": 4
+      },
+      { "__typename": "res_values", "id": 10, "name": "Matus", "groupId": 4 },
+      { "__typename": "res_values", "id": 11, "name": "Laszlo", "groupId": 4 },
+      { "__typename": "res_values", "id": 12, "name": "Pawan", "groupId": 2 },
+      {
+        "__typename": "res_values",
+        "id": 13,
+        "name": "Emanuele Rabino",
+        "groupId": 6
+      },
+      {
+        "__typename": "res_values",
+        "id": 14,
+        "name": "Paolo Galli",
+        "groupId": 6
+      },
+      { "__typename": "res_values", "id": 15, "name": "Donika", "groupId": 7 },
+      {
+        "__typename": "res_values",
+        "id": 16,
+        "name": "Marcello",
+        "groupId": 7
+      },
+      { "__typename": "res_values", "id": 17, "name": "Alfio", "groupId": 7 },
+      {
+        "__typename": "res_values",
+        "id": 22,
+        "name": "Stefania Grillo",
+        "groupId": 1
+      },
+      { "__typename": "res_values", "id": 23, "name": "Khalaf1", "groupId": 1 },
+      { "__typename": "res_values", "id": 24, "name": "Mette", "groupId": 1 },
+      { "__typename": "res_values", "id": 25, "name": "Rafal", "groupId": 1 },
+      { "__typename": "res_values", "id": 26, "name": "Preben", "groupId": 1 },
+      {
+        "__typename": "res_values",
+        "id": 27,
+        "name": "Alessio Amato",
+        "groupId": 2
+      },
+      {
+        "__typename": "res_values",
+        "id": 28,
+        "name": "Salvatore Calla",
+        "groupId": 2
+      },
+      { "__typename": "res_values", "id": 29, "name": "Ehab", "groupId": 4 },
+      {
+        "__typename": "res_values",
+        "id": 30,
+        "name": "Nicoleta",
+        "groupId": 4
+      },
+      {
+        "__typename": "res_values",
+        "id": 31,
+        "name": "Andrea di Saverio",
+        "groupId": 6
+      },
+      {
+        "__typename": "res_values",
+        "id": 32,
+        "name": "Martynas",
+        "groupId": 6
+      },
+      { "__typename": "res_values", "id": 51, "name": "wedqw", "groupId": 1 },
+      { "__typename": "res_values", "id": 52, "name": "ferfe", "groupId": 1 }
+    ],
+    "entries": [
+      {
+        "__typename": "entries",
+        "propId": 3,
+        "resId": 22,
+        "value": 60,
+        "updatedAt": "2020-09-21T11:44:04.581991+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 5,
+        "resId": 29,
+        "value": 40,
+        "updatedAt": "2020-09-21T11:45:34.125012+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 4,
+        "resId": 22,
+        "value": 40,
+        "updatedAt": "2020-09-21T11:45:56.837808+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 25,
+        "resId": 1,
+        "value": 80,
+        "updatedAt": "2020-09-21T11:47:25.94102+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 23,
+        "resId": 1,
+        "value": 20,
+        "updatedAt": "2020-09-21T11:48:13.771454+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 24,
+        "resId": 2,
+        "value": 20,
+        "updatedAt": "2020-09-20T07:24:06.843045+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 20,
+        "resId": 12,
+        "value": 20,
+        "updatedAt": "2020-09-20T07:24:18.941531+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 15,
+        "resId": 23,
+        "value": 20,
+        "updatedAt": "2020-09-21T11:49:12.722047+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 16,
+        "resId": 2,
+        "value": 100,
+        "updatedAt": "2020-09-21T11:53:35.120094+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 20,
+        "resId": 2,
+        "value": 20,
+        "updatedAt": "2020-09-21T11:55:52.517198+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 24,
+        "resId": 23,
+        "value": 40,
+        "updatedAt": "2020-09-21T15:40:51.623069+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 22,
+        "resId": 2,
+        "value": 80,
+        "updatedAt": "2020-09-21T14:25:28.528597+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 23,
+        "resId": 2,
+        "value": 20,
+        "updatedAt": "2020-09-21T14:25:32.992328+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 25,
+        "resId": 22,
+        "value": 40,
+        "updatedAt": "2020-09-21T14:55:38.167684+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 15,
+        "resId": 27,
+        "value": 80,
+        "updatedAt": "2020-09-21T15:08:33.667261+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 3,
+        "resId": 25,
+        "value": 40,
+        "updatedAt": "2020-09-21T15:40:56.161765+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 11,
+        "resId": 22,
+        "value": 40,
+        "updatedAt": "2020-09-21T15:33:39.2394+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 3,
+        "resId": 1,
+        "value": 60,
+        "updatedAt": "2020-09-21T15:33:53.979158+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 5,
+        "resId": 22,
+        "value": 80,
+        "updatedAt": "2020-09-21T15:34:52.304203+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 13,
+        "resId": 22,
+        "value": 40,
+        "updatedAt": "2020-09-21T15:35:30.03786+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 20,
+        "resId": 22,
+        "value": 0,
+        "updatedAt": "2020-09-21T15:35:33.385918+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 20,
+        "resId": 23,
+        "value": 80,
+        "updatedAt": "2020-09-21T15:35:48.36377+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 20,
+        "resId": 24,
+        "value": 0,
+        "updatedAt": "2020-09-21T15:35:57.385452+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 4,
+        "resId": 1,
+        "value": 60,
+        "updatedAt": "2020-09-20T09:45:30.218102+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 5,
+        "resId": 1,
+        "value": 4,
+        "updatedAt": "2020-09-19T10:14:58.725788+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 3,
+        "resId": 2,
+        "value": 6,
+        "updatedAt": "2020-09-19T10:15:07.880593+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 16,
+        "resId": 3,
+        "value": 0,
+        "updatedAt": "2020-09-19T13:04:25.763319+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 13,
+        "resId": 12,
+        "value": 60,
+        "updatedAt": "2020-09-20T09:45:35.354488+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 3,
+        "resId": 3,
+        "value": 40,
+        "updatedAt": "2020-09-19T14:52:52.004013+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 3,
+        "resId": 4,
+        "value": 40,
+        "updatedAt": "2020-09-19T15:02:48.981231+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 3,
+        "resId": 7,
+        "value": 40,
+        "updatedAt": "2020-09-19T15:07:37.109339+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 16,
+        "resId": 7,
+        "value": 60,
+        "updatedAt": "2020-09-19T15:10:10.133263+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 4,
+        "resId": 7,
+        "value": 40,
+        "updatedAt": "2020-09-19T15:10:12.811252+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 5,
+        "resId": 4,
+        "value": 60,
+        "updatedAt": "2020-09-20T09:45:40.043097+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 11,
+        "resId": 1,
+        "value": 60,
+        "updatedAt": "2020-09-19T15:24:45.03837+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 16,
+        "resId": 10,
+        "value": 40,
+        "updatedAt": "2020-09-21T15:47:14.870852+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 4,
+        "resId": 4,
+        "value": 60,
+        "updatedAt": "2020-09-20T09:45:43.784758+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 15,
+        "resId": 2,
+        "value": 80,
+        "updatedAt": "2020-09-22T05:57:44.783283+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 13,
+        "resId": 23,
+        "value": 0,
+        "updatedAt": "2020-09-21T15:36:21.457598+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 13,
+        "resId": 1,
+        "value": 20,
+        "updatedAt": "2020-09-20T04:40:28.869357+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 13,
+        "resId": 2,
+        "value": 60,
+        "updatedAt": "2020-09-22T05:57:51.560266+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 11,
+        "resId": 3,
+        "value": 20,
+        "updatedAt": "2020-09-20T04:44:06.341461+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 13,
+        "resId": 3,
+        "value": 20,
+        "updatedAt": "2020-09-20T04:44:19.150717+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 3,
+        "resId": 13,
+        "value": 40,
+        "updatedAt": "2020-09-20T04:48:04.103121+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 13,
+        "resId": 7,
+        "value": 20,
+        "updatedAt": "2020-09-20T04:52:24.390364+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 20,
+        "resId": 4,
+        "value": 20,
+        "updatedAt": "2020-09-20T04:58:59.384941+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 26,
+        "resId": 1,
+        "value": 20,
+        "updatedAt": "2020-09-20T06:11:08.167972+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 26,
+        "resId": 3,
+        "value": 20,
+        "updatedAt": "2020-09-20T06:22:25.294589+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 26,
+        "resId": 7,
+        "value": 50,
+        "updatedAt": "2020-09-20T06:22:45.404726+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 26,
+        "resId": 10,
+        "value": 40,
+        "updatedAt": "2020-09-20T06:22:53.353179+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 22,
+        "resId": 4,
+        "value": 40,
+        "updatedAt": "2020-09-20T06:25:51.470933+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 4,
+        "resId": 13,
+        "value": 20,
+        "updatedAt": "2020-09-20T06:26:44.44243+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 16,
+        "resId": 13,
+        "value": 60,
+        "updatedAt": "2020-09-20T06:26:52.30425+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 5,
+        "resId": 15,
+        "value": 20,
+        "updatedAt": "2020-09-20T06:27:01.167163+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 11,
+        "resId": 11,
+        "value": 40,
+        "updatedAt": "2020-09-20T10:06:45.170203+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 15,
+        "resId": 1,
+        "value": 20,
+        "updatedAt": "2020-09-21T15:36:51.140371+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 21,
+        "resId": 22,
+        "value": 0,
+        "updatedAt": "2020-09-21T15:36:54.278734+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 16,
+        "resId": 12,
+        "value": 40,
+        "updatedAt": "2020-09-20T10:11:42.760239+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 20,
+        "resId": 1,
+        "value": 100,
+        "updatedAt": "2020-09-20T10:16:28.436946+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 13,
+        "resId": 4,
+        "value": 100,
+        "updatedAt": "2020-09-20T10:17:44.742135+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 16,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:14:37.287842+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 13,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-09-20T10:24:16.744802+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 16,
+        "resId": 1,
+        "value": 60,
+        "updatedAt": "2020-09-20T10:27:39.431259+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 13,
+        "resId": 10,
+        "value": 100,
+        "updatedAt": "2020-09-20T10:27:43.099517+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 24,
+        "resId": 7,
+        "value": 60,
+        "updatedAt": "2020-09-20T10:27:46.198631+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 21,
+        "resId": 4,
+        "value": 60,
+        "updatedAt": "2020-09-20T10:27:49.613878+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 21,
+        "resId": 11,
+        "value": 60,
+        "updatedAt": "2020-09-20T10:29:40.175849+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 4,
+        "resId": 11,
+        "value": 100,
+        "updatedAt": "2020-09-21T07:47:32.300348+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 5,
+        "resId": 24,
+        "value": 80,
+        "updatedAt": "2020-09-21T08:03:40.755372+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 21,
+        "resId": 23,
+        "value": 60,
+        "updatedAt": "2020-09-21T08:06:35.041677+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 21,
+        "resId": 1,
+        "value": 40,
+        "updatedAt": "2020-09-21T11:37:49.90759+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 22,
+        "resId": 1,
+        "value": 40,
+        "updatedAt": "2020-09-21T11:39:46.699304+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 16,
+        "resId": 22,
+        "value": 40,
+        "updatedAt": "2020-09-21T11:40:12.54586+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 22,
+        "resId": 25,
+        "value": 20,
+        "updatedAt": "2020-09-21T11:40:44.214488+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 11,
+        "resId": 2,
+        "value": 40,
+        "updatedAt": "2020-09-22T05:57:55.255482+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 29,
+        "resId": 28,
+        "value": 60,
+        "updatedAt": "2020-09-21T15:37:01.030946+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 21,
+        "resId": 7,
+        "value": 60,
+        "updatedAt": "2020-09-21T15:37:10.875861+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 22,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-09-21T15:37:16.145638+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 15,
+        "resId": 22,
+        "value": 60,
+        "updatedAt": "2020-09-21T15:37:40.402649+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 15,
+        "resId": 28,
+        "value": 60,
+        "updatedAt": "2020-09-21T15:37:45.664251+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 4,
+        "resId": 12,
+        "value": 20,
+        "updatedAt": "2020-09-21T15:38:00.648905+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 11,
+        "resId": 28,
+        "value": 40,
+        "updatedAt": "2020-09-21T15:38:31.892774+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 5,
+        "resId": 2,
+        "value": 20,
+        "updatedAt": "2020-09-22T05:57:58.760719+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 15,
+        "resId": 25,
+        "value": 40,
+        "updatedAt": "2020-09-22T06:08:55.759919+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 16,
+        "resId": 24,
+        "value": 80,
+        "updatedAt": "2020-09-22T06:25:30.695578+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 5,
+        "resId": 26,
+        "value": 80,
+        "updatedAt": "2020-09-22T06:25:34.590086+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 23,
+        "resId": 25,
+        "value": 100,
+        "updatedAt": "2020-09-22T06:25:38.132525+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 5,
+        "resId": 27,
+        "value": 100,
+        "updatedAt": "2020-09-22T06:25:42.618267+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 23,
+        "resId": 26,
+        "value": 100,
+        "updatedAt": "2020-09-22T06:25:47.388987+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 11,
+        "resId": 25,
+        "value": 100,
+        "updatedAt": "2020-09-22T06:25:51.437745+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 16,
+        "resId": 26,
+        "value": 100,
+        "updatedAt": "2020-09-22T06:25:55.497947+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 4,
+        "resId": 23,
+        "value": 20,
+        "updatedAt": "2020-10-03T13:24:45.215397+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 3,
+        "resId": 26,
+        "value": 40,
+        "updatedAt": "2020-10-03T13:25:03.971672+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 4,
+        "resId": 26,
+        "value": 40,
+        "updatedAt": "2020-10-03T13:25:08.675017+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 4,
+        "resId": 2,
+        "value": 20,
+        "updatedAt": "2020-10-04T06:31:06.38562+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 15,
+        "resId": 16,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:07:18.589612+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 5,
+        "resId": 16,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:07:22.809242+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 4,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:08:42.443347+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 23,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:08:47.006572+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 25,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:08:50.869637+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 3,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:14:34.835169+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 57,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:14:40.791587+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 26,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:14:44.875962+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 29,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:14:48.139327+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 5,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:14:52.144265+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 11,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:14:55.733374+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 15,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:14:59.246362+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 20,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:15:02.515502+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 21,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:15:07.129663+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 24,
+        "resId": 17,
+        "value": 100,
+        "updatedAt": "2020-10-04T07:15:10.232836+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 3,
+        "resId": 31,
+        "value": 20,
+        "updatedAt": "2020-10-04T07:16:35.414708+00:00"
+      },
+      {
+        "__typename": "entries",
+        "propId": 29,
+        "resId": 13,
+        "value": 20,
+        "updatedAt": "2020-10-04T12:36:27.632883+00:00"
+      }
+    ]
+  }
+}
