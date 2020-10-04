@@ -15,9 +15,7 @@ const mapById = (list) =>
 export const formatProjectData = (data) => {
   if (!data) return null;
 
-  // console.log(data);
-
-  const project = removeProps(data.project, filterTypename);
+  const project = removeProps(data.projects[0], filterTypename);
   const propGroups = data.propGroups.map(removeTypename);
   const propValues = data.propValues.map(removeTypename);
   const resGroups = data.resGroups.map(removeTypename);
