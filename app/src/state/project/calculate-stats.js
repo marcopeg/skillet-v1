@@ -6,6 +6,15 @@
  * @param {*} settings
  */
 
+// give or take it goes between -1 and 2
+// this turns it into a 0-1 value
+const normalizeScore = (value) => {
+  const min = -1;
+  const max = 1.66;
+  const score = (value - min) / (max - min);
+  return score > 1 ? 1 : score;
+};
+
 export const calculateStats = (entries, surface, settings) => {
   const { baseline, obsolescence, multipliers } = settings.efficiency;
   const now = new Date();
@@ -54,6 +63,6 @@ export const calculateStats = (entries, surface, settings) => {
     scoreValues,
     scoreTot,
     scoreCount,
-    score: scoreCount ? scoreTot / scoreCount : 0
+    score: scoreCount ? normalizeScore(scoreTot / scoreCount) : 0
   };
 };

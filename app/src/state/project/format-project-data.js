@@ -115,6 +115,9 @@ export const formatProjectData = (data) => {
 
       return group;
     });
+
+    // Calculate resource's stats
+    $item.stats = calculateStats($item.entries, propValues.length, settings);
   });
 
   const decoratedData = {
