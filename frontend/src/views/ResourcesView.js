@@ -17,7 +17,8 @@ import {
   IonInput,
   IonTextarea,
   IonRefresher,
-  IonRefresherContent
+  IonRefresherContent,
+  IonSpinner
 } from "@ionic/react";
 
 import { add } from "ionicons/icons";
@@ -25,12 +26,76 @@ import useResourcesList from "../state/resources/use-resources-list";
 import useResourcesCreateGroup from "../state/resources/use-resources-create-group";
 import useResourcesCreateValue from "../state/resources/use-resources-create-value";
 
+const WelcomeMsg = ({ createGroup }) => (
+  <>
+    <h4>What is a Resource?</h4>
+    <p>
+      Think a resource in terms of a <b>team member</b> and a group in terms of
+      a <b>team</b>.
+    </p>
+    <IonButton expand="full" size="small" onClick={createGroup}>
+      <IonIcon icon={add} /> Create the first group
+    </IonButton>
+  </>
+);
+
+const GroupsList = ({ groups, baseUrl, createResource }) => (
+  <IonList lines="full">
+    {groups.map((group, idx) => {
+      return (
+        <React.Fragment key={`gr-${group.id}`}>
+          <IonListHeader className={idx > 0 ? "ion-padding-top" : null}>
+            <IonToolbar>
+              <h3>{group.name}</h3>
+            </IonToolbar>
+          </IonListHeader>
+
+          {group.values.map((value) => {
+            return (
+              <IonItem
+                key={`gr-${group.id}-${value.id}`}
+                routerLink={`${baseUrl}/v/${value.id}`}
+              >
+                <IonLabel>{value.name}</IonLabel>
+              </IonItem>
+            );
+          })}
+
+          <IonButton
+            expand="full"
+            fill="clear"
+            size="small"
+            className="ion-margin"
+            onClick={() => createResource(group.id)}
+          >
+            <IonIcon icon={add} />
+            Add new resource
+          </IonButton>
+        </React.Fragment>
+      );
+    })}
+  </IonList>
+);
+
 const PropertiesView = ({ match }) => {
-  const { groups, refresh } = useResourcesList();
+  const { isLoading, groups, refresh } = useResourcesList();
   const createGroup = useResourcesCreateGroup();
   const createValue = useResourcesCreateValue();
 
-  const showList = groups && groups.length;
+  const usePadding = isLoading || !groups || !groups.length;
+  const content = (() => {
+    if (groups && groups.length) {
+      return (
+        <GroupsList
+          groups={groups}
+          baseUrl={match.url}
+          createResource={createValue.openModal}
+        />
+      );
+    }
+
+    return <WelcomeMsg createGroup={createGroup.openModal} />;
+  })();
 
   return (
     <IonPage>
@@ -45,70 +110,14 @@ const PropertiesView = ({ match }) => {
           <IonTitle>{"Resources"}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className={showList ? null : "ion-padding"}>
-        <IonRefresher slot="fixed" onIonRefresh={refresh}>
-          <IonRefresherContent></IonRefresherContent>
-        </IonRefresher>
-
-        {showList ? (
-          <IonList lines="full">
-            {groups.map((group, idx) => {
-              return (
-                <React.Fragment key={`gr-${group.id}`}>
-                  <IonListHeader className={idx > 0 ? "ion-padding-top" : null}>
-                    <IonToolbar>
-                      <h3>{group.name}</h3>
-                      {/* <IonButtons slot="end">
-                        <IonButton
-                          onClick={() => createValue.openModal(group.id)}
-                        >
-                          <IonIcon icon={add}></IonIcon>
-                        </IonButton>
-                      </IonButtons> */}
-                    </IonToolbar>
-                  </IonListHeader>
-
-                  {group.values.map((value) => {
-                    return (
-                      <IonItem
-                        key={`gr-${group.id}-${value.id}`}
-                        routerLink={`${match.url}/v/${value.id}`}
-                      >
-                        <IonLabel>{value.name}</IonLabel>
-                      </IonItem>
-                    );
-                  })}
-
-                  <IonButton
-                    expand="full"
-                    fill="clear"
-                    size="small"
-                    className="ion-margin"
-                    onClick={() => createValue.openModal(group.id)}
-                  >
-                    <IonIcon icon={add} />
-                    Add new resource
-                  </IonButton>
-                </React.Fragment>
-              );
-            })}
-          </IonList>
-        ) : (
-          <>
-            <h4>What is a Resource?</h4>
-            <p>
-              Think a resource in terms of a <b>team member</b> and a group in
-              terms of a <b>team</b>.
-            </p>
-            <IonButton
-              expand="full"
-              size="small"
-              onClick={createGroup.openModal}
-            >
-              <IonIcon icon={add} /> Create the first group
-            </IonButton>
-          </>
+      <IonContent className={usePadding ? "ion-padding" : null}>
+        {isLoading ? null : (
+          <IonRefresher slot="fixed" onIonRefresh={refresh}>
+            <IonRefresherContent></IonRefresherContent>
+          </IonRefresher>
         )}
+
+        {isLoading ? <IonSpinner name="dots" /> : content}
 
         {/**
          * Create Group Modal
