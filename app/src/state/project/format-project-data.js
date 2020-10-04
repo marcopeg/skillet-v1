@@ -1,5 +1,8 @@
+/* eslint-disable */
+
 import { PROJECT_DEFAULTS } from "./project-default-settings";
-import { calculateStats } from "./calculate-stats";
+import { calculateStats, normalizeScore } from "./calculate-stats";
+import deepmerge from "deepmerge";
 
 // Filtering utilities to remove the "__typename" from the received data
 const filterTypename = ["__typename"];
@@ -12,127 +15,151 @@ const removeTypename = ($) => removeProps($, filterTypename);
 const mapById = (list) =>
   list.reduce((acc, curr) => ({ ...acc, [curr.id]: curr }), {});
 
+const mapEntry = (list) =>
+  list.reduce(
+    (acc, curr) => ({ ...acc, [`${curr.propId}:${curr.resId}`]: curr }),
+    {}
+  );
+
+export const getObsolescenceValue = (
+  updatedAt,
+  settings,
+  refDate = new Date() // used in unit test
+) => {
+  const elapsed = refDate - updatedAt;
+  const item = settings.efficiency.obsolescence.find(
+    ($) => elapsed >= $.elapsed
+  );
+
+  return item ? item.value : 0;
+};
+
+const decorateEntry = (prop, res, entry, settings) => {
+  const updatedAt = entry ? new Date(entry.updatedAt) : null;
+
+  return entry
+    ? {
+        ...entry,
+        updatedAt,
+        score: normalizeScore(
+          entry.value - getObsolescenceValue(updatedAt, settings)
+        )
+      }
+    : {
+        propId: prop.id,
+        resId: res.id,
+        updatedAt,
+        value: null,
+        score: normalizeScore(settings.efficiency.voidValue)
+      };
+};
+
 export const formatProjectData = (data) => {
   if (!data) return null;
 
-  const project = removeProps(data.projects[0], filterTypename);
-  const propGroups = data.propGroups.map(removeTypename);
-  const propValues = data.propValues.map(removeTypename);
-  const resGroups = data.resGroups.map(removeTypename);
-  const resValues = data.resValues.map(removeTypename);
-  const entries = data.entries.map(removeTypename);
-  const settings = { ...PROJECT_DEFAULTS };
-
-  const map = {
-    propGroups: mapById(propGroups),
-    propValues: mapById(propValues),
-    resGroups: mapById(resGroups),
-    resValues: mapById(resValues)
+  const raw = {
+    project: {
+      ...removeProps(data.projects[0], filterTypename),
+      settings: deepmerge(PROJECT_DEFAULTS, data.projects[0].settings || {}),
+      stats: null
+    },
+    prop: {
+      groups: data.propGroups.map(removeTypename),
+      values: data.propValues.map(removeTypename)
+    },
+    res: {
+      groups: data.resGroups.map(removeTypename),
+      values: data.resValues.map(removeTypename)
+    },
+    entries: null
   };
 
-  // Entries with associated entities
-  const decoratedEntries = entries.map(($entry) => {
-    const prop = map.propValues[$entry.propId];
-    const propGroup = map.propGroups[prop.groupId];
-    const res = map.resValues[$entry.resId];
-    const resGroup = map.resGroups[res.groupId];
+  const map = {
+    prop: {
+      groups: mapById(raw.prop.groups),
+      values: mapById(raw.prop.values)
+    },
+    res: {
+      groups: mapById(raw.res.groups),
+      values: mapById(raw.res.values)
+    },
+    entries: mapEntry(data.entries.map(removeTypename))
+  };
 
-    return {
-      ...$entry,
-      updatedAt: new Date($entry.updatedAt),
-      prop,
-      propGroup,
-      res,
-      resGroup
-    };
-  });
+  // Apply settings project -> propGroup
+  raw.prop.groups.forEach((propGroup) => {
+    const $propGroup = map.prop.groups[propGroup.id];
 
-  // Decorate mapped items with their own filtered entries
-  // and associated entities
-  resValues.forEach(($item) => {
-    map.resValues[$item.id].group = map.resGroups[$item.groupId];
-    map.resValues[$item.id].entries = decoratedEntries.filter(
-      ($entry) => $entry.resId === $item.id
+    $propGroup.settings = deepmerge(
+      raw.project.settings,
+      $propGroup.settings || {}
+    );
+
+    $propGroup.values = raw.prop.values.filter(
+      ($) => $.groupId === propGroup.id
     );
   });
 
-  resGroups.forEach(($item) => {
-    map.resGroups[$item.id].entries = decoratedEntries.filter(
-      ($entry) => $entry.resGroup.id === $item.id
-    );
-
-    map.resGroups[$item.id].resources = resValues
-      .filter(($) => $.groupId === $item.id)
-      .map(($) => map.resValues[$.id]);
-
-    // Calculate group's stats
-    // map.resGroups[$item.id].stats = calculateStats(
-    //   map.resGroups[$item.id].entries,
-    //   propValues.length * map.resGroups[$item.id].resources.length,
-    //   settings
-    // );
-  });
-
-  propValues.forEach(($item) => {
-    map.propValues[$item.id].group = map.propGroups[$item.groupId];
-    map.propValues[$item.id].entries = decoratedEntries.filter(
-      ($entry) => $entry.propId === $item.id
+  // Apply settings propGroup -> propValues
+  raw.prop.values.forEach((propValue) => {
+    map.prop.values[propValue.id].settings = deepmerge(
+      map.prop.groups[propValue.groupId].settings,
+      map.prop.values[propValue.id].settings || {}
     );
   });
 
-  propGroups.forEach(($item) => {
-    map.propGroups[$item.id].entries = decoratedEntries.filter(
-      ($entry) => $entry.propGroup.id === $item.id
-    );
+  // ENTRIES
+  // Calculates all the cells with the values and applied scores
+  raw.prop.values.forEach((prop) =>
+    raw.res.values.forEach((res) => {
+      const entryId = `${prop.id}:${res.id}`;
+      map.entries[entryId] = decorateEntry(
+        prop,
+        res,
+        map.entries[entryId],
+        map.prop.values[prop.id].settings
+      );
+    })
+  );
 
-    map.propGroups[$item.id].values = propValues
-      .filter(($) => $.groupId === $item.id)
-      .map(($) => map.propValues[$.id]);
+  // Get all the entries in a list format so we can decorate other entities
+  raw.entries = Object.values(map.entries);
+
+  // Distribute entries to propGroups/propValues
+  raw.prop.groups.forEach((propGroup) => {
+    const values$ = ($) => $.groupId === propGroup.id;
+    propGroup.values = raw.prop.values.filter(values$);
+
+    propGroup.entries = propGroup.values.reduce((acc, propValue) => {
+      const entries$ = (entry) => entry.propId === propValue.id;
+      propValue.entries = raw.entries.filter(entries$);
+      propValue.stats = calculateStats(propValue.entries);
+      return [...acc, ...propValue.entries];
+    }, []);
+
+    propGroup.stats = calculateStats(propGroup.entries);
   });
 
-  // Decorate each resource with the list of skills and filtered entries
-  // This also must be divided by groups so to achieve a correct visualization order
-  resValues.forEach(($item) => {
-    // Group entries by proprGroup to match the visualization order
-    $item.propGroups = propGroups.map(($group) => {
-      const groupEntries$ = ($) => $.propGroup.id === $group.id;
-      const groupEntries = $item.entries.filter(groupEntries$);
-      const group = {
-        ...map.propGroups[$group.id],
-        entries: groupEntries
-      };
+  // Distribute entries to resGroups/resValues
+  raw.res.groups.forEach((resGroup) => {
+    const values$ = ($) => $.groupId === resGroup.id;
+    resGroup.values = raw.res.values.filter(values$);
 
-      // Apply group's values with filtered entries
-      group.values = group.values.map(($value) => {
-        const valueEntries$ = ($) => $.propId === $value.id;
-        return {
-          ...$value,
-          entries: groupEntries.filter(valueEntries$)
-        };
-      });
+    resGroup.entries = resGroup.values.reduce((acc, resValue) => {
+      const entries$ = (entry) => entry.resId === resValue.id;
+      resValue.entries = raw.entries.filter(entries$);
+      resValue.stats = calculateStats(resValue.entries);
+      return [...acc, ...resValue.entries];
+    }, []);
 
-      return group;
-    });
-
-    // Calculate resource's stats
-    $item.stats = calculateStats($item.entries, propValues.length, settings);
+    resGroup.stats = calculateStats(resGroup.entries);
   });
+
+  raw.project.stats = calculateStats(raw.entries);
 
   const decoratedData = {
-    project: {
-      ...project,
-      stats: calculateStats(
-        decoratedEntries,
-        propValues.length * resValues.length,
-        settings
-      )
-    },
-    propGroups: propGroups.map(($) => map.propGroups[$.id]),
-    propValues: propValues.map(($) => map.propValues[$.id]),
-    resGroups: resGroups.map(($) => map.resGroups[$.id]),
-    resValues: resValues.map(($) => map.resValues[$.id]),
-    entries: decoratedEntries,
-    settings
+    ...raw,
+    map
   };
 
   console.log(decoratedData);

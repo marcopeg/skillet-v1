@@ -4,39 +4,22 @@
  */
 
 import React, { useState, useMemo } from "react";
-import deepmerge from "deepmerge";
-
 import { IonPopover } from "@ionic/react";
 
 import CellView from "./CellView";
 import CellEdit from "./CellEdit";
-
-// Static default settings are now part of the data model
-const defaultSettings = {};
 
 const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(null);
   const [currValue, setCurrValue] = useState(null);
 
-  // Extract the current settings to apply to this cell.
-  const settings = useMemo(
-    () =>
-      deepmerge(
-        defaultSettings,
-        data.settings || {},
-        propGroup.settings || {},
-        propValue.settings || {}
-      ),
-    [propValue.settings, propGroup.settings, data.settings]
-  );
-
-  // TODO: filter by "point of view"?
-  const entry = propValue.entries[0];
+  const settings = propValue.settings;
+  const entry = data.map.entries[`${propValue.id}:${resValue.id}`];
 
   // Calculate the current used value to represent while editing
   const useValue = useMemo(
-    () => (currValue !== null ? currValue : entry ? entry.value : null),
+    () => (currValue !== null ? currValue : entry.value),
     [entry, currValue]
   );
 
@@ -46,8 +29,6 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
     const value = settings.thresholds.values.find(($) => $.value >= useValue);
     return value || settings.thresholds._error;
   }, [settings.thresholds, useValue]);
-
-  // console.log(threshold);
 
   // Persist the event so the Popover can mount in relation to it.
   const onRequestEdit = (evt) => {

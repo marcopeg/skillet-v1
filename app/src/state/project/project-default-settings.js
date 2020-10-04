@@ -1,15 +1,46 @@
 export const PROJECT_DEFAULTS = {
   efficiency: {
+    // It's the value that is assigned to the score of an empty cell.
+    voidValue: -100,
+
+    // It's subtracted from the value of a cell while calculating the score.
+    // it should progressively increase in time.
+    obsolescence: [
+      {
+        //       MS     SEC  MIN  HOUR DAYS
+        elapsed: 1000 * 60 * 60 * 24 * 60,
+        value: 80
+      },
+      {
+        //       MS     SEC  MIN  HOUR DAYS
+        elapsed: 1000 * 60 * 60 * 24 * 30,
+        value: 50
+      },
+      {
+        //       MS     SEC  MIN  HOUR DAYS
+        elapsed: 1000 * 60 * 60 * 24 * 20,
+        value: 40
+      },
+      {
+        //       MS     SEC  MIN  HOUR DAYS
+        elapsed: 1000 * 60 * 60 * 24 * 10,
+        value: 10
+      }
+    ],
+
+    // @DEPRECATED
     // It's considered the minimum value for a cell to represent
     // a proficient level of competence for the relative skill
     baseline: 60,
 
+    // @DEPRECATED
     // Amount of time in milliseconds withinc which a score is considered
     // to be up-to-date.
     //            MS     SEC  MIN  HOUR DAYS
-    obsolescence: 1000 * 60 * 60 * 24 * 30,
+    // obsolescence: 1000 * 60 * 60 * 24 * 30,
     // obsolescence: 1000 * 20,
 
+    // @DEPRECATED
     // Multipliers are used to generate a global score that can
     // factor in multiple dimensions and produce a single 0-1 value
     // that could represent the proficiency of an area of the board.
