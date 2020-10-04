@@ -94,7 +94,7 @@ const usePropertyEditValue = () => {
     deleteValue({ variables: { id: propertyId } })
       .then(() => {
         closeConfirm();
-        history.push(`/p/${projectId}/resources`);
+        history.push(`/p/${projectId}/properties`);
       })
       .catch((err) => {
         console.error(err);
