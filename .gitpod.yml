@@ -18,7 +18,7 @@ tasks:
   # it is used to perform triggered based transformations on the todos
   # after they are created.
   - name: Backend
-    before: cd backend
+    before: cd services/backend
     init: npm install
     command: HELLO=world
       PORT=4000
