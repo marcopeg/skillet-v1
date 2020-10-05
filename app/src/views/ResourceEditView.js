@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import React from "react";
+
 import {
   IonPage,
   IonHeader,
@@ -20,6 +21,7 @@ import {
 } from "@ionic/react";
 
 import useResourceEditValue from "../state/resources/use-resource-edit-value";
+import useResourceDeleteValue from "../state/resources/use-resource-delete-value";
 
 const ResourceEditView = () => {
   const editValue = useResourceEditValue();
@@ -28,16 +30,19 @@ const ResourceEditView = () => {
     resourceId,
     isDataLoading,
     isFormDisabled,
-    isConfirmOpen,
     isFormLoading,
     data,
     values,
     setValue,
+    submitForm
+  } = editValue;
+
+  const {
+    isConfirmOpen,
     openConfirm,
     closeConfirm,
-    submitForm,
     submitDelete
-  } = editValue;
+  } = useResourceDeleteValue();
 
   return (
     <IonPage>
