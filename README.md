@@ -101,3 +101,19 @@ hasura console
 # Or with the Make interface
 make start-console
 ```
+
+## Troubleshooting
+
+### Import backup from S3:
+
+The automatic backup that is stored to S3 contains the following instruction:
+
+```sql
+SELECT pg_catalog.set_config('search_path', '', false);
+```
+
+You need to change it to:
+
+```sql
+SELECT pg_catalog.set_config('search_path', 'public', false);
+```

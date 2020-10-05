@@ -2,8 +2,9 @@ FROM alpine:3.12.0
 LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
 
 # Install dependencies
+# https://pkgs.alpinelinux.org/packages?name=postgresql&branch=&repo=main&arch=x86_64&maintainer=
 RUN apk update
-RUN apk add postgresql=12.3-r2 python3 py3-pip curl zip
+RUN apk add postgresql=12.4-r0 python3 py3-pip curl zip
 RUN pip install awscli
 RUN curl -L --insecure https://github.com/odise/go-cron/releases/download/v0.0.6/go-cron-linux.gz | zcat > /usr/local/bin/go-cron
 RUN chmod u+x /usr/local/bin/go-cron
