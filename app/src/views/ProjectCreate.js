@@ -46,7 +46,7 @@ const ProjectCreate = () => {
       <IonModal isOpen={isModalOpen}>
         <IonPage>
           <IonHeader>
-            <IonToolbar>
+            <IonToolbar color="primary">
               <IonTitle>New Skill Matrix</IonTitle>
               <IonButtons slot="end">
                 <IonButton onClick={closeModal}>Cancel</IonButton>

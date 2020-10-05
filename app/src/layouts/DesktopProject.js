@@ -53,8 +53,8 @@ const DesktopLayout = ({ match }) => {
         <IonSplitPane contentId="desktop-project" when="md">
           <IonMenu contentId="desktop-project" type="overlay">
             <IonHeader>
-              <IonToolbar>
-                <IonTitle>SkillMatrix</IonTitle>
+              <IonToolbar color="primary">
+                <IonTitle>Skillet</IonTitle>
               </IonToolbar>
             </IonHeader>
             <IonContent>

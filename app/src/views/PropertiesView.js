@@ -121,7 +121,7 @@ const PropertiesView = ({ match }) => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="primary">
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
@@ -149,7 +149,7 @@ const PropertiesView = ({ match }) => {
         >
           <IonPage>
             <IonHeader>
-              <IonToolbar>
+              <IonToolbar color="primary">
                 <IonTitle>New Group</IonTitle>
                 <IonButtons slot="end">
                   <IonButton onClick={createGroup.closeModal}>Cancel</IonButton>
@@ -201,7 +201,7 @@ const PropertiesView = ({ match }) => {
         >
           <IonPage>
             <IonHeader>
-              <IonToolbar>
+              <IonToolbar color="primary">
                 <IonTitle>New Property</IonTitle>
                 <IonButtons slot="end">
                   <IonButton onClick={createValue.closeModal}>Cancel</IonButton>

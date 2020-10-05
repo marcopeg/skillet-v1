@@ -20,9 +20,9 @@ import {
 } from "@ionic/react";
 
 import usePropertyEditValue from "../state/properties/use-property-edit-value";
+// import usePropertyDeleteValue from "../state/properties/use-property-delete-value";
 
 const PropertyEditView = () => {
-  const editValue = usePropertyEditValue();
   const {
     projectId,
     propertyId,
@@ -33,16 +33,18 @@ const PropertyEditView = () => {
     data,
     values,
     setValue,
+    submitForm,
     openConfirm,
     closeConfirm,
-    submitForm,
     submitDelete
-  } = editValue;
+  } = usePropertyEditValue();
+
+  // const {  } = usePropertyDeleteValue();
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="primary">
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>

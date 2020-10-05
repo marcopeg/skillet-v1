@@ -34,7 +34,7 @@ const DashboardView = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="primary">
           <IonButtons slot="start">
             {isMobile ? (
               <IonButton routerLink="/" routerDirection="back">

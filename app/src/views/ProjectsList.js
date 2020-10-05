@@ -27,8 +27,12 @@ const ProjectsList = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Skill Matrix</IonTitle>
+        <IonToolbar color="primary">
+          <IonTitle>
+            Skillet
+            <br />
+            <small>Know your team, know what to expect</small>
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

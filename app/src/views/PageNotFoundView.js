@@ -21,7 +21,7 @@ import { homeOutline } from "ionicons/icons";
 const PageNotFoundView = () => (
   <IonPage>
     <IonHeader>
-      <IonToolbar>
+      <IonToolbar color="primary">
         <IonButtons slot="primary">
           <IonMenuButton />
         </IonButtons>
