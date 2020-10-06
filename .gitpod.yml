@@ -46,7 +46,7 @@ tasks:
   # then it runs SQL migrations, Hasura Engine schema, and seed data.
   - name: Migrations
     before: cd services/migrations
-    init:
+    command:
       bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8080/v1/version)" != "200" ]]; do sleep 5; done'
       && bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:4000/healthz)" != "200" ]]; do sleep 5; done'
       && hasura migrate apply
