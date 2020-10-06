@@ -147,10 +147,12 @@
   - role: project
     permission:
       columns:
-      - id
-      - title
-      - description
       - created_at
+      - description
+      - id
+      - is_private
+      - settings
+      - title
       - updated_at
       filter:
         id:
@@ -264,12 +266,13 @@
   - role: project
     permission:
       columns:
-      - id
-      - order
       - description
-      - updated_at
+      - id
       - name
+      - order
       - project_id
+      - settings
+      - updated_at
       filter:
         project_id:
           _eq: x-hasura-project-id
