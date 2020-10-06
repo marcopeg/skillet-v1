@@ -1,8 +1,6 @@
-/* eslint-disable */
-
-import React, { useState, useEffect } from "react"; // eslint-disable-line
+import { useState, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { LOAD_PROPERTIES_LIST } from "./use-properties-list";
 import usePropertyDetails, {
@@ -22,23 +20,13 @@ const UPDATE_VALUE = gql`
   }
 `;
 
-const DELETE_VALUE = gql`
-  mutation deletePropValue($id: Int!) {
-    delete_prop_values_by_pk(id: $id) {
-      id
-    }
-  }
-`;
-
 const defaultValues = {
   name: "",
   description: ""
 };
 
 const usePropertyEditValue = () => {
-  const history = useHistory();
   const { propertyId, projectId } = useParams();
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [values, setValues] = useState({ ...defaultValues });
 
   const { data, isDataLoading } = usePropertyDetails();
@@ -55,24 +43,8 @@ const usePropertyEditValue = () => {
     ]
   });
 
-  const [deleteValue] = useMutation(DELETE_VALUE, {
-    refetchQueries: [
-      {
-        query: LOAD_PROPERTIES_LIST
-      }
-    ]
-  });
-
   const resetValues = (values = {}) =>
     setValues({ ...defaultValues, ...values });
-
-  const openConfirm = () => {
-    setIsConfirmOpen(true);
-  };
-
-  const closeConfirm = (evt) => {
-    setIsConfirmOpen(false);
-  };
 
   const setValue = (prop, value) =>
     setValues({
@@ -86,21 +58,6 @@ const usePropertyEditValue = () => {
     });
   };
 
-  const submitDelete = (confirm) => {
-    if (confirm.name !== data.name) {
-      alert("Wrong name");
-      return;
-    }
-    deleteValue({ variables: { id: propertyId } })
-      .then(() => {
-        closeConfirm();
-        history.push(`/p/${projectId}/properties`);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
   useEffect(() => {
     if (data) {
       resetValues({
@@ -112,7 +69,6 @@ const usePropertyEditValue = () => {
 
   return {
     isDataLoading,
-    isConfirmOpen,
     isFormDisabled: values.name.length < 3,
     isFormLoading: false,
     projectId,
@@ -120,11 +76,7 @@ const usePropertyEditValue = () => {
     data,
     values,
     setValue,
-    closeConfirm,
-    openConfirm,
-    closeConfirm,
-    submitForm,
-    submitDelete
+    submitForm
   };
 };
 
