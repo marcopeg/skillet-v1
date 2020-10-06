@@ -334,13 +334,14 @@
   - role: project
     permission:
       columns:
+      - description
       - id
+      - name
+      - order
       - project_id
       - prop_group_id
-      - name
-      - description
+      - settings
       - tags
-      - order
       - updated_at
       filter:
         project_id:
