@@ -3,6 +3,9 @@
    * Vapor
    */
 
+  --vapor-font-family-title: "Cairo", sans-serif;
+  --vapor-font-family-body: "Roboto", sans-serif;
+
   /* primary */
   --vapor-color-rich-electric-blue: #0090d1;
   --vapor-color-cyan-progress: #00c3ea;
@@ -95,4 +98,29 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #dcdddf;
   --ion-color-light-tint: #fbfbfd;
+
+  --ion-font-family: var(--vapor-font-family-body);
+}
+
+ion-title {
+  font-family: var(--vapor-font-family-title);
+}
+
+ion-split-pane {
+  /* --border: 1px solid var(--vapor-color-rich-electric-blue); */
+  --border: none;
+}
+
+ion-item-divider {
+  border-color: var(--vapor-color-azureish-white);
+}
+
+ion-split-pane ion-menu ion-content,
+ion-split-pane ion-menu ion-footer {
+  border-right: 1px solid var(--vapor-color-azureish-white);
+}
+
+.header-md::after,
+.footer-md::before {
+  background-image: none;
 }
