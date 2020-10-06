@@ -68,14 +68,17 @@ export const GET_PROJECT_BY_ID = gql`
       id
       title
       description
+      settings
     }
     propGroups: prop_groups(order_by: { order: desc, id: asc }) {
       id
       name
+      settings
     }
     propValues: prop_values(order_by: { order: desc, id: asc }) {
       id
       name
+      settings
       groupId: prop_group_id
     }
     resGroups: res_groups(order_by: { order: desc, id: asc }) {
@@ -148,11 +151,11 @@ export const ProjectProvider = ({ projectId, children }) => {
   // Generate the project's token to scope the data access
   useEffect(() => {
     createProjectToken()
-      .then((res) => {
+      .then(res => {
         setToken(res.data.project.accessToken);
         return loadProject();
       })
-      .catch((err) => {
+      .catch(err => {
         console.error("Could not generate the project token");
         console.error(err.message);
       });
