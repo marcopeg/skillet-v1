@@ -26,40 +26,15 @@ export const PROJECT_DEFAULTS = {
         elapsed: 1000 * 60 * 60 * 24 * 10,
         value: 10
       }
-    ],
-
-    // @DEPRECATED
-    // It's considered the minimum value for a cell to represent
-    // a proficient level of competence for the relative skill
-    baseline: 60,
-
-    // @DEPRECATED
-    // Amount of time in milliseconds withinc which a score is considered
-    // to be up-to-date.
-    //            MS     SEC  MIN  HOUR DAYS
-    // obsolescence: 1000 * 60 * 60 * 24 * 30,
-    // obsolescence: 1000 * 20,
-
-    // @DEPRECATED
-    // Multipliers are used to generate a global score that can
-    // factor in multiple dimensions and produce a single 0-1 value
-    // that could represent the proficiency of an area of the board.
-    multipliers: {
-      completionRate: 0,
-      completionGapRate: 100,
-      updatedEntriesRate: 0,
-      obsolentEntriesRate: 50,
-      entriesScore: 0,
-      boardScore: 100
-    }
+    ]
   },
   thresholds: {
     _null: {
-      style: { backgroundColor: "#f9caca" },
+      style: { backgroundColor: "#fff1d4" },
       label: "Damn it, fill this stuff"
     },
     _error: {
-      style: { backgroundColor: "#ff1c1c" },
+      style: { backgroundColor: "#f7d4d4" },
       label: "Damn it, fill this stuff"
     },
     values: [
@@ -70,27 +45,27 @@ export const PROJECT_DEFAULTS = {
       },
       {
         value: 20,
-        style: { backgroundColor: "#DFEED4" },
+        style: { backgroundColor: "#e6f3ea" },
         label: "I know the pourpose of it"
       },
       {
         value: 40,
-        style: { backgroundColor: "#CCE8B5" },
+        style: { backgroundColor: "#cee6d4" },
         label: "I have Hello World experience"
       },
       {
         value: 60,
-        style: { backgroundColor: "#B2DD8B" },
+        style: { backgroundColor: "#b5dabf" },
         label: "I can handle tasks"
       },
       {
         value: 80,
-        style: { backgroundColor: "#97D35E" },
+        style: { backgroundColor: "#9dcdaa" },
         label: "I feel I'm an expert"
       },
       {
         value: 100,
-        style: { backgroundColor: "#70c619" },
+        style: { backgroundColor: "#84c195" },
         label: "I'm a master of it"
       }
     ]

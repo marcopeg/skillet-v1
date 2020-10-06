@@ -1,6 +1,8 @@
 :root {
   --skm-col1-width: 130px;
   --skm-cell-size: 30px;
+  --skm-header-color: var(--vapor-color-azureish-white);
+  --skm-sub-header-color: var(--vapor-color-white);
 }
 
 .skm-container {
@@ -13,7 +15,7 @@
 .skm-table td {
   margin: 0;
   padding: 0;
-  border: 1px solid #666;
+  border: 1px solid #005075;
 }
 
 .skm-table-body > tbody > tr:first-child > td {
@@ -42,7 +44,7 @@
 .skm-header-group {
   vertical-align: middle;
   text-align: center;
-  background: #ddd;
+  background: var(--skm-header-color);
   font-weight: bold;
   white-space: nowrap;
 }
@@ -57,6 +59,7 @@
   vertical-align: bottom;
   text-align: center;
   width: var(--skm-cell-size);
+  background: var(--skm-sub-header-color);
   overflow: hidden;
 }
 
@@ -86,7 +89,7 @@
 
 .skm-body-group {
   text-align: left;
-  background: #ddd;
+  background: var(--skm-header-color);
   position: sticky;
   top: 0;
 }
@@ -106,6 +109,7 @@
   vertical-align: middle;
   white-space: nowrap;
   height: var(--skm-cell-size);
+  background: var(--skm-sub-header-color);
 }
 
 .skm-body-resource > span {

@@ -1,4 +1,38 @@
 :root {
+  /**
+   * Vapor
+   */
+
+  /* primary */
+  --vapor-color-rich-electric-blue: #0090d1;
+  --vapor-color-cyan-progress: #00c3ea;
+  --vapor-color-dark-imperial-blue: #005075;
+  --vapor-color-columbia-blue: #c9d9e8;
+
+  /* secondary */
+
+  /* background */
+  --vapor-color-white: #ffffff;
+  --vapor-color-white-smoke: #f2f5f8;
+  --vapor-color-azureish-white: #e4eaf0;
+
+  /* text */
+  --vapor-color-yankees-blue: #152935;
+  --vapor-color-cadet: #5a6872;
+  --vapor-color-quick-silver: #9da6ad;
+  --vapor-color-silver-sand: #c1c1c4;
+  --vapor-color-gainsboro: #d8d8d9;
+  --vapor-color-ghost-white: #fafbfd;
+
+  /* status */
+  --vapor-color-la-salle-green: #09822a;
+  --vapor-color-crayola: #fdb927;
+  --vapor-color-maximum-red: #d82829;
+
+  /**
+   * Ionic Theme
+   */
+
   --ion-color-primary: #0090d1;
   --ion-color-primary-rgb: 0, 144, 209;
   --ion-color-primary-contrast: #ffffff;
