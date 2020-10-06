@@ -28,9 +28,10 @@ const ProjectsList = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar color="primary">
+          <IonTitle>Skillet</IonTitle>
+        </IonToolbar>
+        <IonToolbar color="primary">
           <IonTitle>
-            Skillet
-            <br />
             <small>Know your team, know what to expect</small>
           </IonTitle>
         </IonToolbar>

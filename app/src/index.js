@@ -20,7 +20,7 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
-import "./vapor.css";
+import "./vapor";
 
 import App from "./App";
 import { AuthProvider } from "./hooks/use-auth";

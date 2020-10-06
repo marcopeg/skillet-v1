@@ -1,0 +1,54 @@
+/**
+ * VAPOR
+ * Ionic Theme
+ */
+
+ion-title {
+  font-family: var(--vapor-font-family-title);
+}
+
+.header-md::after,
+.footer-md::before {
+  background-image: none;
+}
+
+/**
+* Split Pane
+*/
+
+ion-split-pane {
+  --border: none;
+}
+
+ion-split-pane ion-menu,
+ion-split-pane ion-menu ion-content,
+ion-split-pane ion-menu ion-item,
+ion-split-pane ion-menu ion-item-divider {
+  --background: var(--ion-color-primary);
+}
+
+ion-split-pane ion-menu ion-content .list-md {
+  background-color: var(--ion-color-primary);
+}
+
+ion-split-pane ion-menu ion-content,
+ion-split-pane ion-menu ion-footer {
+  --background: var(--ion-color-primary);
+}
+
+ion-split-pane ion-menu ion-item {
+  --color: var(--vapor-color-white);
+}
+
+/* ion-split-pane ion-menu ion-label {
+  font-family: var(--vapor-font-family-title);
+} */
+
+ion-split-pane ion-menu ion-icon {
+  color: var(--vapor-color-white);
+}
+
+ion-split-pane ion-menu ion-item-divider {
+  --color: var(--vapor-color-gainsboro);
+  border-color: var(--vapor-color-gainsboro);
+}
