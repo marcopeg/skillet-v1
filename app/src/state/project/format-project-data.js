@@ -8,14 +8,14 @@ import { deepmerge } from "./deepmerge";
 const filterTypename = ["__typename"];
 const removeProps = (data = {}, props = []) =>
   Object.keys(data)
-    .filter(key => !props.includes(key))
+    .filter((key) => !props.includes(key))
     .reduce((acc, key) => ({ ...acc, [key]: data[key] }), {});
-const removeTypename = $ => removeProps($, filterTypename);
+const removeTypename = ($) => removeProps($, filterTypename);
 
-const mapById = list =>
+const mapById = (list) =>
   list.reduce((acc, curr) => ({ ...acc, [curr.id]: curr }), {});
 
-const mapEntry = list =>
+const mapEntry = (list) =>
   list.reduce(
     (acc, curr) => ({ ...acc, [`${curr.propId}:${curr.resId}`]: curr }),
     {}
@@ -27,7 +27,9 @@ export const getObsolescenceValue = (
   refDate = new Date() // used in unit test
 ) => {
   const elapsed = refDate - updatedAt;
-  const item = settings.efficiency.obsolescence.find($ => elapsed >= $.elapsed);
+  const item = settings.efficiency.obsolescence.find(
+    ($) => elapsed >= $.elapsed
+  );
 
   return item ? item.value : 0;
 };
@@ -52,7 +54,7 @@ const decorateEntry = (prop, res, entry, settings) => {
       };
 };
 
-export const formatProjectData = data => {
+export const formatProjectData = (data) => {
   if (!data) return null;
 
   const raw = {
@@ -85,7 +87,7 @@ export const formatProjectData = data => {
   };
 
   // Apply settings project -> propGroup
-  raw.prop.groups.forEach(propGroup => {
+  raw.prop.groups.forEach((propGroup) => {
     const $propGroup = map.prop.groups[propGroup.id];
 
     $propGroup.settings = deepmerge(
@@ -93,11 +95,13 @@ export const formatProjectData = data => {
       $propGroup.settings || {}
     );
 
-    $propGroup.values = raw.prop.values.filter($ => $.groupId === propGroup.id);
+    $propGroup.values = raw.prop.values.filter(
+      ($) => $.groupId === propGroup.id
+    );
   });
 
   // Apply settings propGroup -> propValues
-  raw.prop.values.forEach(propValue => {
+  raw.prop.values.forEach((propValue) => {
     map.prop.values[propValue.id].settings = deepmerge(
       map.prop.groups[propValue.groupId].settings,
       map.prop.values[propValue.id].settings || {}
@@ -106,8 +110,8 @@ export const formatProjectData = data => {
 
   // ENTRIES
   // Calculates all the cells with the values and applied scores
-  raw.prop.values.forEach(prop =>
-    raw.res.values.forEach(res => {
+  raw.prop.values.forEach((prop) =>
+    raw.res.values.forEach((res) => {
       const entryId = `${prop.id}:${res.id}`;
       map.entries[entryId] = decorateEntry(
         prop,
@@ -122,12 +126,12 @@ export const formatProjectData = data => {
   raw.entries = Object.values(map.entries);
 
   // Distribute entries to propGroups/propValues
-  raw.prop.groups.forEach(propGroup => {
-    const values$ = $ => $.groupId === propGroup.id;
+  raw.prop.groups.forEach((propGroup) => {
+    const values$ = ($) => $.groupId === propGroup.id;
     propGroup.values = raw.prop.values.filter(values$);
 
     propGroup.entries = propGroup.values.reduce((acc, propValue) => {
-      const entries$ = entry => entry.propId === propValue.id;
+      const entries$ = (entry) => entry.propId === propValue.id;
       propValue.entries = raw.entries.filter(entries$);
       propValue.stats = calculateStats(propValue.entries);
       return [...acc, ...propValue.entries];
@@ -137,12 +141,12 @@ export const formatProjectData = data => {
   });
 
   // Distribute entries to resGroups/resValues
-  raw.res.groups.forEach(resGroup => {
-    const values$ = $ => $.groupId === resGroup.id;
+  raw.res.groups.forEach((resGroup) => {
+    const values$ = ($) => $.groupId === resGroup.id;
     resGroup.values = raw.res.values.filter(values$);
 
     resGroup.entries = resGroup.values.reduce((acc, resValue) => {
-      const entries$ = entry => entry.resId === resValue.id;
+      const entries$ = (entry) => entry.resId === resValue.id;
       resValue.entries = raw.entries.filter(entries$);
       resValue.stats = calculateStats(resValue.entries);
       return [...acc, ...resValue.entries];
@@ -158,6 +162,6 @@ export const formatProjectData = data => {
     map
   };
 
-  console.log(decoratedData);
+  // console.log(decoratedData);
   return decoratedData;
 };

@@ -15,6 +15,8 @@ import {
 
 import useResourceDetails from "../state/resources/use-resource-details";
 
+import SlidingQuestions from "../containers/SlidingQuestions";
+
 const ResourceDetailsView = () => {
   const { data, projectId, resourceId, isDataLoading } = useResourceDetails();
 
@@ -47,7 +49,10 @@ const ResourceDetailsView = () => {
             <IonSpinner name="dots" />
           </div>
         ) : (
-          <div>[[ TO BE COMPLETED ]]</div>
+          <>
+            <SlidingQuestions resourceId={resourceId} />
+            <div>[[ TO BE COMPLETED ]]</div>
+          </>
         )}
       </IonContent>
     </IonPage>
