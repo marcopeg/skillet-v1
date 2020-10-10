@@ -29,7 +29,7 @@ const DashboardView = () => {
   const showMatrix =
     isReady && data.prop.values.length && data.res.values.length;
 
-  const onUpdate = (evt) => upsertEntry(evt.detail);
+  const onUpdate = evt => upsertEntry(evt.detail);
 
   return (
     <IonPage>
@@ -49,7 +49,14 @@ const DashboardView = () => {
       </IonHeader>
       <IonContent scrollX={true} className="ion-padding">
         {showMatrix ? (
-          <SkillMatrix data={data} onUpdate={onUpdate} />
+          <>
+            <div>
+              Fill the cells with your evaluation for each property.The data
+              collected will be used only in an aggregate way to generate
+              metrics and statistics.
+            </div>
+            <SkillMatrix data={data} onUpdate={onUpdate} />
+          </>
         ) : (
           <div>
             Welcome to a new Skill Matrix project,
