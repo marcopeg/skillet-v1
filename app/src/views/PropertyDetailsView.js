@@ -34,7 +34,9 @@ const PropertiesView = () => {
           </IonButtons>
           <IonTitle>
             {data ? (
-              `${data.group.name} - ${data.name}`
+              <>
+                {data.name} <small>- {data.group.name}</small>
+              </>
             ) : (
               <IonSpinner name="dots" />
             )}
