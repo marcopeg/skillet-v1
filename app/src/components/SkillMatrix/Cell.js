@@ -30,10 +30,12 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
 
   // Calculate the current threshold of the cell
   const threshold = useMemo(() => {
-    if (useValue === null) return settings.thresholds._null;
-    const value = settings.thresholds.values.find($ => $.value >= useValue);
-    return value || settings.thresholds._error;
-  }, [settings.thresholds, useValue]);
+    if (useValue === null) return settings.appearance.thresholds._null;
+    const value = settings.appearance.thresholds.values.find(
+      $ => $.value >= useValue
+    );
+    return value || settings.appearance.thresholds._error;
+  }, [settings.appearance.thresholds, useValue]);
 
   // Persist the event so the Popover can mount in relation to it.
   const onRequestEdit = evt => {

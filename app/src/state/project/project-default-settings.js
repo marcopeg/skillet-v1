@@ -86,82 +86,37 @@ export const PROJECT_DEFAULTS = {
       }
     ]
   },
-  board: {
-    appearance: {
-      thresholds: {
-        _null: {
-          style: { backgroundColor: "#fff1d4" }
+  appearance: {
+    thresholds: {
+      _null: {
+        style: { backgroundColor: "#fff1d4" }
+      },
+      values: [
+        {
+          value: 0,
+          style: { backgroundColor: "#fff" }
         },
-        values: [
-          {
-            value: 0,
-            style: { backgroundColor: "#fff" }
-          },
-          {
-            value: 20,
-            style: { backgroundColor: "#e6f3ea" }
-          },
-          {
-            value: 40,
-            style: { backgroundColor: "#cee6d4" }
-          },
-          {
-            value: 60,
-            style: { backgroundColor: "#b5dabf" }
-          },
-          {
-            value: 80,
-            style: { backgroundColor: "#9dcdaa" }
-          },
-          {
-            value: 100,
-            style: { backgroundColor: "#84c195" }
-          }
-        ]
-      }
+        {
+          value: 20,
+          style: { backgroundColor: "#e6f3ea" }
+        },
+        {
+          value: 40,
+          style: { backgroundColor: "#cee6d4" }
+        },
+        {
+          value: 60,
+          style: { backgroundColor: "#b5dabf" }
+        },
+        {
+          value: 80,
+          style: { backgroundColor: "#9dcdaa" }
+        },
+        {
+          value: 100,
+          style: { backgroundColor: "#84c195" }
+        }
+      ]
     }
-  },
-  // @DEPRECATED
-  thresholds: {
-    _null: {
-      style: { backgroundColor: "#fff1d4" },
-      label: "Damn it, fill this stuff"
-    },
-    _error: {
-      style: { backgroundColor: "#f7d4d4" },
-      label: "Damn it, fill this stuff"
-    },
-    values: [
-      {
-        value: 0,
-        style: { backgroundColor: "#fff" },
-        label: "I have no idea"
-      },
-      {
-        value: 20,
-        style: { backgroundColor: "#e6f3ea" },
-        label: "I know the pourpose of it"
-      },
-      {
-        value: 40,
-        style: { backgroundColor: "#cee6d4" },
-        label: "I have Hello World experience"
-      },
-      {
-        value: 60,
-        style: { backgroundColor: "#b5dabf" },
-        label: "I can handle tasks"
-      },
-      {
-        value: 80,
-        style: { backgroundColor: "#9dcdaa" },
-        label: "I feel I'm an expert"
-      },
-      {
-        value: 100,
-        style: { backgroundColor: "#84c195" },
-        label: "I'm a master of it"
-      }
-    ]
   }
 };

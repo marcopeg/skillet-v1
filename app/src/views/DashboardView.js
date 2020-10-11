@@ -50,10 +50,9 @@ const DashboardView = () => {
       <IonContent scrollX={true} className="ion-padding">
         {showMatrix ? (
           <>
-            <div>
-              Fill the cells with your evaluation for each property.The data
-              collected will be used only in an aggregate way to generate
-              metrics and statistics.
+            <div className="ion-margin-bottom">
+              <b>NOTE:</b> The data collected will be used only in an aggregate
+              way to generate metrics and statistics.
             </div>
             <SkillMatrix data={data} onUpdate={onUpdate} />
           </>
