@@ -12,3 +12,9 @@ start-app:
 
 start-console:
 	(cd services/migrations && hasura console)
+
+start:
+	docker-compose up -d hasura
+	docker-compose up migrations
+	(cd app && npm i && npm start)
+	

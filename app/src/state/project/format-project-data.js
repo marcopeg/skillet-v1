@@ -52,7 +52,7 @@ const decorateEntry = (prop, res, entry, settings) => {
       };
 };
 
-export const formatProjectData = data => {
+export const formatProjectData = (data, sourceName = "default") => {
   if (!data) return null;
 
   const raw = {
@@ -71,6 +71,8 @@ export const formatProjectData = data => {
     },
     entries: null
   };
+
+  // console.log(`@@ ${sourceName}`, data.entries);
 
   const map = {
     prop: {
@@ -121,6 +123,9 @@ export const formatProjectData = data => {
   // Get all the entries in a list format so we can decorate other entities
   raw.entries = Object.values(map.entries);
 
+  // console.log(`@@ ${sourceName}`, raw.entries);
+  // console.log(`@@ ${sourceName}`, map.entries);
+
   // Distribute entries to propGroups/propValues
   raw.prop.groups.forEach(propGroup => {
     const values$ = $ => $.groupId === propGroup.id;
@@ -158,6 +163,6 @@ export const formatProjectData = data => {
     map
   };
 
-  console.log(decoratedData);
+  // console.log(`@@ ${sourceName}`, decoratedData);
   return decoratedData;
 };

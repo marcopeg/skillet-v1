@@ -1,0 +1,6 @@
+/* Centers the content of IonContent both horizontally and vertically */
+.ion-content-center::part(scroll) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

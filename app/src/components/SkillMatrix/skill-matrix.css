@@ -61,6 +61,7 @@
   width: var(--skm-cell-size);
   background: var(--skm-sub-header-color);
   overflow: hidden;
+  cursor: pointer;
 }
 
 .skm-header-skill span {
@@ -110,6 +111,7 @@
   white-space: nowrap;
   height: var(--skm-cell-size);
   background: var(--skm-sub-header-color);
+  cursor: pointer;
 }
 
 .skm-body-resource > span {

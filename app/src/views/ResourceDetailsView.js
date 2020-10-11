@@ -15,6 +15,8 @@ import {
 
 import useResourceDetails from "../state/resources/use-resource-details";
 
+import SlidingQuestions from "../containers/SlidingQuestions";
+
 const ResourceDetailsView = () => {
   const { data, projectId, resourceId, isDataLoading } = useResourceDetails();
 
@@ -27,9 +29,10 @@ const ResourceDetailsView = () => {
           </IonButtons>
           <IonButtons slot="end">
             <IonButton
-              routerLink={`/p/${projectId}/resources/v/${resourceId}/edit`}
+              routerLink={`/p/${projectId}/resources`}
+              routerDirection="back"
             >
-              Edit
+              Close
             </IonButton>
           </IonButtons>
           <IonTitle>
@@ -41,13 +44,22 @@ const ResourceDetailsView = () => {
           </IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
+      <IonContent>
         {isDataLoading ? (
           <div className="ion-padding">
             <IonSpinner name="dots" />
           </div>
         ) : (
-          <div>[[ TO BE COMPLETED ]]</div>
+          <>
+            <SlidingQuestions resourceId={resourceId} />
+            <div className="ion-padding ion-text-end">
+              <IonButton
+                routerLink={`/p/${projectId}/resources/v/${resourceId}/edit`}
+              >
+                Edit
+              </IonButton>
+            </div>
+          </>
         )}
       </IonContent>
     </IonPage>
