@@ -13,11 +13,13 @@ export const LOAD_BOARD_BY_RESOURCE_ID = gql`
     propGroups: prop_groups(order_by: { order: desc, id: asc }) {
       id
       name
+      settings
     }
     propValues: prop_values(order_by: { order: desc, id: asc }) {
       id
       name
       groupId: prop_group_id
+      settings
     }
     resGroups: res_groups(
       order_by: { order: desc, id: asc }
@@ -36,14 +38,14 @@ export const LOAD_BOARD_BY_RESOURCE_ID = gql`
     }
     entries(where: { res_value_id: { _eq: $resourceId } }) {
       propId: prop_value_id
-      resourceId: res_value_id
+      resId: res_value_id
       value
       updatedAt: updated_at
     }
   }
 `;
 
-const useBoardByResourceId = (resourceId) => {
+const useBoardByResourceId = resourceId => {
   const { projectId } = useParams();
   const { data, loading } = useQuery(LOAD_BOARD_BY_RESOURCE_ID, {
     variables: { resourceId },
@@ -55,7 +57,7 @@ const useBoardByResourceId = (resourceId) => {
       projectId,
       isReady: !!data,
       isLoading: loading,
-      data: formatProjectData(data)
+      data: formatProjectData(data, "byId")
     }),
     [data, loading, projectId]
   );

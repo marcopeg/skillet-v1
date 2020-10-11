@@ -1,4 +1,62 @@
 export const PROJECT_DEFAULTS = {
+  question: {
+    type: "slider",
+    options: {
+      stars: {
+        top: 5,
+        style: {
+          color: "var(--ion-color-primary)",
+          fontSize: 24
+        }
+      },
+      slider: {
+        thresholds: {
+          _null: {
+            style: { backgroundColor: "#fff1d4" },
+            label: "Use the slide to set your level:"
+          },
+          _error: {
+            style: { backgroundColor: "#f7d4d4" },
+            label: "Damn it, fill this stuff"
+          },
+          values: [
+            {
+              applyFrom: 0,
+              label: "I have no idea what this is"
+            },
+            {
+              applyFrom: 20,
+              label: "I know the pourpose of it"
+            },
+            {
+              applyFrom: 40,
+              label: "I have Hello World experience"
+            },
+            {
+              applyFrom: 60,
+              label: "I can handle tasks"
+            },
+            {
+              applyFrom: 80,
+              label: "I can onboard others"
+            },
+            {
+              applyFrom: 100,
+              label: "I feel I could do a tech-talk about it"
+            }
+          ]
+        },
+        props: {
+          range: {
+            min: 0,
+            max: 100,
+            step: 20,
+            snaps: true
+          }
+        }
+      }
+    }
+  },
   efficiency: {
     // It's the value that is assigned to the score of an empty cell.
     voidValue: -100,
@@ -28,6 +86,42 @@ export const PROJECT_DEFAULTS = {
       }
     ]
   },
+  board: {
+    appearance: {
+      thresholds: {
+        _null: {
+          style: { backgroundColor: "#fff1d4" }
+        },
+        values: [
+          {
+            value: 0,
+            style: { backgroundColor: "#fff" }
+          },
+          {
+            value: 20,
+            style: { backgroundColor: "#e6f3ea" }
+          },
+          {
+            value: 40,
+            style: { backgroundColor: "#cee6d4" }
+          },
+          {
+            value: 60,
+            style: { backgroundColor: "#b5dabf" }
+          },
+          {
+            value: 80,
+            style: { backgroundColor: "#9dcdaa" }
+          },
+          {
+            value: 100,
+            style: { backgroundColor: "#84c195" }
+          }
+        ]
+      }
+    }
+  },
+  // @DEPRECATED
   thresholds: {
     _null: {
       style: { backgroundColor: "#fff1d4" },

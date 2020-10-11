@@ -43,7 +43,7 @@ const ResourceDetailsView = () => {
           </IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
+      <IonContent>
         {isDataLoading ? (
           <div className="ion-padding">
             <IonSpinner name="dots" />
@@ -51,7 +51,6 @@ const ResourceDetailsView = () => {
         ) : (
           <>
             <SlidingQuestions resourceId={resourceId} />
-            <div>[[ TO BE COMPLETED ]]</div>
           </>
         )}
       </IonContent>
