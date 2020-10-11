@@ -18,18 +18,16 @@ const TypeStars = ({
     return starValue === value ? 0 : starValue;
   };
 
-  const stars = new Array(options.top)
-    .fill(null)
-    .map((_, idx) => (
-      <IonIcon
-        key={`star-${idx}`}
-        icon={getStarIcon(idx)}
-        style={options.style}
-        onClick={() => setValue(applyStarValue(idx))}
-      />
-    ));
+  const stars = new Array(options.top).fill(null).map((_, idx) => (
+    <IonIcon
+      key={`star-${idx}`}
+      icon={getStarIcon(idx)}
+      // style={options.style}
+      onClick={() => setValue(applyStarValue(idx))}
+    />
+  ));
 
-  return <div>{stars}</div>;
+  return <div className="prop-value-form--stars-outer">{stars}</div>;
 };
 
 export default TypeStars;

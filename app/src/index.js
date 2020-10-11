@@ -21,6 +21,7 @@ import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
 import "./vapor";
+import "./index.css";
 
 import App from "./App";
 import { AuthProvider } from "./hooks/use-auth";

@@ -31,18 +31,16 @@ const TypeSlider = ({
   const onChange = evt => setValue(evt.target.value);
 
   return (
-    <>
+    <div style={{ textAlign: "left" }}>
       <p>{threshold.label}</p>
-      <div style={{ display: "inline-block", width: 300 }}>
-        <IonRange
-          {...options.props.range}
-          value={value}
-          onIonChange={onChange}
-          onIonFocus={requestLockSlides}
-          onIonBlur={requestUnlockSlides}
-        />
-      </div>
-    </>
+      <IonRange
+        {...options.props.range}
+        value={value}
+        onIonChange={onChange}
+        onIonFocus={requestLockSlides}
+        onIonBlur={requestUnlockSlides}
+      />
+    </div>
   );
 };
 

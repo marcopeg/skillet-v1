@@ -29,9 +29,10 @@ const ResourceDetailsView = () => {
           </IonButtons>
           <IonButtons slot="end">
             <IonButton
-              routerLink={`/p/${projectId}/resources/v/${resourceId}/edit`}
+              routerLink={`/p/${projectId}/resources`}
+              routerDirection="back"
             >
-              Edit
+              Close
             </IonButton>
           </IonButtons>
           <IonTitle>
@@ -51,6 +52,13 @@ const ResourceDetailsView = () => {
         ) : (
           <>
             <SlidingQuestions resourceId={resourceId} />
+            <div className="ion-padding ion-text-end">
+              <IonButton
+                routerLink={`/p/${projectId}/resources/v/${resourceId}/edit`}
+              >
+                Edit
+              </IonButton>
+            </div>
           </>
         )}
       </IonContent>

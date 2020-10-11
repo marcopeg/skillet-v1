@@ -1,15 +1,21 @@
+/* eslint-disable */
+
 /**
  * Renders a single entry for the SkillMatrix.
  *
  */
 
 import React, { useState, useMemo } from "react";
-import { IonPopover } from "@ionic/react";
+import { IonPopover, IonContent, IonButton } from "@ionic/react";
+import { useHistory, useParams } from "react-router-dom";
 
 import CellView from "./CellView";
 import CellEdit from "./CellEdit";
 
 const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
+  const { projectId } = useParams();
+  const history = useHistory();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(null);
   const [currValue, setCurrValue] = useState(null);
@@ -26,12 +32,12 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
   // Calculate the current threshold of the cell
   const threshold = useMemo(() => {
     if (useValue === null) return settings.thresholds._null;
-    const value = settings.thresholds.values.find(($) => $.value >= useValue);
+    const value = settings.thresholds.values.find($ => $.value >= useValue);
     return value || settings.thresholds._error;
   }, [settings.thresholds, useValue]);
 
   // Persist the event so the Popover can mount in relation to it.
-  const onRequestEdit = (evt) => {
+  const onRequestEdit = evt => {
     evt.persist();
     setCurrValue(entry ? entry.value : 0);
     setIsEditing(evt);
@@ -65,6 +71,11 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
     }
   };
 
+  const navigateToUser = () => {
+    setIsEditing(null);
+    history.push(`/p/${projectId}/resources/v/${resValue.id}`);
+  };
+
   return (
     <>
       <CellView
@@ -79,7 +90,13 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
         event={isEditing}
         onDidDismiss={requestCancel}
       >
-        <CellEdit
+        <IonContent className="ion-padding">
+          <p>Open the Resource's name to run a self-evaluation session.</p>
+          <IonButton size="small" onClick={navigateToUser}>
+            Open the Resource's page
+          </IonButton>
+        </IonContent>
+        {/* <CellEdit
           propGroup={propGroup}
           propValue={propValue}
           resGroup={resGroup}
@@ -92,7 +109,7 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
           setValue={setCurrValue}
           requestCancel={requestCancel}
           requestSubmit={requestSubmit}
-        />
+        /> */}
       </IonPopover>
     </>
   );

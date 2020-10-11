@@ -26,72 +26,28 @@ const types = {
 const PropValueForm = ({
   settings,
   value,
+  setValue,
   propGroup,
   propValue,
   requestSkip,
   requestSubmit,
   ...props
 }) => {
-  const [currentValue, setValue] = useState(value);
-
   const Element = types[settings.type];
-
-  const requestCancel = () => {
-    setValue(null);
-    requestSkip();
-  };
-
   return (
-    <IonContent>
-      <IonCard>
-        <IonCardHeader color="primary">
-          <IonCardTitle>
-            <small>{propGroup.name} </small>
-            {propValue.name}
-          </IonCardTitle>
-        </IonCardHeader>
-        <IonCardContent>
-          <IonGrid>
-            <IonRow
-              className={"ion-align-items-center"}
-              style={{ height: 100, overflow: "hidden" }}
-            >
-              <IonCol size={12}>
-                <Element
-                  settings={settings}
-                  value={currentValue}
-                  setValue={setValue}
-                  {...props}
-                />
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-          <IonGrid>
-            <IonRow>
-              <IonCol size={6}>
-                <IonButton
-                  size={"small"}
-                  fill={"clear"}
-                  expand={"block"}
-                  onClick={requestCancel}
-                >
-                  skip
-                </IonButton>
-              </IonCol>
-              <IonCol size={6}>
-                <IonButton
-                  disabled={currentValue === null}
-                  size={"small"}
-                  expand={"block"}
-                  onClick={() => requestSubmit(currentValue)}
-                >
-                  <IonIcon icon={checkmarkOutline} slot={"end"} /> Save
-                </IonButton>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </IonCardContent>
-      </IonCard>
+    <IonContent scrollX={false} scrollY={false} className="ion-content-center">
+      <div className="prop-value-form-inner">
+        <h1>
+          {propValue.name}
+          <small>{propGroup.name}</small>
+        </h1>
+        <Element
+          settings={settings}
+          value={value}
+          setValue={setValue}
+          {...props}
+        />
+      </div>
     </IonContent>
   );
 };
