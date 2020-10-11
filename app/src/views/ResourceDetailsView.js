@@ -56,6 +56,8 @@ const ResourceDetailsView = () => {
             <SlidingQuestions resourceId={resourceId} />
             <div className="ion-padding ion-text-end">
               <IonButton
+                fill="outline"
+                expand="block"
                 routerLink={`/p/${projectId}/resources/v/${resourceId}/edit`}
               >
                 Edit

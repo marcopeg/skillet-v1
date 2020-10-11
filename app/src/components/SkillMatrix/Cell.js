@@ -1,22 +1,21 @@
-/* eslint-disable */
-
 /**
  * Renders a single entry for the SkillMatrix.
  *
  */
 
 import React, { useState, useMemo } from "react";
-import { IonPopover, IonContent, IonButton } from "@ionic/react";
+import { IonPopover, IonContent, IonButton, IonIcon } from "@ionic/react";
 import { useHistory, useParams } from "react-router-dom";
+import { returnUpForwardOutline } from "ionicons/icons";
 
 import CellView from "./CellView";
-import CellEdit from "./CellEdit";
+// import CellEdit from "./CellEdit";
 
 const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
   const { projectId } = useParams();
   const history = useHistory();
 
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(null);
   const [currValue, setCurrValue] = useState(null);
 
@@ -46,30 +45,30 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
   // Reset the current value to null so that the original value
   // could be represented instead.
   const requestCancel = () => {
-    setIsLoading(false);
+    // setIsLoading(false);
     setIsEditing(null);
     setCurrValue(null);
   };
 
-  const requestSubmit = () => {
-    setIsLoading(true);
-    const p = onUpdate({
-      detail: {
-        prop_value_id: propValue.id,
-        res_value_id: resValue.id,
-        value: currValue
-      }
-    });
+  // const requestSubmit = () => {
+  //   setIsLoading(true);
+  //   const p = onUpdate({
+  //     detail: {
+  //       prop_value_id: propValue.id,
+  //       res_value_id: resValue.id,
+  //       value: currValue
+  //     }
+  //   });
 
-    // Slow down save time to allow the push update to be
-    // applied to the SkillMatrix.
-    // It's kinda of a cheap trick, but it should do the job.
-    try {
-      p.finally(() => setTimeout(requestCancel, 500));
-    } catch (err) {
-      requestCancel();
-    }
-  };
+  //   // Slow down save time to allow the push update to be
+  //   // applied to the SkillMatrix.
+  //   // It's kinda of a cheap trick, but it should do the job.
+  //   try {
+  //     p.finally(() => setTimeout(requestCancel, 500));
+  //   } catch (err) {
+  //     requestCancel();
+  //   }
+  // };
 
   const navigateToUser = () => {
     setIsEditing(null);
@@ -91,9 +90,13 @@ const Cell = ({ propGroup, propValue, resGroup, resValue, data, onUpdate }) => {
         onDidDismiss={requestCancel}
       >
         <IonContent className="ion-padding">
+          <h3>
+            {resValue.name} <small>- {resGroup.name}</small>
+          </h3>
           <p>Open the Resource's name to run a self-evaluation session.</p>
           <IonButton size="small" onClick={navigateToUser}>
-            Open the Resource's page
+            View details
+            <IonIcon slot="end" icon={returnUpForwardOutline} />
           </IonButton>
         </IonContent>
         {/* <CellEdit
