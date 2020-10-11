@@ -11,7 +11,7 @@ const useResourceQuestions = resourceId => {
 
     const sorted = board.entries.sort((a, b) => {
       if (a.value === null) return -1;
-      return b.updatedAt - a.updatedAt;
+      return a.updatedAt - b.updatedAt;
     });
 
     return sorted.map(answer => ({
