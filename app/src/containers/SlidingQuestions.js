@@ -30,22 +30,6 @@ const slideOpts = {
   allowTouchMove: false
 };
 
-// STATIC QUESTIONS
-// The slider doesn't work well with dynamic contents.
-// here we use a cheap trick so to lock the questions data
-// after first data load:
-const useStaticQuestions = dynamicQuestions => {
-  const [etag, setEtag] = useState(0);
-  const staticQuestions = useMemo(() => [...dynamicQuestions], [etag]);
-  useEffect(() => {
-    if (etag === 0 && dynamicQuestions.length > 0) {
-      setEtag(1);
-    }
-  }, [dynamicQuestions]);
-
-  return staticQuestions;
-};
-
 const useDeferredFlag = (delay = 250) => {
   const [value, setValue] = useState(false);
 
@@ -57,42 +41,16 @@ const useDeferredFlag = (delay = 250) => {
   return value;
 };
 
-const useQuestionsValues = questions => {
-  const [values, setValues] = useState({});
-
-  useEffect(() => {
-    setValues(
-      questions.reduce(
-        (acc, $) => ({ ...acc, [$.question.id]: $.answer.value }),
-        {}
-      )
-    );
-  }, [questions]);
-
-  const setValue = slide => value =>
-    setValues({
-      ...values,
-      [slide.question.id]: value
-    });
-
-  return {
-    values,
-    setValue
-  };
-};
-
 const SlidingQuestions = ({ resourceId }) => {
   const slidesRef = useRef(null);
   const isVisible = useDeferredFlag();
   const [activeIndex, setActiveIndex] = useState(slideOpts.initialSlide);
   const { upsertEntry } = useEntryUpsert();
 
-  // // const [canSubmit, setCanSubmit] = useState(false);
-
   // Load the questions to run and freeze the data
-  const { questions: dynamicQuestions } = useResourceQuestions(resourceId);
-  const questions = useStaticQuestions(dynamicQuestions);
-  const { values, setValue } = useQuestionsValues(dynamicQuestions);
+  const { questions, staticQuestions, values, setValue } = useResourceQuestions(
+    resourceId
+  );
 
   const isFirstSlide = activeIndex === 0;
   const isLastSlide = activeIndex >= questions.length - 1;
