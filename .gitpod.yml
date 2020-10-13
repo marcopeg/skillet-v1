@@ -19,7 +19,7 @@ tasks:
   # after they are created.
   - name: Backend
     before: cd backend
-    init: rm -rf ./.gitpod.lock && yarn install && touch ./.gitpod.lock
+    init: rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
     command: HELLO=world
       PORT=4000
       HASURA_ENDPOINT=$(gp url 8080)
@@ -32,7 +32,7 @@ tasks:
   # it runs the CreateReactApp setup that consumes Hasura Engine's API.
   - name: Frontend
     before: cd app
-    init: rm -rf ./.gitpod.lock && yarn install && touch ./.gitpod.lock
+    init: rm -rf ./.gitpod.lock && npm install && touch ./.gitpod.lock
     command: HELLO=world
       REACT_APP_HASURA_URL=$(gp url 8080)/v1/graphql
       DANGEROUSLY_DISABLE_HOST_CHECK=true
