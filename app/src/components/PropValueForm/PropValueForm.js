@@ -1,4 +1,5 @@
 /* eslint-disable */
+import "./index.css";
 import React, { useState, useEffect } from "react";
 import {
   IonContent,
@@ -36,7 +37,11 @@ const PropValueForm = ({
   const Element = types[settings.type];
 
   return (
-    <IonContent scrollX={false} scrollY={false} className="ion-content-center">
+    <IonContent
+      scrollX={false}
+      scrollY={false}
+      className="ion-content-v-center"
+    >
       <div className="prop-value-form-inner">
         <h1>
           {propValue.name}

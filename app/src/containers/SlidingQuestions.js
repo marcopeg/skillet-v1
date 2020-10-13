@@ -101,7 +101,7 @@ const SlidingQuestions = ({ resourceId }) => {
   return (
     <IonCard>
       <IonCardHeader color="primary">Self Evaluation:</IonCardHeader>
-      <IonCardContent>
+      <IonCardContent style={{ padding: 0 }}>
         <IonGrid className="sliding-question-inner">
           <IonRow>
             <IonCol>

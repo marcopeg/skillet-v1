@@ -6,6 +6,9 @@ module.exports = {
   styleguideComponents: {
     Wrapper: path.join(__dirname, "src/styleguidist/Wrapper")
   },
+  context: {
+    IonWrapper: path.join(__dirname, "src/styleguidist/IonWrapper")
+  },
   dangerouslyUpdateWebpackConfig(webpackConfig, env) {
     webpackConfig.devServer = {
       disableHostCheck: true

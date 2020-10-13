@@ -1,7 +1,8 @@
 .prop-value-form-inner {
   display: flex;
-  min-width: 280px;
-  max-width: 700px;
+  flex: 1;
+  /* min-width: 280px;
+  max-width: 700px; */
   flex-direction: column;
 }
 
