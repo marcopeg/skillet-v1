@@ -71,6 +71,8 @@ ports:
     onOpen: ignore
   - port: 3000
     onOpen: open-preview
+  - port: 6060
+    onOpen: ignore
   - port: 4000
     onOpen: ignore
   - port: 8008
