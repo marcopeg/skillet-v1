@@ -19,8 +19,9 @@
     "use-media": "^1.4.0"
   },
   "devDependencies": {
-    "typescript": "3.8.3",
-    "node-forge": ">=0.10.0"
+    "node-forge": ">=0.10.0",
+    "react-styleguidist": "^11.1.0",
+    "typescript": "3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,7 +30,8 @@
     "eject": "react-scripts eject",
     "start:compose": "npm i && react-scripts start",
     "start:node": "REACT_APP_HASURA_URL=http://localhost:8080/v1/graphql react-scripts start",
-    "ngrok": "ngrok http 3000 -host-header=\"localhost:3000\""
+    "ngrok": "ngrok http 3000 -host-header=\"localhost:3000\"",
+    "styleguide": "styleguidist server"
   },
   "browserslist": [
     ">0.2%",

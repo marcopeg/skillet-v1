@@ -105,3 +105,4 @@ dist
 
 # Project files
 .docker-data
+.gitpod.lock
