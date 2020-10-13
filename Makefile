@@ -17,4 +17,9 @@ start:
 	docker-compose up -d hasura
 	docker-compose up migrations
 	(cd app && npm i && npm start)
+
+stop:
+	docker-compose down
 	
+migrate:
+	docker-compose up migrations
