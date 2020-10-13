@@ -34,6 +34,7 @@ const PropValueForm = ({
   ...props
 }) => {
   const Element = types[settings.type];
+
   return (
     <IonContent scrollX={false} scrollY={false} className="ion-content-center">
       <div className="prop-value-form-inner">
