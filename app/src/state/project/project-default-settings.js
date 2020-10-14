@@ -4,10 +4,10 @@ export const PROJECT_DEFAULTS = {
     options: {
       stars: {
         top: 5,
-        style: {
-          color: "var(--ion-color-primary)",
-          fontSize: 24
-        }
+        // style: {
+        //   color: "var(--ion-color-primary)",
+        //   fontSize: 24
+        // }
       },
       slider: {
         thresholds: {

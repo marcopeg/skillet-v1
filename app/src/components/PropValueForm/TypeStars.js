@@ -1,6 +1,7 @@
 import React from "react";
 import { IonIcon } from "@ionic/react";
 import { star, starOutline } from "ionicons/icons";
+import "./TypeStars.css"
 
 const TypeStars = ({
   settings: {
@@ -22,12 +23,12 @@ const TypeStars = ({
     <IonIcon
       key={`star-${idx}`}
       icon={getStarIcon(idx)}
-      // style={options.style}
+      style={options.style || {}}
       onClick={() => setValue(applyStarValue(idx))}
     />
   ));
 
-  return <div className="prop-value-form--stars-outer">{stars}</div>;
+  return <div className="prop-value-form__type-stars">{stars}</div>;
 };
 
 export default TypeStars;

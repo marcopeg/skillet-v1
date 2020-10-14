@@ -35,7 +35,7 @@ const SlidingQuestions = ({
   const getActiveIndex = () => slidesRef.current.getActiveIndex();
   const onSlideChange = () => getActiveIndex().then(setActiveIndex);
   const lockSlides = value => () => slidesRef.current.lockSwipes(value);
-  const requestSubmit = () => submitSlide().then(slidesRef.current.slideNext);
+  const requestSubmit = () => submitSlide().then(() => slidesRef.current.slideNext());
 
   return (
     <IonCard>
@@ -49,7 +49,7 @@ const SlidingQuestions = ({
             <IonCol>
               <IonSlides
                 ref={slidesRef}
-                pager={true}
+                pager={false}
                 options={{
                   initialSlide: activeSlide.__index,
                   speed: 400,
@@ -66,14 +66,15 @@ const SlidingQuestions = ({
                           <ReactMarkdown source={$slide.question.description} />
                         </div>
                       )}
-                      <div className="ion-margin-vertical sliding-questions--control">
+                      <div className="ion-margin-vertical sliding-questions--control-wrapper">
+                        <div className="ion-margin-vertical sliding-questions--control">
                         <PropValueForm
                           settings={$slide.question.settings}
                           value={getValue($slide)}
                           setValue={setValue($slide)}
                           requestLockSlides={lockSlides(true)}
                           requestUnlockSlides={lockSlides(false)}
-                        />
+                        /></div>
                       </div>
                     </div>
                   </IonSlide>

@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useMemo } from "react";
+import "./TypeSlider.css";
 
 import {
   IonGrid,
@@ -9,7 +10,8 @@ import {
   IonRange,
   IonButton,
   IonIcon,
-  IonSpinner
+  IonSpinner,
+  IonText
 } from "@ionic/react";
 
 const TypeSlider = ({
@@ -34,16 +36,19 @@ const TypeSlider = ({
   };
 
   return (
-    <div style={{ textAlign: "left" }}>
-      <p style={{ textAlign: "center", margin: 0 }}>{threshold.label}</p>
-      <IonRange
-        {...options.props.range}
-        value={value}
-        onIonChange={onChange}
-        onIonFocus={requestLockSlides}
-        onIonBlur={requestUnlockSlides}
-        style={{ margin: 0 }}
-      />
+    <div className="prop-value-form__type-slider">
+      <div className="prop-value-form__type-slider--label">
+        <IonText color="primary">{threshold.label}</IonText>
+      </div>
+      <div className="prop-value-form__type-slider--control">
+        <IonRange
+          {...options.props.range}
+          value={value}
+          onIonChange={onChange}
+          onIonFocus={requestLockSlides}
+          onIonBlur={requestUnlockSlides}
+        />
+      </div>
     </div>
   );
 };

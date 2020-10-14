@@ -31,7 +31,7 @@ const DEFAULT_SLIDES = [
     question: {
       id: 2,
       name: "Indexes",
-      // description: `As a developer, I'm able to optimize data access to a table by **defining indexes** on one or multiple columns.`,
+      description: `As a developer, I'm able to optimize data access to a table by **defining indexes** on one or multiple columns.`,
       settings: {
         type: "stars",
         options: PROJECT_DEFAULTS.question.options

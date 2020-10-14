@@ -16,16 +16,31 @@ ion-slides.sliding-questions--slides {
   flex: 1;
   flex-direction: column;
   justify-content: space-around;
-  align-items: center;
+  align-items: stretch;
   /* background: lime; */
 }
 
 .sliding-questions--description {
   border-bottom: 1px solid var(--ion-color-medium);
   text-align: left;
-  /* background: red; */
 }
 
-/* .sliding-questions--control {
-  background: blue;
-} */
+.sliding-questions--control-wrapper {
+  position: relative;
+  display: block;
+  min-height: 120px;
+  width: 100%;
+}
+
+.sliding-questions--control {
+  position: absolute;
+  top: 0;
+  bottom: 0; 
+  left: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+}
