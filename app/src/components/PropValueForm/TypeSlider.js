@@ -32,13 +32,14 @@ const TypeSlider = ({
 
   return (
     <div style={{ textAlign: "left" }}>
-      <p>{threshold.label}</p>
+      <p style={{ textAlign: "center", margin: 0 }}>{threshold.label}</p>
       <IonRange
         {...options.props.range}
         value={value}
         onIonChange={onChange}
         onIonFocus={requestLockSlides}
         onIonBlur={requestUnlockSlides}
+        style={{ margin: 0 }}
       />
     </div>
   );

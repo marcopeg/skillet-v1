@@ -1,0 +1,19 @@
+/* Remove grid's margins */
+.sliding-questions--grid {
+  --ion-grid-padding: 0;
+}
+.sliding-questions--grid ion-col {
+  --ion-grid-column-padding: 0;
+}
+
+/* Slide's Sections */
+.sliding-questions--slide {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.sliding-questions--description {
+  border-bottom: 1px solid var(--ion-color-medium);
+  text-align: left;
+}

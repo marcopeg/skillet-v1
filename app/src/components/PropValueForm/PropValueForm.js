@@ -43,16 +43,21 @@ const PropValueForm = ({
       className="ion-content-v-center"
     >
       <div className="prop-value-form-inner">
-        <h1>
-          {propValue.name}
-          <small>{propGroup.name}</small>
-        </h1>
-        <Element
-          settings={settings}
-          value={value}
-          setValue={setValue}
-          {...props}
-        />
+        <div className="prop-value-form--header">
+          <h1>
+            <small>{propGroup.name}</small>
+            {propValue.name}
+          </h1>
+          <p>foobar</p>
+        </div>
+        <div className="prop-value-form--body">
+          <Element
+            settings={settings}
+            value={value}
+            setValue={setValue}
+            {...props}
+          />
+        </div>
       </div>
     </IonContent>
   );

@@ -109,7 +109,7 @@ const SlidingQuestions = ({ resourceId }) => {
                 ref={slidesRef}
                 pager={false}
                 options={slideOpts}
-                style={{ height: 150 }}
+                style={{ height: 250 }}
                 onIonSlideDidChange={onSlideChange}
               >
                 {questions.map(slide => (
