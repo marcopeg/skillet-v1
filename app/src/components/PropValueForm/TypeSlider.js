@@ -28,7 +28,10 @@ const TypeSlider = ({
     return item || options.thresholds._error;
   }, [options, value]);
 
-  const onChange = evt => setValue(evt.target.value);
+  const onChange = evt => {
+    console.log("@@change", evt.target.value);
+    setValue(evt.target.value);
+  };
 
   return (
     <div style={{ textAlign: "left" }}>

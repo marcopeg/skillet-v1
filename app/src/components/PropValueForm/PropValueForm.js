@@ -24,43 +24,9 @@ const types = {
   stars: TypeStars
 };
 
-const PropValueForm = ({
-  settings,
-  value,
-  setValue,
-  propGroup,
-  propValue,
-  requestSkip,
-  requestSubmit,
-  ...props
-}) => {
+const PropValueForm = ({ settings, ...props }) => {
   const Element = types[settings.type];
-
-  return (
-    <IonContent
-      scrollX={false}
-      scrollY={false}
-      className="ion-content-v-center"
-    >
-      <div className="prop-value-form-inner">
-        <div className="prop-value-form--header">
-          <h1>
-            <small>{propGroup.name}</small>
-            {propValue.name}
-          </h1>
-          <p>foobar</p>
-        </div>
-        <div className="prop-value-form--body">
-          <Element
-            settings={settings}
-            value={value}
-            setValue={setValue}
-            {...props}
-          />
-        </div>
-      </div>
-    </IonContent>
-  );
+  return <Element settings={settings} {...props} />;
 };
 
 export default PropValueForm;

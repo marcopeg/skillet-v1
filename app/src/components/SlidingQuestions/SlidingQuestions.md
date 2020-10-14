@@ -1,52 +1,32 @@
-HELLO WORLD
+```js
+import useFakeProps from "./use-fake-props";
+const {
+  slides,
+  isFirstSlide,
+  canSubmit,
+  activeSlide,
+  setActiveIndex,
+  getValue,
+  setValue,
+  submitSlide
+} = useFakeProps();
+<IonWrapper>
+  <SlidingQuestions
+    slides={slides}
+    isFirstSlide={isFirstSlide}
+    canSubmit={canSubmit}
+    activeSlide={activeSlide}
+    setActiveIndex={setActiveIndex}
+    getValue={getValue}
+    setValue={setValue}
+    submitSlide={submitSlide}
+  />
+</IonWrapper>;
+```
 
 ```js
-import { useState } from "react";
-const useFakeProps = () => {
-  const questions = [
-    {
-      question: {
-        id: 1,
-        name: "CRUD",
-        description: `As a developer, I'm able to **R**ead, **W**rite, **U**pdate and **D**elete data from a table that I've set up.`,
-        settings: {
-          question: {}
-        }
-      },
-      group: {
-        id: 1,
-        name: "Postgres"
-      }
-    },
-    {
-      question: {
-        id: 2,
-        name: "Indexes",
-        description: `As a developer, I'm able to optimize data access to a table by **defining indexes** on one or multiple columns.`,
-        settings: {
-          question: {}
-        }
-      },
-      group: {
-        id: 1,
-        name: "Postgres"
-      }
-    }
-  ];
-
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  return {
-    isFirstSlide: activeIndex === 0,
-    canSubmit: false,
-    questions,
-    activeIndex,
-    activeQuestion: questions[activeIndex],
-    setActiveIndex,
-    requestSubmit: () => {}
-  };
-};
+import useFakeProps from "./use-fake-props";
 <IonWrapper>
-  <SlidingQuestions {...useFakeProps()} />
+  <SlidingQuestions {...useFakeProps(undefined, 1)} />
 </IonWrapper>;
 ```

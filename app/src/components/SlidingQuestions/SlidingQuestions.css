@@ -6,14 +6,26 @@
   --ion-grid-column-padding: 0;
 }
 
+ion-slides.sliding-questions--slides {
+  height: 100%;
+}
+
 /* Slide's Sections */
 .sliding-questions--slide {
   display: flex;
   flex: 1;
   flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  /* background: lime; */
 }
 
 .sliding-questions--description {
   border-bottom: 1px solid var(--ion-color-medium);
   text-align: left;
+  /* background: red; */
 }
+
+/* .sliding-questions--control {
+  background: blue;
+} */

@@ -2,8 +2,9 @@ import React, { useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import "./SlidingQuestions.css";
 
+import PropValueForm from "../PropValueForm";
+
 import {
-  IonContent,
   IonGrid,
   IonRow,
   IonCol,
@@ -23,20 +24,24 @@ import { checkmarkOutline, chevronBackOutline } from "ionicons/icons";
 const SlidingQuestions = ({
   isFirstSlide,
   canSubmit,
-  questions,
-  activeQuestion,
-  activeIndex,
+  slides,
+  activeSlide,
   setActiveIndex,
-  requestSubmit
+  getValue,
+  setValue,
+  submitSlide
 }) => {
   const slidesRef = useRef(null);
-  const onSlideChange = () =>
-    slidesRef.current.getActiveIndex().then(setActiveIndex);
+  const getActiveIndex = () => slidesRef.current.getActiveIndex();
+  const onSlideChange = () => getActiveIndex().then(setActiveIndex);
+  const lockSlides = value => () => slidesRef.current.lockSwipes(value);
+  const requestSubmit = () => submitSlide().then(slidesRef.current.slideNext);
+
   return (
     <IonCard>
       <IonCardHeader color="primary">
-        <IonCardSubtitle>{activeQuestion.group.name}</IonCardSubtitle>
-        <IonCardTitle>{activeQuestion.question.name}</IonCardTitle>
+        <IonCardSubtitle>{activeSlide.group.name}</IonCardSubtitle>
+        <IonCardTitle>{activeSlide.question.name}</IonCardTitle>
       </IonCardHeader>
       <IonCardContent>
         <IonGrid className="sliding-questions--grid">
@@ -46,20 +51,29 @@ const SlidingQuestions = ({
                 ref={slidesRef}
                 pager={true}
                 options={{
-                  initialSlide: activeIndex,
+                  initialSlide: activeSlide.__index,
                   speed: 400,
                   allowTouchMove: false
                 }}
                 onIonSlideWillChange={onSlideChange}
+                className="sliding-questions--slides"
               >
-                {questions.map($item => (
-                  <IonSlide key={`q-${$item.group.id}-${$item.question.id}`}>
+                {slides.map($slide => (
+                  <IonSlide key={`q-${$slide.group.id}-${$slide.question.id}`}>
                     <div className="sliding-questions--slide">
-                      <div className="ion-margin-vertical ion-padding-bottom sliding-questions--description">
-                        <ReactMarkdown source={$item.question.description} />
-                      </div>
-                      <div className="ion-margin-bottom sliding-questions--control">
-                        [control]
+                      {$slide.question.description && (
+                        <div className="ion-margin-top ion-padding-bottom sliding-questions--description">
+                          <ReactMarkdown source={$slide.question.description} />
+                        </div>
+                      )}
+                      <div className="ion-margin-vertical sliding-questions--control">
+                        <PropValueForm
+                          settings={$slide.question.settings}
+                          value={getValue($slide)}
+                          setValue={setValue($slide)}
+                          requestLockSlides={lockSlides(true)}
+                          requestUnlockSlides={lockSlides(false)}
+                        />
                       </div>
                     </div>
                   </IonSlide>
