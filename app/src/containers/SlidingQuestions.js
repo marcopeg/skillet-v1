@@ -24,6 +24,8 @@ import useEntryUpsert from "../state/use-entry-upsert";
 
 import PropValueForm from "../components/PropValueForm";
 
+import SlidingQuestionsUI from '../components/SlidingQuestions'
+
 const slideOpts = {
   initialSlide: 0,
   speed: 400,
@@ -98,71 +100,86 @@ const SlidingQuestions = ({ resourceId }) => {
     return false;
   }
 
-  return (
-    <IonCard>
-      <IonCardHeader color="primary">Self Evaluation:</IonCardHeader>
-      <IonCardContent style={{ padding: 0 }}>
-        <IonGrid className="sliding-question-inner">
-          <IonRow>
-            <IonCol>
-              <IonSlides
-                ref={slidesRef}
-                pager={false}
-                options={slideOpts}
-                style={{ height: 250 }}
-                onIonSlideDidChange={onSlideChange}
-              >
-                {questions.map(slide => (
-                  <IonSlide key={`q-${slide.group.id}-${slide.question.id}`}>
-                    <PropValueForm
-                      settings={slide.question.settings.question}
-                      value={values[slide.question.id]}
-                      setValue={setValue(slide)}
-                      propGroup={slide.group}
-                      propValue={slide.question}
-                      requestSkip={requestSkip}
-                      requestSubmit={onUpdate(slide)}
-                      requestLockSlides={() =>
-                        slidesRef.current.lockSwipes(true)
-                      }
-                      requestUnlockSlides={() =>
-                        slidesRef.current.lockSwipes(false)
-                      }
-                    />
-                  </IonSlide>
-                ))}
-                <IonSlide>You are done!</IonSlide>
-              </IonSlides>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size={2} className="ion-justify-content-start">
-              {isFirstSlide ? null : (
-                <IonButton size={"small"} fill={"clear"} onClick={requestPrev}>
-                  <IonIcon icon={chevronBackOutline} />
-                </IonButton>
-              )}
-            </IonCol>
-            <IonCol size={4} className="ion-justify-content-center">
-              <IonButton size={"small"} fill={"clear"} onClick={requestSkip}>
-                skip
-              </IonButton>
-            </IonCol>
-            <IonCol size={6}>
-              <IonButton
-                disabled={canSubmit === false}
-                size={"small"}
-                expand={"block"}
-                onClick={requestSubmit}
-              >
-                <IonIcon icon={checkmarkOutline} slot={"end"} /> Save
-              </IonButton>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-      </IonCardContent>
-    </IonCard>
-  );
+  const getValue = slide => values[slide.question.id];
+
+
+    return 'slides'
+//   return <SlidingQuestionsUI 
+//     slides={staticQuestions}
+//     isFirstSlide={isFirstSlide}
+//     canSubmit={canSubmit}
+//     activeSlide={staticQuestions[activeIndex]}
+//     setActiveIndex={setActiveIndex}
+//     getValue={getValue}
+//     setValue={setValue}
+//     submitSlide={() => {}}
+//   />
+
+//   return (
+//     <IonCard>
+//       <IonCardHeader color="primary">Self Evaluation:</IonCardHeader>
+//       <IonCardContent style={{ padding: 0 }}>
+//         <IonGrid className="sliding-question-inner">
+//           <IonRow>
+//             <IonCol>
+//               <IonSlides
+//                 ref={slidesRef}
+//                 pager={false}
+//                 options={slideOpts}
+//                 style={{ height: 250 }}
+//                 onIonSlideDidChange={onSlideChange}
+//               >
+//                 {questions.map(slide => (
+//                   <IonSlide key={`q-${slide.group.id}-${slide.question.id}`}>
+//                     <PropValueForm
+//                       settings={slide.question.settings.question}
+//                       value={values[slide.question.id]}
+//                       setValue={setValue(slide)}
+//                       propGroup={slide.group}
+//                       propValue={slide.question}
+//                       requestSkip={requestSkip}
+//                       requestSubmit={onUpdate(slide)}
+//                       requestLockSlides={() =>
+//                         slidesRef.current.lockSwipes(true)
+//                       }
+//                       requestUnlockSlides={() =>
+//                         slidesRef.current.lockSwipes(false)
+//                       }
+//                     />
+//                   </IonSlide>
+//                 ))}
+//                 <IonSlide>You are done!</IonSlide>
+//               </IonSlides>
+//             </IonCol>
+//           </IonRow>
+//           <IonRow>
+//             <IonCol size={2} className="ion-justify-content-start">
+//               {isFirstSlide ? null : (
+//                 <IonButton size={"small"} fill={"clear"} onClick={requestPrev}>
+//                   <IonIcon icon={chevronBackOutline} />
+//                 </IonButton>
+//               )}
+//             </IonCol>
+//             <IonCol size={4} className="ion-justify-content-center">
+//               <IonButton size={"small"} fill={"clear"} onClick={requestSkip}>
+//                 skip
+//               </IonButton>
+//             </IonCol>
+//             <IonCol size={6}>
+//               <IonButton
+//                 disabled={canSubmit === false}
+//                 size={"small"}
+//                 expand={"block"}
+//                 onClick={requestSubmit}
+//               >
+//                 <IonIcon icon={checkmarkOutline} slot={"end"} /> Save
+//               </IonButton>
+//             </IonCol>
+//           </IonRow>
+//         </IonGrid>
+//       </IonCardContent>
+//     </IonCard>
+//   );
 };
 
 export default SlidingQuestions;
