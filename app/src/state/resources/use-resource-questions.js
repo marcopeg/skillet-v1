@@ -14,10 +14,10 @@ const useStaticQuestions = dynamicQuestions => {
     if (etag === 0 && dynamicQuestions.length > 0) {
       setEtag(1);
     }
-  }, [dynamicQuestions]);
+  }, [dynamicQuestions]); // eslint-disable-line
 
   // Only the `etag`can change the value of this memo
-  return useMemo(() => [...dynamicQuestions], [etag]); // eslint-disable
+  return useMemo(() => [...dynamicQuestions], [etag]); // eslint-disable-line
 };
 
 const useQuestionsValues = questions => {
@@ -67,7 +67,7 @@ const useSortedQuestions = board =>
 const useResourceQuestions = resourceId => {
   const { upsertEntry } = useEntryUpsert();
   const [activeIndex, setActiveIndex] = useState(0);
-  const { data: board, isLoading } = useBoardByResourceId(resourceId);
+  const { data: board } = useBoardByResourceId(resourceId);
 
   const questions = useSortedQuestions(board);
   const slides = useStaticQuestions(questions);

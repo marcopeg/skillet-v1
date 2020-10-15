@@ -21,12 +21,20 @@ ion-slides.sliding-questions--slides {
   flex-direction: column;
   justify-content: space-around;
   align-items: stretch;
-  /* background: lime; */
+}
+
+.sliding-questions--col-info {
+  display: flex;
 }
 
 .sliding-questions--description {
-  border-bottom: 1px solid var(--ion-color-medium);
+  border: 1px solid var(--ion-color-medium);
+  border-radius: 4px;
+  background-color: var(--vapor-color-white-smoke);
   text-align: left;
+  width: 95%;
+  max-height: 120px;
+  overflow: auto;
 }
 
 .sliding-questions--control-wrapper {

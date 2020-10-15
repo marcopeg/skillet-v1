@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import React from "react";
+import ReactMarkdown from "react-markdown";
 import {
   IonPage,
   IonHeader,
@@ -16,7 +17,10 @@ import {
   IonInput,
   IonTextarea,
   IonSpinner,
-  IonAlert
+  IonAlert,
+  IonGrid,
+  IonRow,
+  IonCol
 } from "@ionic/react";
 
 import usePropertyEditValue from "../state/properties/use-property-edit-value";
@@ -73,20 +77,48 @@ const PropertyEditView = () => {
         ) : (
           <>
             <IonList lines="full">
-              <IonItem>
-                <IonLabel position="floating">Name:</IonLabel>
-                <IonInput
-                  value={values.name}
-                  onIonChange={e => setValue("name", e.detail.value)}
-                />
+              <IonItem className="ion-no-padding">
+                <IonGrid style={{ width: "100%" }}>
+                  <IonRow>
+                    <IonCol>
+                      <IonLabel position="floating">Name:</IonLabel>
+                      <IonInput
+                        value={values.name}
+                        onIonChange={e => setValue("name", e.detail.value)}
+                      />
+                    </IonCol>
+                  </IonRow>
+                </IonGrid>
               </IonItem>
-              <IonItem>
-                <IonLabel position="floating">Description:</IonLabel>
-                <IonTextarea
-                  rows="5"
-                  value={values.description}
-                  onIonChange={e => setValue("description", e.detail.value)}
-                />
+              <IonItem className="ion-no-padding">
+                <IonGrid style={{ width: "100%" }}>
+                  <IonRow>
+                    <IonCol sizeSm={6} sizeXs={12}>
+                      <IonLabel position="floating">Description:</IonLabel>
+                      <IonTextarea
+                        rows="5"
+                        value={values.description}
+                        onIonChange={e =>
+                          setValue("description", e.detail.value)
+                        }
+                      />
+                    </IonCol>
+                    <IonCol sizeSm={6} sizeXs={12}>
+                      <div
+                        className="ion-padding ion-margin-top"
+                        style={{
+                          border: "1px solid var(--ion-color-medium)",
+                          background: "var(--vapor-color-white-smoke)",
+                          borderRadius: 4,
+                          maxHeight: 150,
+                          overflow: "auto"
+                        }}
+                      >
+                        <ReactMarkdown source={values.description} />
+                      </div>
+                    </IonCol>
+                  </IonRow>
+                </IonGrid>
               </IonItem>
             </IonList>
             <div className="ion-padding">

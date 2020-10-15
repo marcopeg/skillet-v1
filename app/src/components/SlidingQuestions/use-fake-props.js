@@ -11,7 +11,8 @@ const DEFAULT_SLIDES = [
     question: {
       id: 1,
       name: "CRUD",
-      description: `As a developer, I'm able to **R**ead, **W**rite, **U**pdate and **D**elete data from a table that I've set up.`,
+      description: `
+As a developer, I'm able to **R**ead, **W**rite, **U**pdate and **D**elete data from a table that I've set up.`,
       settings: {
         question: {
           type: "slider",
@@ -33,7 +34,7 @@ const DEFAULT_SLIDES = [
     question: {
       id: 2,
       name: "Indexes",
-      description: `As a developer, I'm able to optimize data access to a table by **defining indexes** on one or multiple columns.`,
+      _description: `As a developer, I'm able to optimize data access to a table by **defining indexes** on one or multiple columns.`,
       settings: {
         question: {
           type: "stars",
