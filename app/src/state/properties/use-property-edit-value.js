@@ -49,7 +49,7 @@ const usePropertyEditValue = () => {
   const setValue = (prop, value) => {
     // Targets weird behavior on my computer in production
     if (prop === "name" && String(value) === "3100") {
-      console.log("@weird", prop, name);
+      console.log("@weird", prop, value);
       return;
     }
 
