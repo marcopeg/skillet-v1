@@ -47,6 +47,17 @@ const usePropertyEditValue = () => {
     setValues({ ...defaultValues, ...values });
 
   const setValue = (prop, value) => {
+    console.log(
+      "@@@",
+      prop,
+      typeof prop,
+      value,
+      typeof value,
+      "--",
+      prop === "name",
+      value === "3100",
+      value === 3100
+    );
     // Targets weird behavior on my computer in production
     if (prop === "name" && String(value) === "3100") {
       console.log("@weird", prop, value);
