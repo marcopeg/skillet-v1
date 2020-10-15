@@ -74,11 +74,14 @@ const PropertyEditView = () => {
           <>
             <IonList lines="full">
               <IonItem>
+                <IonInput placeholder={"ignore me"} />
+              </IonItem>
+              <IonItem>
                 <IonLabel position="floating">
                   Name: <small>({values.name})</small>
                 </IonLabel>
                 <IonInput
-                  name="name"
+                  name="propName"
                   value={values.name}
                   onIonChange={e => {
                     console.log("@onIonChange", e);
