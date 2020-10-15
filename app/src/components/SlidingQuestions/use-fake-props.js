@@ -13,8 +13,10 @@ const DEFAULT_SLIDES = [
       name: "CRUD",
       description: `As a developer, I'm able to **R**ead, **W**rite, **U**pdate and **D**elete data from a table that I've set up.`,
       settings: {
-        type: "slider",
-        options: PROJECT_DEFAULTS.question.options
+        question: {
+          type: "slider",
+          options: PROJECT_DEFAULTS.question.options
+        }
       }
     },
     group: {
@@ -33,8 +35,10 @@ const DEFAULT_SLIDES = [
       name: "Indexes",
       description: `As a developer, I'm able to optimize data access to a table by **defining indexes** on one or multiple columns.`,
       settings: {
-        type: "stars",
-        options: PROJECT_DEFAULTS.question.options
+        question: {
+          type: "stars",
+          options: PROJECT_DEFAULTS.question.options
+        }
       }
     },
     group: {

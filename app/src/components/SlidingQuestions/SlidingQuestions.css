@@ -1,3 +1,7 @@
+ion-card.sliding-questions {
+  margin: 0;
+}
+
 /* Remove grid's margins */
 .sliding-questions--grid {
   --ion-grid-padding: 0;
@@ -35,7 +39,7 @@ ion-slides.sliding-questions--slides {
 .sliding-questions--control {
   position: absolute;
   top: 0;
-  bottom: 0; 
+  bottom: 0;
   left: 0;
   right: 0;
 

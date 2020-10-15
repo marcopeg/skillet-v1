@@ -17,7 +17,6 @@ import {
 } from "@ionic/react";
 
 import useResourceDetails from "../state/resources/use-resource-details";
-
 import SlidingQuestions from "../containers/SlidingQuestions";
 
 const ResourceDetailsView = () => {
@@ -57,21 +56,19 @@ const ResourceDetailsView = () => {
         ) : (
           <IonGrid>
             <IonRow>
-              <IonCol sizeLg={6}>
+              <IonCol sizeLg={12}>
                 <SlidingQuestions resourceId={resourceId} />
               </IonCol>
             </IonRow>
             <IonRow>
-              <IonCol>
-                <div className="ion-padding ion-text-end">
-                  <IonButton
-                    fill="outline"
-                    expand="block"
-                    routerLink={`/p/${projectId}/resources/v/${resourceId}/edit`}
-                  >
-                    Edit
-                  </IonButton>
-                </div>
+              <IonCol className="ion-text-end">
+                <IonButton
+                  fill="outline"
+                  expand="block"
+                  routerLink={`/p/${projectId}/resources/v/${resourceId}/edit`}
+                >
+                  Edit
+                </IonButton>
               </IonCol>
             </IonRow>
           </IonGrid>

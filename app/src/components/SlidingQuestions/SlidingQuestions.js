@@ -29,16 +29,17 @@ const SlidingQuestions = ({
   setActiveIndex,
   getValue,
   setValue,
-  submitSlide
+  onRequestSubmit
 }) => {
   const slidesRef = useRef(null);
   const getActiveIndex = () => slidesRef.current.getActiveIndex();
   const onSlideChange = () => getActiveIndex().then(setActiveIndex);
   const lockSlides = value => () => slidesRef.current.lockSwipes(value);
-  const requestSubmit = () => submitSlide().then(() => slidesRef.current.slideNext());
+  const requestSubmit = () =>
+    onRequestSubmit().then(() => slidesRef.current.slideNext());
 
   return (
-    <IonCard>
+    <IonCard className="sliding-questions">
       <IonCardHeader color="primary">
         <IonCardSubtitle>{activeSlide.group.name}</IonCardSubtitle>
         <IonCardTitle>{activeSlide.question.name}</IonCardTitle>
@@ -68,13 +69,14 @@ const SlidingQuestions = ({
                       )}
                       <div className="ion-margin-vertical sliding-questions--control-wrapper">
                         <div className="ion-margin-vertical sliding-questions--control">
-                        <PropValueForm
-                          settings={$slide.question.settings}
-                          value={getValue($slide)}
-                          setValue={setValue($slide)}
-                          requestLockSlides={lockSlides(true)}
-                          requestUnlockSlides={lockSlides(false)}
-                        /></div>
+                          <PropValueForm
+                            settings={$slide.question.settings.question}
+                            value={getValue($slide)}
+                            setValue={setValue($slide)}
+                            requestLockSlides={lockSlides(true)}
+                            requestUnlockSlides={lockSlides(false)}
+                          />
+                        </div>
                       </div>
                     </div>
                   </IonSlide>

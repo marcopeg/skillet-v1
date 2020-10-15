@@ -20,6 +20,7 @@ export const LOAD_BOARD_BY_RESOURCE_ID = gql`
       name
       groupId: prop_group_id
       settings
+      description
     }
     resGroups: res_groups(
       order_by: { order: desc, id: asc }
