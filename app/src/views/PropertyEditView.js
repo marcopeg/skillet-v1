@@ -42,6 +42,8 @@ const PropertyEditView = () => {
     submitDelete
   } = usePropertyDeleteValue();
 
+  console.log("@PropertyEditView", values);
+
   return (
     <IonPage>
       <IonHeader>
@@ -74,7 +76,9 @@ const PropertyEditView = () => {
           <>
             <IonList lines="full">
               <IonItem>
-                <IonLabel position="floating">Name:</IonLabel>
+                <IonLabel position="floating">
+                  Name: <small>({values.name})</small>
+                </IonLabel>
                 <IonInput
                   name="name"
                   value={values.name}
