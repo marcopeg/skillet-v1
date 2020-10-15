@@ -80,7 +80,10 @@ const PropertyEditView = () => {
                 <IonInput
                   name="name"
                   value={values.name}
-                  onIonChange={e => setValue("name", e.detail.value)}
+                  onIonChange={e => {
+                    console.log("@onIonChange", e);
+                    setValue("name", e.detail.value);
+                  }}
                 />
               </IonItem>
               <IonItem>
