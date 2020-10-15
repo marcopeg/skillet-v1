@@ -40,7 +40,11 @@ const ResourceDetailsView = () => {
           <IonTitle>
             {data ? (
               <>
-                {data.name} <small>- {data.group.name}</small>
+                <small>
+                  {data.group.name}
+                  {" / "}
+                </small>
+                {data.name}
               </>
             ) : (
               <IonSpinner name="dots" />
@@ -64,7 +68,7 @@ const ResourceDetailsView = () => {
               <IonCol className="ion-text-end">
                 <IonButton
                   fill="outline"
-                  expand="block"
+                  // expand="block"
                   routerLink={`/p/${projectId}/resources/v/${resourceId}/edit`}
                 >
                   Edit

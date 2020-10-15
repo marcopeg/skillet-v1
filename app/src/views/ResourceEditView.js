@@ -59,7 +59,10 @@ const ResourceEditView = () => {
             )}
           </IonTitle>
           <IonButtons slot="end">
-            <IonButton routerLink={`/p/${projectId}/resources/v/${resourceId}`}>
+            <IonButton
+              routerLink={`/p/${projectId}/resources/v/${resourceId}`}
+              routerDirection="back"
+            >
               Close
             </IonButton>
           </IonButtons>
@@ -77,7 +80,7 @@ const ResourceEditView = () => {
                 <IonLabel position="floating">Name:</IonLabel>
                 <IonInput
                   value={values.name}
-                  onIonChange={(e) => setValue("name", e.detail.value)}
+                  onIonChange={e => setValue("name", e.detail.value)}
                 />
               </IonItem>
               <IonItem>
@@ -85,7 +88,7 @@ const ResourceEditView = () => {
                 <IonTextarea
                   rows="5"
                   value={values.description}
-                  onIonChange={(e) => setValue("description", e.detail.value)}
+                  onIonChange={e => setValue("description", e.detail.value)}
                 />
               </IonItem>
             </IonList>

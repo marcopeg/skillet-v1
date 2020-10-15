@@ -63,6 +63,7 @@ const PropertyEditView = () => {
           <IonButtons slot="end">
             <IonButton
               routerLink={`/p/${projectId}/properties/v/${propertyId}`}
+              routerDirection="back"
             >
               Close
             </IonButton>

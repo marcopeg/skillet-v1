@@ -32,7 +32,7 @@ ion-slides.sliding-questions--slides {
   border-radius: 4px;
   background-color: var(--vapor-color-white-smoke);
   text-align: left;
-  width: 95%;
+  width: 100%;
   max-height: 120px;
   overflow: auto;
 }
