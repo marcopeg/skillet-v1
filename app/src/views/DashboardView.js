@@ -15,21 +15,17 @@ import { homeOutline } from "ionicons/icons";
 
 // Hooks
 import useIsMobile from "../hooks/use-is-mobile";
-import useProject from "../state/project/use-project";
-import useEntryUpsert from "../state/use-entry-upsert";
+import useBoardByProjectId from "../state/board/use-board-by-project-id";
 
 import SkillMatrix from "../components/SkillMatrix/SkillMatrix";
 
 const DashboardView = () => {
   const isMobile = useIsMobile();
-  const { isReady, data } = useProject();
-  const { upsertEntry } = useEntryUpsert();
+  const { isReady, data } = useBoardByProjectId();
 
   const title = isReady ? data.project.title : "Loading skills...";
   const showMatrix =
     isReady && data.prop.values.length && data.res.values.length;
-
-  const onUpdate = evt => upsertEntry(evt.detail);
 
   return (
     <IonPage>
@@ -54,7 +50,7 @@ const DashboardView = () => {
               <b>NOTE:</b> The data collected will be used only in an aggregate
               way to generate metrics and statistics.
             </div>
-            <SkillMatrix data={data} onUpdate={onUpdate} />
+            <SkillMatrix data={data} />
           </>
         ) : (
           <div>
