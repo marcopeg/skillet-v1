@@ -42,8 +42,6 @@ const PropertyEditView = () => {
     submitDelete
   } = usePropertyDeleteValue();
 
-  console.log("@PropertyEditView", values);
-
   return (
     <IonPage>
       <IonHeader>

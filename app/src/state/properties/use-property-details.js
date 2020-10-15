@@ -27,8 +27,6 @@ const usePropertyDetails = () => {
     fetchPolicy: "network-only"
   });
 
-  console.log("@@use-property-details", data);
-
   return {
     projectId,
     propertyId,
