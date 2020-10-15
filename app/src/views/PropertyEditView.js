@@ -76,16 +76,18 @@ const PropertyEditView = () => {
               <IonItem>
                 <IonLabel position="floating">Name:</IonLabel>
                 <IonInput
+                  name="name"
                   value={values.name}
-                  onIonChange={(e) => setValue("name", e.detail.value)}
+                  onIonChange={e => setValue("name", e.detail.value)}
                 />
               </IonItem>
               <IonItem>
                 <IonLabel position="floating">Description:</IonLabel>
                 <IonTextarea
+                  name="description"
                   rows="5"
                   value={values.description}
-                  onIonChange={(e) => setValue("description", e.detail.value)}
+                  onIonChange={e => setValue("description", e.detail.value)}
                 />
               </IonItem>
             </IonList>
