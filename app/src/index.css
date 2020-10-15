@@ -4,3 +4,13 @@
   align-items: center;
   justify-content: center;
 }
+
+.ion-content-h-center::part(scroll) {
+  display: flex;
+  justify-content: center;
+}
+
+.ion-content-v-center::part(scroll) {
+  display: flex;
+  align-items: center;
+}

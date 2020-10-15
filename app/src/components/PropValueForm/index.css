@@ -1,21 +1,30 @@
-.prop-value-form-inner {
+/* .prop-value-form-inner {
   display: flex;
-  min-width: 280px;
-  max-width: 700px;
+  flex: 1;
   flex-direction: column;
 }
 
-.prop-value-form-inner > h1 {
+.prop-value-form--header {
   margin-bottom: 10px;
   padding-bottom: 10px;
-  text-align: left;
   border-bottom: 1px solid black;
 }
 
-.prop-value-form-inner > h1 > small {
+.prop-value-form--header > h1 {
+  text-align: left;
+  margin-bottom: 0;
+  background: red;
+}
+
+.prop-value-form--header > h1 > small {
   display: block;
   margin-top: -0.25em;
-  font-size: 0.6em;
+  font-size: 0.5em;
+}
+
+.prop-value-form--header p {
+  background: green;
+  margin: 0;
 }
 
 .prop-value-form--stars-outer {
@@ -25,4 +34,4 @@
 .prop-value-form--stars-outer ion-icon {
   margin-right: 5px;
   font-size: 1.5em;
-}
+} */

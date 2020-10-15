@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import useBoardByResourceId from "../board/use-board-by-resource-id";
+import useEntryUpsert from "../use-entry-upsert";
 
 // STATIC QUESTIONS
 // The slider doesn't work well with dynamic contents.
@@ -7,14 +8,16 @@ import useBoardByResourceId from "../board/use-board-by-resource-id";
 // after first data load:
 const useStaticQuestions = dynamicQuestions => {
   const [etag, setEtag] = useState(0);
-  const staticQuestions = useMemo(() => [...dynamicQuestions], [etag]);
+
+  // Observe the first data load to force the memo to update
   useEffect(() => {
     if (etag === 0 && dynamicQuestions.length > 0) {
       setEtag(1);
     }
   }, [dynamicQuestions]);
 
-  return staticQuestions;
+  // Only the `etag`can change the value of this memo
+  return useMemo(() => [...dynamicQuestions], [etag]); // eslint-disable
 };
 
 const useQuestionsValues = questions => {
@@ -35,18 +38,17 @@ const useQuestionsValues = questions => {
       [slide.question.id]: value
     });
 
+  const getValue = slide => values[slide.question.id];
+
   return {
     values,
+    getValue,
     setValue
   };
 };
 
-const useResourceQuestions = resourceId => {
-  const { data: board, isLoading, ...otherDetails } = useBoardByResourceId(
-    resourceId
-  );
-
-  const questions = useMemo(() => {
+const useSortedQuestions = board =>
+  useMemo(() => {
     if (!board) return [];
 
     const sorted = board.entries.sort((a, b) => {
@@ -62,12 +64,43 @@ const useResourceQuestions = resourceId => {
     }));
   }, [board]);
 
+const useResourceQuestions = resourceId => {
+  const { upsertEntry } = useEntryUpsert();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const { data: board, isLoading } = useBoardByResourceId(resourceId);
+
+  const questions = useSortedQuestions(board);
+  const slides = useStaticQuestions(questions);
+  const { values, setValue, getValue } = useQuestionsValues(slides);
+
+  const activeSlide = slides[activeIndex];
+  const isFirstSlide = activeIndex === 0;
+  const isLastSlide = activeIndex >= slides.length - 1;
+
+  const canSubmit = useMemo(() => {
+    return activeSlide ? values[activeSlide.question.id] !== null : false;
+  }, [activeSlide, values]);
+
+  const requestSubmit = () =>
+    upsertEntry({
+      prop_value_id: activeSlide.answer.propId,
+      res_value_id: activeSlide.answer.resId,
+      value: values[activeSlide.question.id]
+    });
+
   return {
-    ...otherDetails,
+    isReady: Boolean(activeSlide),
     board,
-    questions,
-    ...useQuestionsValues(questions),
-    staticQuestions: useStaticQuestions(questions)
+    slides,
+    values,
+    setValue,
+    getValue,
+    activeSlide,
+    isFirstSlide,
+    isLastSlide,
+    setActiveIndex,
+    canSubmit,
+    requestSubmit
   };
 };
 

@@ -1,4 +1,5 @@
 /* eslint-disable */
+import "./index.css";
 import React, { useState, useEffect } from "react";
 import {
   IonContent,
@@ -23,34 +24,9 @@ const types = {
   stars: TypeStars
 };
 
-const PropValueForm = ({
-  settings,
-  value,
-  setValue,
-  propGroup,
-  propValue,
-  requestSkip,
-  requestSubmit,
-  ...props
-}) => {
+const PropValueForm = ({ settings, ...props }) => {
   const Element = types[settings.type];
-
-  return (
-    <IonContent scrollX={false} scrollY={false} className="ion-content-center">
-      <div className="prop-value-form-inner">
-        <h1>
-          {propValue.name}
-          <small>{propGroup.name}</small>
-        </h1>
-        <Element
-          settings={settings}
-          value={value}
-          setValue={setValue}
-          {...props}
-        />
-      </div>
-    </IonContent>
-  );
+  return <Element settings={settings} {...props} />;
 };
 
 export default PropValueForm;

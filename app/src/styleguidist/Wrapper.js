@@ -21,6 +21,9 @@ import "@ionic/react/css/display.css";
 import "../vapor";
 import "../index.css";
 
+/* Styleguidist overrides to make the Styleguide scrollable */
+import "./Wrapper.css";
+
 const Wrapper = ({ children, ...rest }) => (
   <RsgWrapper {...rest}>
     <Router>{children}</Router>

@@ -10,11 +10,13 @@ import {
   IonButtons,
   IonMenuButton,
   IonButton,
-  IonSpinner
+  IonSpinner,
+  IonGrid,
+  IonRow,
+  IonCol
 } from "@ionic/react";
 
 import useResourceDetails from "../state/resources/use-resource-details";
-
 import SlidingQuestions from "../containers/SlidingQuestions";
 
 const ResourceDetailsView = () => {
@@ -52,18 +54,24 @@ const ResourceDetailsView = () => {
             <IonSpinner name="dots" />
           </div>
         ) : (
-          <>
-            <SlidingQuestions resourceId={resourceId} />
-            <div className="ion-padding ion-text-end">
-              <IonButton
-                fill="outline"
-                expand="block"
-                routerLink={`/p/${projectId}/resources/v/${resourceId}/edit`}
-              >
-                Edit
-              </IonButton>
-            </div>
-          </>
+          <IonGrid>
+            <IonRow>
+              <IonCol sizeLg={12}>
+                <SlidingQuestions resourceId={resourceId} />
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol className="ion-text-end">
+                <IonButton
+                  fill="outline"
+                  expand="block"
+                  routerLink={`/p/${projectId}/resources/v/${resourceId}/edit`}
+                >
+                  Edit
+                </IonButton>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
         )}
       </IonContent>
     </IonPage>

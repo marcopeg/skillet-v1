@@ -1,0 +1,12 @@
+.prop-value-form__type-slider {
+  flex: 1;
+}
+
+.prop-value-form__type-slider--label ion-text {
+  font-size: 0.8em;
+}
+
+.prop-value-form__type-slider--control ion-range {
+  margin: 0 auto;
+  max-width: 300px;
+}
