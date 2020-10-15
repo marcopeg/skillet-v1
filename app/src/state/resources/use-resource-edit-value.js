@@ -46,14 +46,21 @@ const useResourceEditValue = () => {
   const resetValues = (values = {}) =>
     setValues({ ...defaultValues, ...values });
 
-  const setValue = (prop, value) =>
-    setValues({
+  const setValue = (prop, value) => {
+    // Targets weird behavior on my computer in production
+    if (prop === "name" && String(value) === "3100") {
+      console.log("@weird", prop, name);
+      return;
+    }
+
+    return setValues({
       ...values,
       [prop]: value
     });
+  };
 
   const submitForm = () => {
-    updateValue({ variables: { ...values, id: resourceId } }).catch((err) => {
+    updateValue({ variables: { ...values, id: resourceId } }).catch(err => {
       console.error(err);
     });
   };

@@ -47,7 +47,12 @@ const usePropertyEditValue = () => {
     setValues({ ...defaultValues, ...values });
 
   const setValue = (prop, value) => {
-    console.log("@setValue", prop, value);
+    // Targets weird behavior on my computer in production
+    if (prop === "name" && String(value) === "3100") {
+      console.log("@weird", prop, name);
+      return;
+    }
+
     return setValues({
       ...values,
       [prop]: value
