@@ -46,6 +46,28 @@ As a developer, I'm able to **R**ead, **W**rite, **U**pdate and **D**elete data 
       id: 1,
       name: "Postgres"
     }
+  },
+  {
+    answer: {
+      value: null,
+      propId: 3,
+      resId: 22
+    },
+    question: {
+      id: 3,
+      name: "Triggers",
+      description: `https://en.wikipedia.org/wiki/Single-responsibility_principle`,
+      settings: {
+        question: {
+          type: "stars",
+          options: PROJECT_DEFAULTS.question.options
+        }
+      }
+    },
+    group: {
+      id: 1,
+      name: "Postgres"
+    }
   }
 ];
 

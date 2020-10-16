@@ -30,7 +30,7 @@ const QuestionSlide = ({ slide, getValue, setValue, lockSlides }) => (
             sizeXs={12}
             className="ion-align-items-center sliding-questions--col-info"
           >
-            <div className="ion-margin-vertical ion-padding sliding-questions--description">
+            <div className="ion-margin-vertical ion-padding skillet-break-long-word sliding-questions--description">
               <h4>
                 <small>
                   {slide.group.name}
