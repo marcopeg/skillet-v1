@@ -104,7 +104,7 @@ const PropertyEditView = () => {
                         }
                       />
                     </IonCol>
-                    <IonCol sizeSm={6} sizeXs={12}>
+                    <IonCol sizeSm={6} sizeXs={12} className="ion-hide-sm-down">
                       <div
                         className="ion-padding ion-margin-top"
                         style={{
