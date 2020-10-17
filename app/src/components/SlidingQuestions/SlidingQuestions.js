@@ -38,7 +38,12 @@ const QuestionSlide = ({ slide, getValue, setValue, lockSlides }) => (
                   {slide.question.name}
                 </small>
               </h4>
-              <Markdown source={slide.question.description} />
+              {slide.question.description.length ? (
+                <Markdown source={slide.question.description} />
+              ) : null}
+              {slide.question.url_docs.length ? (
+                <Markdown source={slide.question.url_docs} />
+              ) : null}
             </div>
           </IonCol>
           <IonCol sizeMd={6} sizeXs={12}>
@@ -91,7 +96,7 @@ const SlidingQuestions = ({
   const slidesRef = useRef(null);
   const getActiveIndex = () => slidesRef.current.getActiveIndex();
   const onSlideChange = () => getActiveIndex().then(setActiveIndex);
-  const lockSlides = value => () => slidesRef.current.lockSwipes(value);
+  const lockSlides = (value) => () => slidesRef.current.lockSwipes(value);
   const requestSubmit = () =>
     onRequestSubmit().then(() => slidesRef.current.slideNext());
 
@@ -121,7 +126,7 @@ const SlidingQuestions = ({
                 onIonSlideWillChange={onSlideChange}
                 className="sliding-questions--slides"
               >
-                {slides.map(slide => (
+                {slides.map((slide) => (
                   <QuestionSlide
                     key={`q-${slide.group.id}-${slide.question.id}`}
                     slide={slide}
