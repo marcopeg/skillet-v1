@@ -8,10 +8,16 @@ import usePropertyDetails, {
 } from "./use-property-details";
 
 const UPDATE_VALUE = gql`
-  mutation updatePropValue($id: Int!, $name: String!, $description: String) {
+  mutation updatePropValue(
+    $id: Int!
+    $name: String!
+    $description: String!
+    $data: jsonb!
+  ) {
     update_prop_values_by_pk(
       pk_columns: { id: $id }
       _set: { name: $name, description: $description }
+      _append: { data: $data }
     ) {
       id
       name
@@ -22,7 +28,8 @@ const UPDATE_VALUE = gql`
 
 const defaultValues = {
   name: "",
-  description: ""
+  description: "",
+  url_docs: ""
 };
 
 const usePropertyEditValue = () => {
@@ -53,7 +60,13 @@ const usePropertyEditValue = () => {
     });
 
   const submitForm = () => {
-    updateValue({ variables: { ...values, id: propertyId } }).catch(err => {
+    const { url_docs, ...otherValues } = values;
+    const variables = {
+      ...otherValues,
+      data: { url_docs },
+      id: propertyId
+    };
+    updateValue({ variables }).catch((err) => {
       console.error(err);
     });
   };
@@ -62,7 +75,8 @@ const usePropertyEditValue = () => {
     if (data) {
       resetValues({
         name: data.name,
-        description: data.description
+        description: data.description,
+        url_docs: data.url_docs
       });
     }
   }, [data]);

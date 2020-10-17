@@ -78,20 +78,20 @@ const PropertyEditView = () => {
         ) : (
           <>
             <IonList lines="full">
-              <IonItem className="ion-no-padding">
+              <IonItem id="field-name" className="ion-no-padding">
                 <IonGrid style={{ width: "100%" }}>
                   <IonRow>
                     <IonCol>
                       <IonLabel position="floating">Name:</IonLabel>
                       <IonInput
                         value={values.name}
-                        onIonChange={e => setValue("name", e.detail.value)}
+                        onIonChange={(e) => setValue("name", e.detail.value)}
                       />
                     </IonCol>
                   </IonRow>
                 </IonGrid>
               </IonItem>
-              <IonItem className="ion-no-padding">
+              <IonItem id="field-description" className="ion-no-padding">
                 <IonGrid style={{ width: "100%" }}>
                   <IonRow>
                     <IonCol sizeSm={6} sizeXs={12}>
@@ -99,7 +99,7 @@ const PropertyEditView = () => {
                       <IonTextarea
                         rows="5"
                         value={values.description}
-                        onIonChange={e =>
+                        onIonChange={(e) =>
                           setValue("description", e.detail.value)
                         }
                       />
@@ -118,6 +118,24 @@ const PropertyEditView = () => {
                       >
                         <Markdown source={values.description} />
                       </div>
+                    </IonCol>
+                  </IonRow>
+                </IonGrid>
+              </IonItem>
+              <IonItem id="field-url-docs" className="ion-no-padding">
+                <IonGrid style={{ width: "100%" }}>
+                  <IonRow>
+                    <IonCol>
+                      <IonLabel position="floating">
+                        Documentation URL:
+                      </IonLabel>
+                      <IonInput
+                        inputmode="url"
+                        value={values.url_docs}
+                        onIonChange={(e) =>
+                          setValue("url_docs", e.detail.value)
+                        }
+                      />
                     </IonCol>
                   </IonRow>
                 </IonGrid>

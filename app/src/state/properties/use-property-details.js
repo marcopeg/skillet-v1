@@ -9,6 +9,7 @@ export const LOAD_PROPERTY_DETAILS = gql`
     value: prop_values_by_pk(id: $id) {
       name
       description
+      url_docs: data(path: "url_docs")
       order
       tags
       group: prop_group {
