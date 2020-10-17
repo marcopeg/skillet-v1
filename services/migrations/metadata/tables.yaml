@@ -247,10 +247,12 @@
       set:
         project_id: x-hasura-project-id
       columns:
+      - data
       - description
       - id
       - name
       - order
+      - settings
       - updated_at
       backend_only: false
   select_permissions:
@@ -266,6 +268,7 @@
   - role: project
     permission:
       columns:
+      - data
       - description
       - id
       - name
@@ -277,6 +280,19 @@
         project_id:
           _eq: x-hasura-project-id
       limit: 50
+  update_permissions:
+  - role: project
+    permission:
+      columns:
+      - data
+      - description
+      - name
+      - order
+      - settings
+      filter:
+        project_id:
+          _eq: x-hasura-project-id
+      check: null
   event_triggers:
   - name: project_cache_by_prop_groups
     definition:
@@ -301,6 +317,9 @@
     schema: public
     name: prop_values
   object_relationships:
+  - name: project
+    using:
+      foreign_key_constraint_on: project_id
   - name: prop_group
     using:
       foreign_key_constraint_on: prop_group_id
@@ -311,11 +330,13 @@
       set:
         project_id: x-hasura-project-id
       columns:
+      - data
       - description
       - id
       - name
       - order
       - prop_group_id
+      - settings
       - tags
       - updated_at
       backend_only: false
@@ -334,6 +355,7 @@
   - role: project
     permission:
       columns:
+      - data
       - description
       - id
       - name
@@ -351,9 +373,11 @@
   - role: project
     permission:
       columns:
+      - data
       - description
       - name
       - order
+      - settings
       - tags
       filter:
         project_id:

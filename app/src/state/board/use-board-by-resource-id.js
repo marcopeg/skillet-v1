@@ -9,6 +9,7 @@ export const LOAD_BOARD_BY_RESOURCE_ID = gql`
       id
       title
       description
+      settings
     }
     propGroups: prop_groups(order_by: { order: desc, id: asc }) {
       id
@@ -19,8 +20,9 @@ export const LOAD_BOARD_BY_RESOURCE_ID = gql`
       id
       name
       groupId: prop_group_id
-      settings
       description
+      url_docs: data(path: "url_docs")
+      settings
     }
     resGroups: res_groups(
       order_by: { order: desc, id: asc }
@@ -46,7 +48,7 @@ export const LOAD_BOARD_BY_RESOURCE_ID = gql`
   }
 `;
 
-const useBoardByResourceId = resourceId => {
+const useBoardByResourceId = (resourceId) => {
   const { projectId } = useParams();
   const { data, loading } = useQuery(LOAD_BOARD_BY_RESOURCE_ID, {
     variables: { resourceId },
