@@ -34,6 +34,7 @@ const PropertyEditView = () => {
     isFormDisabled,
     isFormLoading,
     data,
+    hints,
     values,
     setValue,
     submitForm
@@ -105,19 +106,21 @@ const PropertyEditView = () => {
                       />
                     </IonCol>
                     <IonCol sizeSm={6} sizeXs={12} className="ion-hide-sm-down">
-                      <div
-                        className="ion-padding ion-margin-top"
-                        style={{
-                          border: "1px solid var(--ion-color-medium)",
-                          background: "var(--vapor-color-white-smoke)",
-                          borderRadius: 4,
-                          maxHeight: 150,
-                          overflow: "auto",
-                          paddingTop: 0
-                        }}
-                      >
-                        <Markdown source={values.description} />
-                      </div>
+                      {!values.description.length ? null : (
+                        <div
+                          className="ion-padding ion-margin-top"
+                          style={{
+                            border: "1px solid var(--ion-color-medium)",
+                            background: "var(--vapor-color-white-smoke)",
+                            borderRadius: 4,
+                            maxHeight: 150,
+                            overflow: "auto",
+                            paddingTop: 0
+                          }}
+                        >
+                          <Markdown source={values.description} />
+                        </div>
+                      )}
                     </IonCol>
                   </IonRow>
                 </IonGrid>
@@ -131,11 +134,23 @@ const PropertyEditView = () => {
                       </IonLabel>
                       <IonInput
                         inputmode="url"
+                        placeholder={hints.url_docs}
                         value={values.url_docs}
                         onIonChange={(e) =>
                           setValue("url_docs", e.detail.value)
                         }
                       />
+                      {!values.url_docs.length ? null : (
+                        <small>
+                          <a
+                            href={hints.url_docs}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {hints.url_docs}
+                          </a>
+                        </small>
+                      )}
                     </IonCol>
                   </IonRow>
                 </IonGrid>

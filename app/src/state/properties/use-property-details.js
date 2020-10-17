@@ -3,6 +3,8 @@
 import React from "react"; // eslint-disable-line
 import { gql, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
+import { PROJECT_DEFAULTS } from "../project/project-default-settings";
+import { deepmerge } from "../project/deepmerge";
 
 export const LOAD_PROPERTY_DETAILS = gql`
   query loadPropValue($id: Int!) {
@@ -12,9 +14,14 @@ export const LOAD_PROPERTY_DETAILS = gql`
       url_docs: data(path: "url_docs")
       order
       tags
+      settings
       group: prop_group {
         id
         name
+        settings
+      }
+      project {
+        settings
       }
     }
   }
@@ -32,6 +39,14 @@ const usePropertyDetails = () => {
     projectId,
     propertyId,
     data: data ? data.value : null,
+    settings: data
+      ? deepmerge(
+          PROJECT_DEFAULTS,
+          data.value.project.settings,
+          data.value.group.settings,
+          data.value.settings
+        )
+      : PROJECT_DEFAULTS,
     isDataLoading
   };
 };

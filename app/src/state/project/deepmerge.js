@@ -4,4 +4,5 @@ const deepmergeOptions = {
   arrayMerge: (destinationArray, sourceArray, options) => sourceArray
 };
 
-export const deepmerge = (...args) => _deepmerge(...args, deepmergeOptions);
+export const deepmerge = (...args) => _deepmerge.all(args, deepmergeOptions);
+deepmerge.all = (args) => _deepmerge.all(args, deepmergeOptions);

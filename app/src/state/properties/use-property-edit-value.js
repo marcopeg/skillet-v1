@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
+import { composeUrl } from "../../lib/strings";
+
 import { LOAD_PROPERTIES_LIST } from "./use-properties-list";
 import usePropertyDetails, {
   LOAD_PROPERTY_DETAILS
@@ -36,7 +38,7 @@ const usePropertyEditValue = () => {
   const { propertyId, projectId } = useParams();
   const [values, setValues] = useState({ ...defaultValues });
 
-  const { data, isDataLoading } = usePropertyDetails();
+  const { data, settings, isDataLoading } = usePropertyDetails();
 
   const [updateValue] = useMutation(UPDATE_VALUE, {
     refetchQueries: [
@@ -49,6 +51,10 @@ const usePropertyEditValue = () => {
       }
     ]
   });
+
+  const hints = {
+    url_docs: composeUrl(settings.prop.value.url_docs, values.url_docs)
+  };
 
   const resetValues = (values = {}) =>
     setValues({ ...defaultValues, ...values });
@@ -88,6 +94,7 @@ const usePropertyEditValue = () => {
     projectId,
     propertyId,
     data,
+    hints,
     values,
     setValue,
     submitForm
