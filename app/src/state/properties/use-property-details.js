@@ -5,6 +5,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { PROJECT_DEFAULTS } from "../project/project-default-settings";
 import { deepmerge } from "../project/deepmerge";
+import { composeUrl } from "../../lib/strings";
 
 export const LOAD_PROPERTY_DETAILS = gql`
   query loadPropValue($id: Int!) {
@@ -30,23 +31,41 @@ export const LOAD_PROPERTY_DETAILS = gql`
 const usePropertyDetails = () => {
   const { propertyId, projectId } = useParams();
 
-  const { data, loading: isDataLoading } = useQuery(LOAD_PROPERTY_DETAILS, {
-    variables: { id: propertyId },
-    fetchPolicy: "network-only"
-  });
+  const { data: rawData, loading: isDataLoading } = useQuery(
+    LOAD_PROPERTY_DETAILS,
+    {
+      variables: { id: propertyId },
+      fetchPolicy: "network-only"
+    }
+  );
+
+  const data = rawData ? rawData.value : null;
+
+  const settings = data
+    ? deepmerge(
+        PROJECT_DEFAULTS,
+        data.project.settings,
+        data.group.settings,
+        data.settings
+      )
+    : PROJECT_DEFAULTS;
+
+  const values = data
+    ? {
+        name: data.name,
+        description: data.description,
+        url_docs: data.url_docs
+          ? composeUrl(settings.prop.value.url_docs, data.url_docs)
+          : null
+      }
+    : null;
 
   return {
     projectId,
     propertyId,
-    data: data ? data.value : null,
-    settings: data
-      ? deepmerge(
-          PROJECT_DEFAULTS,
-          data.value.project.settings,
-          data.value.group.settings,
-          data.value.settings
-        )
-      : PROJECT_DEFAULTS,
+    data,
+    values,
+    settings,
     isDataLoading
   };
 };
