@@ -10,7 +10,7 @@ module.exports = {
   //     components: "src/components/SlidingQuestions/SlidingQuestions.js"
   //   }
   // ],
-  ignore: ["src/components/SkillMatrix/**/*.js"],
+  ignore: ["src/components/SkillMatrix/**/*.js", "**/*.test.js"],
   styleguideComponents: {
     Wrapper: path.join(__dirname, "src/styleguidist/Wrapper")
   },
