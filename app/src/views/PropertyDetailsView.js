@@ -1,7 +1,6 @@
 /* eslint-disable */
 
 import React from "react";
-import ReactMarkdown from "react-markdown";
 import {
   IonPage,
   IonHeader,
@@ -17,6 +16,7 @@ import {
   IonCol
 } from "@ionic/react";
 
+import Markdown from "../components/base/Markdown";
 import usePropertyDetails from "../state/properties/use-property-details";
 
 const PropertiesView = () => {
@@ -62,7 +62,7 @@ const PropertiesView = () => {
           <IonGrid>
             <IonRow>
               <IonCol>
-                <ReactMarkdown source={data.description} />
+                <Markdown source={data.description} />
               </IonCol>
             </IonRow>
             <IonRow>

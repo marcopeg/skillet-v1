@@ -48,6 +48,15 @@ tasks:
     command: npm run styleguide
     openIn: right
 
+  # Unit Tests
+  # ================
+  # it runs the CreateReactApp setup that let you do TDD.
+  - name: Unit Tests
+    before: cd app
+    init: echo "Awaiting NPM install..." && while ! find ./.gitpod.lock 2> /dev/null 1> /dev/null; do sleep 1; done
+    command: npm test
+    openIn: right
+
   # Hasura Migrations
   # =================
   # it pings Hasura Engine to make sure the instance is correctly running,

@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
-import ReactMarkdown from "react-markdown";
 import "./SlidingQuestions.css";
 
 import PropValueForm from "../PropValueForm";
+import Markdown from "../base/Markdown";
 
 import {
   IonGrid,
@@ -38,7 +38,7 @@ const QuestionSlide = ({ slide, getValue, setValue, lockSlides }) => (
                   {slide.question.name}
                 </small>
               </h4>
-              <ReactMarkdown source={slide.question.description} />
+              <Markdown source={slide.question.description} />
             </div>
           </IonCol>
           <IonCol sizeMd={6} sizeXs={12}>
