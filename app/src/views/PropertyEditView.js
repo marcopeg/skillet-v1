@@ -1,7 +1,6 @@
 /* eslint-disable */
 
 import React from "react";
-import ReactMarkdown from "react-markdown";
 import {
   IonPage,
   IonHeader,
@@ -23,6 +22,7 @@ import {
   IonCol
 } from "@ionic/react";
 
+import Markdown from "../components/base/Markdown";
 import usePropertyEditValue from "../state/properties/use-property-edit-value";
 import usePropertyDeleteValue from "../state/properties/use-property-delete-value";
 
@@ -112,10 +112,11 @@ const PropertyEditView = () => {
                           background: "var(--vapor-color-white-smoke)",
                           borderRadius: 4,
                           maxHeight: 150,
-                          overflow: "auto"
+                          overflow: "auto",
+                          paddingTop: 0
                         }}
                       >
-                        <ReactMarkdown source={values.description} />
+                        <Markdown source={values.description} />
                       </div>
                     </IonCol>
                   </IonRow>
