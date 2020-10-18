@@ -16,11 +16,11 @@ RUN chmod -R +x /scripts
 VOLUME /backups
 
 # These defaults are from the standard docker setup
-# ENV PG_HOST=mssql
-# ENV PG_PORT=1433
-# ENV PG_USER=SA
-# ENV PG_PASSWORD=xxx
-# ENV PG_DATABASE=yyy
+ENV POSTGRES_HOST=localhost
+ENV POSTGRES_PORT=5432
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=postgres
+ENV POSTGRES_DB=postgres
 
 # How to get data from AWS
 ENV AWS_ACCESS_KEY=xxx

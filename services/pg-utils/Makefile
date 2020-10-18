@@ -25,6 +25,7 @@ publish: build
 run:
 	docker run \
 		--rm \
+		--volume ${PWD}/backups:/backups \
 		--env-file .env \
 		${tag}:${image_version}-${pg_version} \
 		${cmd}

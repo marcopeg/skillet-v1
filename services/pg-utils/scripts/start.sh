@@ -17,9 +17,9 @@ echo "aws_access_key_id = ${AWS_ACCESS_KEY}" >> ~/.aws/credentials
 echo "aws_secret_access_key = ${AWS_ACCESS_SECRET}" >> ~/.aws/credentials
 
 if [[ "$COMMAND" == 'ls' ]]; then
-  exec /scripts/list.sh
-elif [[ "$COMMAND" == 'oo' ]]; then
-  echo "OOOOO"
+  exec /scripts/list.sh ${@}
+elif [[ "$COMMAND" == 'restore' ]]; then
+  exec /scripts/restore.sh ${@}
 elif [[ "$COMMAND" == 'help' ]]; then
   help
 else
