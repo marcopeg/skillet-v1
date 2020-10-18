@@ -140,7 +140,7 @@ const PropertyEditView = () => {
                           setValue("url_docs", e.detail.value)
                         }
                       />
-                      {!values.url_docs.length ? null : (
+                      {values.url_docs === null ? null : (
                         <small>
                           <a
                             href={hints.url_docs}

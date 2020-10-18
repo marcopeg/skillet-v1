@@ -41,7 +41,7 @@ const QuestionSlide = ({ slide, getValue, setValue, lockSlides }) => (
               {slide.question.description.length ? (
                 <Markdown source={slide.question.description} />
               ) : null}
-              {slide.question.url_docs.length ? (
+              {slide.question.url_docs !== null ? (
                 <Markdown source={slide.question.url_docs} />
               ) : null}
             </div>
