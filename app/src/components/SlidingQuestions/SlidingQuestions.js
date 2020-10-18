@@ -38,11 +38,14 @@ const QuestionSlide = ({ slide, getValue, setValue, lockSlides }) => (
                   {slide.question.name}
                 </small>
               </h4>
+              {slide.question.url_docs !== null ? (
+                <Markdown
+                  className="sliding-questions--slide-url"
+                  source={`[Read the doc page](${slide.question.url_docs}) »`}
+                />
+              ) : null}
               {slide.question.description.length ? (
                 <Markdown source={slide.question.description} />
-              ) : null}
-              {slide.question.url_docs !== null ? (
-                <Markdown source={slide.question.url_docs} />
               ) : null}
             </div>
           </IonCol>
