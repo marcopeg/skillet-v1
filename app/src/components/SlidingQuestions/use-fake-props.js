@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PROJECT_DEFAULTS } from "../../state/project/project-default-settings";
 
 const DEFAULT_SLIDES = [

@@ -88,6 +88,8 @@ const useResourceQuestions = resourceId => {
       value: values[activeSlide.question.id]
     });
 
+  console.log(">>", slides);
+
   return {
     isReady: Boolean(activeSlide),
     board,

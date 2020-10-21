@@ -15,72 +15,88 @@ import {
   IonCardTitle,
   IonCardContent,
   IonSlides,
-  IonSlide
+  IonSlide,
+  IonText
 } from "@ionic/react";
 
 import { checkmarkOutline, chevronBackOutline } from "ionicons/icons";
 
-const QuestionSlide = ({ slide, getValue, setValue, lockSlides }) => (
+const QuestionSlideWithDescription = ({
+  slide,
+  getValue,
+  setValue,
+  lockSlides
+}) => (
+  <IonRow>
+    <IonCol
+      sizeMd={6}
+      sizeXs={12}
+      className="sliding-questions--control-wrapper"
+    >
+      <div className="ion-margin-top ion-padding skillet-break-long-word sliding-questions--description">
+        {slide.question.description.length ? (
+          <Markdown source={slide.question.description.trim()} />
+        ) : null}
+      </div>
+      {slide.question.url_docs !== null ? (
+        <Markdown
+          className="ion-padding sliding-questions--slide-url"
+          source={`[Read the doc page](${slide.question.url_docs}) »`}
+        />
+      ) : null}
+    </IonCol>
+    <IonCol sizeMd={6} sizeXs={12} className="ion-justify-content-center">
+      <div className="sliding-questions--control-wrapper">
+        <div className="ion-margin-vertical sliding-questions--title">
+          <IonText color="primary">{slide.question.name}</IonText>
+          <small>{slide.group.name}</small>
+        </div>
+        <div className="sliding-questions--control">
+          <PropValueForm
+            settings={slide.question.settings.question}
+            value={getValue(slide)}
+            setValue={setValue(slide)}
+            requestLockSlides={lockSlides(true)}
+            requestUnlockSlides={lockSlides(false)}
+          />
+        </div>
+      </div>
+    </IonCol>
+  </IonRow>
+);
+
+const QuestionSlideWithoutDescription = ({
+  slide,
+  getValue,
+  setValue,
+  lockSlides
+}) => (
+  <IonRow>
+    <IonCol className="sliding-questions--control-wrapper">
+      <div className="ion-margin-vertical sliding-questions--title">
+        <IonText color="primary">{slide.question.name}</IonText>
+        <small>{slide.group.name}</small>
+      </div>
+      <div className="ion-margin-bottom sliding-questions--control">
+        <PropValueForm
+          settings={slide.question.settings.question}
+          value={getValue(slide)}
+          setValue={setValue(slide)}
+          requestLockSlides={lockSlides(true)}
+          requestUnlockSlides={lockSlides(false)}
+        />
+      </div>
+    </IonCol>
+  </IonRow>
+);
+
+const QuestionSlide = ({ slide, ...props }) => (
   <IonSlide key={`q-${slide.group.id}-${slide.question.id}`}>
     <IonGrid>
       {Boolean(slide.question.description) ? (
-        <IonRow>
-          <IonCol
-            sizeMd={6}
-            sizeXs={12}
-            className="ion-align-items-center sliding-questions--col-info"
-          >
-            <div className="ion-margin-vertical ion-padding skillet-break-long-word sliding-questions--description">
-              <h4>
-                <small>
-                  {slide.group.name}
-                  {" / "}
-                  {slide.question.name}
-                </small>
-              </h4>
-              {slide.question.url_docs !== null ? (
-                <Markdown
-                  className="sliding-questions--slide-url"
-                  source={`[Read the doc page](${slide.question.url_docs}) »`}
-                />
-              ) : null}
-              {slide.question.description.length ? (
-                <Markdown source={slide.question.description} />
-              ) : null}
-            </div>
-          </IonCol>
-          <IonCol sizeMd={6} sizeXs={12}>
-            <div className="sliding-questions--slide">
-              <div className="ion-margin-vertical sliding-questions--control-wrapper">
-                <div className="ion-margin-vertical sliding-questions--control">
-                  <PropValueForm
-                    settings={slide.question.settings.question}
-                    value={getValue(slide)}
-                    setValue={setValue(slide)}
-                    requestLockSlides={lockSlides(true)}
-                    requestUnlockSlides={lockSlides(false)}
-                  />
-                </div>
-              </div>
-            </div>
-          </IonCol>
-        </IonRow>
+        <QuestionSlideWithDescription {...props} slide={slide} />
       ) : (
-        <IonRow>
-          <IonCol>
-            <div className="ion-margin-vertical sliding-questions--control-wrapper">
-              <div className="ion-margin-vertical sliding-questions--control">
-                <PropValueForm
-                  settings={slide.question.settings.question}
-                  value={getValue(slide)}
-                  setValue={setValue(slide)}
-                  requestLockSlides={lockSlides(true)}
-                  requestUnlockSlides={lockSlides(false)}
-                />
-              </div>
-            </div>
-          </IonCol>
-        </IonRow>
+        <QuestionSlideWithoutDescription {...props} slide={slide} />
       )}
     </IonGrid>
   </IonSlide>
@@ -99,7 +115,7 @@ const SlidingQuestions = ({
   const slidesRef = useRef(null);
   const getActiveIndex = () => slidesRef.current.getActiveIndex();
   const onSlideChange = () => getActiveIndex().then(setActiveIndex);
-  const lockSlides = (value) => () => slidesRef.current.lockSwipes(value);
+  const lockSlides = value => () => slidesRef.current.lockSwipes(value);
   const requestSubmit = () =>
     onRequestSubmit().then(() => slidesRef.current.slideNext());
 
@@ -107,11 +123,7 @@ const SlidingQuestions = ({
     <IonCard className="sliding-questions">
       <IonCardHeader color="primary">
         <IonCardTitle>
-          <small>
-            {activeSlide.group.name}
-            {" / "}
-          </small>
-          {activeSlide.question.name}
+          <small>Self Evaluation</small>
         </IonCardTitle>
       </IonCardHeader>
       <IonCardContent>
@@ -129,7 +141,7 @@ const SlidingQuestions = ({
                 onIonSlideWillChange={onSlideChange}
                 className="sliding-questions--slides"
               >
-                {slides.map((slide) => (
+                {slides.map(slide => (
                   <QuestionSlide
                     key={`q-${slide.group.id}-${slide.question.id}`}
                     slide={slide}

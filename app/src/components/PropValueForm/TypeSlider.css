@@ -9,4 +9,5 @@
 .prop-value-form__type-slider--control ion-range {
   margin: 0 auto;
   max-width: 300px;
+  margin-top: -15px;
 }

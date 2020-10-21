@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: space-around;
   max-width: 300px;
+  margin: auto;
 }
 
 .prop-value-form__type-stars ion-icon {

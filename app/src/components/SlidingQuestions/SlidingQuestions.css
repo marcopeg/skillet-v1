@@ -37,27 +37,35 @@ ion-slides.sliding-questions--slides {
   overflow: auto;
 }
 
+.sliding-questions--slide-url {
+  width: 100%;
+  text-align: left;
+}
 .sliding-questions--slide-url p {
-  font-size: 0.6em;
-  margin-top: -3px;
+  font-size: 10px !important;
+}
+.sliding-questions--slide-url a {
+  text-decoration: none;
 }
 
 .sliding-questions--control-wrapper {
-  position: relative;
-  display: block;
-  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  /* min-height: 120px; */
   width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.sliding-questions--title small {
+  display: block;
+  font-size: 10px;
+  margin-top: -3px;
 }
 
 .sliding-questions--control {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
   display: flex;
-  justify-content: center;
   width: 100%;
   overflow: hidden;
 }

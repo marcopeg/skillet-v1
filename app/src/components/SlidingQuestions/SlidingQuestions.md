@@ -33,7 +33,5 @@ import useFakeProps from "./use-fake-props";
 
 ```js
 import useFakeProps from "./use-fake-props";
-<IonWrapper width={200}>
-  <SlidingQuestions {...useFakeProps(undefined, 0)} />
-</IonWrapper>;
+<SlidingQuestions {...useFakeProps(undefined, 2)} />;
 ```
