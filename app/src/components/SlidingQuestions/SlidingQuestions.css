@@ -37,6 +37,11 @@ ion-slides.sliding-questions--slides {
   overflow: auto;
 }
 
+.sliding-questions--slide-url p {
+  font-size: 0.6em;
+  margin-top: -3px;
+}
+
 .sliding-questions--control-wrapper {
   position: relative;
   display: block;

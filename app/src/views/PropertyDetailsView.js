@@ -13,15 +13,21 @@ import {
   IonSpinner,
   IonGrid,
   IonRow,
-  IonCol
+  IonCol,
+  IonText
 } from "@ionic/react";
 
 import Markdown from "../components/base/Markdown";
 import usePropertyDetails from "../state/properties/use-property-details";
 
 const PropertiesView = () => {
-  const { data, projectId, propertyId, isDataLoading } = usePropertyDetails();
-  console.log(data);
+  const {
+    data,
+    values,
+    projectId,
+    propertyId,
+    isDataLoading
+  } = usePropertyDetails();
 
   return (
     <IonPage>
@@ -62,9 +68,26 @@ const PropertiesView = () => {
           <IonGrid>
             <IonRow>
               <IonCol>
-                <Markdown source={data.description} />
+                <IonText>
+                  <h4>Description:</h4>
+                </IonText>
+                {values.description ? (
+                  <Markdown source={values.description} />
+                ) : (
+                  <Markdown source="✏️ Please edit this document and provide a description." />
+                )}
               </IonCol>
             </IonRow>
+            {values.url_docs ? (
+              <IonRow>
+                <IonCol>
+                  <IonText>
+                    <h4>Documentation:</h4>
+                  </IonText>
+                  <Markdown source={`👉 ${values.url_docs}`} />
+                </IonCol>
+              </IonRow>
+            ) : null}
             <IonRow>
               <IonCol className="ion-text-end">
                 <IonButton

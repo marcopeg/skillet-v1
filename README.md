@@ -61,9 +61,10 @@ First start the backend and run the migrations:
 # Manually:
 docker-compose up -d hasura
 docker-compose up migrations
+docker-compose logs -f hasura
 
 # Or with the Make interface
-make start-backend
+make hasura
 ```
 
 Then start the frontend project:
@@ -75,7 +76,7 @@ npm install
 npm start
 
 # Or with the Make interface
-make start-app
+make app
 ```
 
 ### Hasura Console
@@ -99,7 +100,7 @@ cd services/migrations
 hasura console
 
 # Or with the Make interface
-make start-console
+make console
 ```
 
 ## Troubleshooting

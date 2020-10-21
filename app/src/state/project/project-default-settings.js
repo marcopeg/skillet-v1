@@ -3,7 +3,7 @@ export const PROJECT_DEFAULTS = {
     type: "slider",
     options: {
       stars: {
-        top: 5,
+        top: 5
         // style: {
         //   color: "var(--ion-color-primary)",
         //   fontSize: 24
@@ -117,6 +117,11 @@ export const PROJECT_DEFAULTS = {
           style: { backgroundColor: "#84c195" }
         }
       ]
+    }
+  },
+  prop: {
+    value: {
+      url_docs: ""
     }
   }
 };
