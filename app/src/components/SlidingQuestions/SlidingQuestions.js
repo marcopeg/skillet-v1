@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./SlidingQuestions.css";
 
 import PropValueForm from "../PropValueForm";
@@ -113,8 +113,16 @@ const SlidingQuestions = ({
   setValue
 }) => {
   const slidesRef = useRef(null);
+  const [isFinalSlide, setIsFinalSlide] = useState(false);
   const getActiveIndex = () => slidesRef.current.getActiveIndex();
-  const onSlideChange = () => getActiveIndex().then(setActiveIndex);
+  const onSlideChange = () =>
+    getActiveIndex().then(activeIndex => {
+      if (activeIndex >= slides.length) {
+        setIsFinalSlide(true);
+      } else {
+        setActiveIndex(activeIndex);
+      }
+    });
   const lockSlides = value => () => slidesRef.current.lockSwipes(value);
   const requestSubmit = () =>
     onRequestSubmit().then(() => slidesRef.current.slideNext());
@@ -150,41 +158,55 @@ const SlidingQuestions = ({
                     lockSlides={lockSlides}
                   />
                 ))}
+                <IonSlide key={"last"}>
+                  <div>
+                    <h2>
+                      <IonText color="primary">Well Done</IonText>
+                    </h2>
+                    <p>
+                      You are all set for now, please come back every now and
+                      then to check if there are new skills you can evaluate, or
+                      to refresh your evaluation on the existing ones!
+                    </p>
+                  </div>
+                </IonSlide>
               </IonSlides>
             </IonCol>
           </IonRow>
-          <IonRow>
-            <IonCol size={2} className="ion-justify-content-start">
-              {isFirstSlide ? null : (
+          {isFinalSlide ? null : (
+            <IonRow>
+              <IonCol size={2} className="ion-justify-content-start">
+                {isFirstSlide ? null : (
+                  <IonButton
+                    size={"small"}
+                    fill={"clear"}
+                    onClick={() => slidesRef.current.slidePrev()}
+                  >
+                    <IonIcon icon={chevronBackOutline} />
+                  </IonButton>
+                )}
+              </IonCol>
+              <IonCol size={4} className="ion-justify-content-center">
                 <IonButton
                   size={"small"}
                   fill={"clear"}
-                  onClick={() => slidesRef.current.slidePrev()}
+                  onClick={() => slidesRef.current.slideNext()}
                 >
-                  <IonIcon icon={chevronBackOutline} />
+                  skip
                 </IonButton>
-              )}
-            </IonCol>
-            <IonCol size={4} className="ion-justify-content-center">
-              <IonButton
-                size={"small"}
-                fill={"clear"}
-                onClick={() => slidesRef.current.slideNext()}
-              >
-                skip
-              </IonButton>
-            </IonCol>
-            <IonCol size={6}>
-              <IonButton
-                disabled={canSubmit === false}
-                size={"small"}
-                expand={"block"}
-                onClick={requestSubmit}
-              >
-                <IonIcon icon={checkmarkOutline} slot={"end"} /> Save
-              </IonButton>
-            </IonCol>
-          </IonRow>
+              </IonCol>
+              <IonCol size={6}>
+                <IonButton
+                  disabled={canSubmit === false}
+                  size={"small"}
+                  expand={"block"}
+                  onClick={requestSubmit}
+                >
+                  <IonIcon icon={checkmarkOutline} slot={"end"} /> Save
+                </IonButton>
+              </IonCol>
+            </IonRow>
+          )}
         </IonGrid>
       </IonCardContent>
     </IonCard>
