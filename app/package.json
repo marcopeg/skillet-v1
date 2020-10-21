@@ -17,7 +17,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "subscriptions-transport-ws": "^0.9.18",
-    "use-media": "^1.4.0"
+    "use-media": "^1.4.0",
+    "react-device-detect": "^1.14.0"
   },
   "devDependencies": {
     "node-forge": ">=0.10.0",
