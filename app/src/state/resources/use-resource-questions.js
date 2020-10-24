@@ -17,7 +17,8 @@ const useStaticQuestions = dynamicQuestions => {
   }, [dynamicQuestions]); // eslint-disable-line
 
   // Only the `etag`can change the value of this memo
-  return useMemo(() => [...dynamicQuestions], [etag]); // eslint-disable-line
+  const onlyActive = ({ answer: { dueForUpdate } }) => dueForUpdate;
+  return useMemo(() => dynamicQuestions.filter(onlyActive), [etag]); // eslint-disable-line
 };
 
 const useQuestionsValues = questions => {
@@ -89,7 +90,7 @@ const useResourceQuestions = resourceId => {
     });
 
   return {
-    isReady: Boolean(activeSlide),
+    isReady: board !== null,
     board,
     slides,
     values,

@@ -83,7 +83,7 @@ const useFakeProps = (slides = DEFAULT_SLIDES, initialSlide = 0) => {
       ...values,
       [slide.question.id]: value
     });
-  const getValue = slide => values[slide.question.id];
+  const getValue = slide => (slide ? values[slide.question.id] : null);
 
   return {
     isFirstSlide: activeIndex === 0,
