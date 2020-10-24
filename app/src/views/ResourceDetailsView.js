@@ -71,14 +71,14 @@ const ResourceDetailsView = () => {
             <IonRow>
               <IonCol>
                 <Gauge
-                  value={stats ? stats.fillRate * 100 : 0}
+                  value={stats ? Math.round(stats.fillRate * 100) : 0}
                   label="Fill Rate"
                   units="%"
                 />
               </IonCol>
               <IonCol>
                 <Gauge
-                  value={stats ? stats.score * 100 : 0}
+                  value={stats ? Math.round(stats.score * 100) : 0}
                   label="Score"
                   units="%"
                 />
