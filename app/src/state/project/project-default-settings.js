@@ -66,22 +66,27 @@ export const PROJECT_DEFAULTS = {
     obsolescence: [
       {
         //       MS     SEC  MIN  HOUR DAYS
-        elapsed: 1000 * 60 * 60 * 24 * 60,
+        elapsed: 1000 * 60 * 60 * 24 * 240,
+        value: 100
+      },
+      {
+        //       MS     SEC  MIN  HOUR DAYS
+        elapsed: 1000 * 60 * 60 * 24 * 120,
         value: 80
       },
       {
         //       MS     SEC  MIN  HOUR DAYS
-        elapsed: 1000 * 60 * 60 * 24 * 30,
-        value: 50
-      },
-      {
-        //       MS     SEC  MIN  HOUR DAYS
-        elapsed: 1000 * 60 * 60 * 24 * 20,
+        elapsed: 1000 * 60 * 60 * 24 * 90,
         value: 40
       },
       {
         //       MS     SEC  MIN  HOUR DAYS
-        elapsed: 1000 * 60 * 60 * 24 * 10,
+        elapsed: 1000 * 60 * 60 * 24 * 60,
+        value: 20
+      },
+      {
+        //       MS     SEC  MIN  HOUR DAYS
+        elapsed: 1000 * 60 * 60 * 24 * 30,
         value: 10
       }
     ]
