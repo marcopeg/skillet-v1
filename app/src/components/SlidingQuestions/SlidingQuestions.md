@@ -35,3 +35,8 @@ import useFakeProps from "./use-fake-props";
 import useFakeProps from "./use-fake-props";
 <SlidingQuestions {...useFakeProps(undefined, 2)} />;
 ```
+
+```js
+import useFakeProps from "./use-fake-props";
+<SlidingQuestions {...useFakeProps([])} />;
+```

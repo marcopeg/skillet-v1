@@ -127,9 +127,95 @@ const SlidingQuestions = ({
   const requestSubmit = () =>
     onRequestSubmit().then(() => slidesRef.current.slideNext());
 
-  if (!slides.length) {
-    return "no slides";
-  }
+  const cardContent = slides.length ? (
+    <IonGrid className="sliding-questions--grid">
+      <IonRow>
+        <IonCol>
+          <IonSlides
+            ref={slidesRef}
+            pager={false}
+            options={{
+              initialSlide: activeSlide.__index,
+              speed: 400,
+              allowTouchMove: false
+            }}
+            onIonSlideWillChange={onSlideChange}
+            className="sliding-questions--slides"
+          >
+            {slides.map(slide => (
+              <QuestionSlide
+                key={`q-${slide.group.id}-${slide.question.id}`}
+                slide={slide}
+                getValue={getValue}
+                setValue={setValue}
+                lockSlides={lockSlides}
+              />
+            ))}
+            <IonSlide key={"last"}>
+              <div>
+                <h2>
+                  <IonText color="primary">Well Done 👍</IonText>
+                </h2>
+                <p>
+                  You are all set for now, please come back every now and then
+                  to check if there are new skills you can evaluate, or to
+                  refresh your evaluation on the existing ones!
+                </p>
+              </div>
+            </IonSlide>
+          </IonSlides>
+        </IonCol>
+      </IonRow>
+      {isFinalSlide ? null : (
+        <IonRow>
+          <IonCol size={2} className="ion-justify-content-start">
+            {isFirstSlide ? null : (
+              <IonButton
+                size={"small"}
+                fill={"clear"}
+                onClick={() => slidesRef.current.slidePrev()}
+              >
+                <IonIcon icon={chevronBackOutline} />
+              </IonButton>
+            )}
+          </IonCol>
+          <IonCol size={4} className="ion-justify-content-center">
+            <IonButton
+              size={"small"}
+              fill={"clear"}
+              onClick={() => slidesRef.current.slideNext()}
+            >
+              skip
+            </IonButton>
+          </IonCol>
+          <IonCol size={6}>
+            <IonButton
+              disabled={canSubmit === false}
+              size={"small"}
+              expand={"block"}
+              onClick={requestSubmit}
+            >
+              <IonIcon icon={checkmarkOutline} slot={"end"} /> Save
+            </IonButton>
+          </IonCol>
+        </IonRow>
+      )}
+    </IonGrid>
+  ) : (
+    <IonGrid className="sliding-questions--grid ion-margin-top">
+      <IonRow>
+        <IonCol>
+          <h2>
+            <IonText color="primary">🏅 You are all set!</IonText>
+          </h2>
+          <p>
+            Come back regularly to answer new questions or re-evaluate yourself
+            on existing skills.
+          </p>
+        </IonCol>
+      </IonRow>
+    </IonGrid>
+  );
 
   return (
     <IonCard className="sliding-questions">
@@ -138,81 +224,7 @@ const SlidingQuestions = ({
           <small>Self Evaluation</small>
         </IonCardTitle>
       </IonCardHeader>
-      <IonCardContent>
-        <IonGrid className="sliding-questions--grid">
-          <IonRow>
-            <IonCol>
-              <IonSlides
-                ref={slidesRef}
-                pager={false}
-                options={{
-                  initialSlide: activeSlide.__index,
-                  speed: 400,
-                  allowTouchMove: false
-                }}
-                onIonSlideWillChange={onSlideChange}
-                className="sliding-questions--slides"
-              >
-                {slides.map(slide => (
-                  <QuestionSlide
-                    key={`q-${slide.group.id}-${slide.question.id}`}
-                    slide={slide}
-                    getValue={getValue}
-                    setValue={setValue}
-                    lockSlides={lockSlides}
-                  />
-                ))}
-                <IonSlide key={"last"}>
-                  <div>
-                    <h2>
-                      <IonText color="primary">Well Done</IonText>
-                    </h2>
-                    <p>
-                      You are all set for now, please come back every now and
-                      then to check if there are new skills you can evaluate, or
-                      to refresh your evaluation on the existing ones!
-                    </p>
-                  </div>
-                </IonSlide>
-              </IonSlides>
-            </IonCol>
-          </IonRow>
-          {isFinalSlide ? null : (
-            <IonRow>
-              <IonCol size={2} className="ion-justify-content-start">
-                {isFirstSlide ? null : (
-                  <IonButton
-                    size={"small"}
-                    fill={"clear"}
-                    onClick={() => slidesRef.current.slidePrev()}
-                  >
-                    <IonIcon icon={chevronBackOutline} />
-                  </IonButton>
-                )}
-              </IonCol>
-              <IonCol size={4} className="ion-justify-content-center">
-                <IonButton
-                  size={"small"}
-                  fill={"clear"}
-                  onClick={() => slidesRef.current.slideNext()}
-                >
-                  skip
-                </IonButton>
-              </IonCol>
-              <IonCol size={6}>
-                <IonButton
-                  disabled={canSubmit === false}
-                  size={"small"}
-                  expand={"block"}
-                  onClick={requestSubmit}
-                >
-                  <IonIcon icon={checkmarkOutline} slot={"end"} /> Save
-                </IonButton>
-              </IonCol>
-            </IonRow>
-          )}
-        </IonGrid>
-      </IonCardContent>
+      <IonCardContent>{cardContent}</IonCardContent>
     </IonCard>
   );
 };
