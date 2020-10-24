@@ -8,7 +8,8 @@
     "@forrestjs/service-fastify-jwt": "^3.16.1",
     "envalid": "^6.0.2",
     "fastify-plugin": "^2.3.4",
-    "apollo-server-fastify": "^2.17.0"
+    "apollo-server-fastify": "^2.17.0",
+    "object-path": ">=0.11.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

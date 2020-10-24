@@ -4,6 +4,8 @@ import React from "react"; // eslint-disable-line
 import { gql, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
+import useBoardByResourceId from "../board/use-board-by-resource-id";
+
 export const LOAD_RESOURCE_DETAILS = gql`
   query loadResValue($id: Int!) {
     value: res_values_by_pk(id: $id) {
@@ -21,6 +23,9 @@ export const LOAD_RESOURCE_DETAILS = gql`
 
 const useResourceDetails = () => {
   const { resourceId, projectId } = useParams();
+  const { data: board, loading: isBoardLoading } = useBoardByResourceId(
+    resourceId
+  );
 
   const { data, loading: isDataLoading } = useQuery(LOAD_RESOURCE_DETAILS, {
     variables: { id: resourceId },
@@ -31,7 +36,8 @@ const useResourceDetails = () => {
     projectId,
     resourceId,
     data: data ? data.value : null,
-    isDataLoading
+    board,
+    isLoading: isDataLoading || isBoardLoading
   };
 };
 
