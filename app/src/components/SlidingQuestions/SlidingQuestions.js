@@ -127,6 +127,10 @@ const SlidingQuestions = ({
   const requestSubmit = () =>
     onRequestSubmit().then(() => slidesRef.current.slideNext());
 
+  if (!slides.length) {
+    return "no slides";
+  }
+
   return (
     <IonCard className="sliding-questions">
       <IonCardHeader color="primary">
