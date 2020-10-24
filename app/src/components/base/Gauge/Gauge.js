@@ -12,9 +12,9 @@ const Gauge = ({
   label,
   units,
   colorArcBackground = "#dbdbe7",
-  colorPinFill = "#6a6a85",
-  colorArcFillMin = "#a7d3eb",
-  colorArcFillMax = "#1f92d1"
+  colorPinFill = "#152935",
+  colorArcFillMin = "#0d709e",
+  colorArcFillMax = "#005075"
 }) => {
   const backgroundArc = arc()
     .innerRadius(0.65)
@@ -51,11 +51,7 @@ const Gauge = ({
   const markerLocation = getCoordsOnArc(angle, 1 - (1 - 0.65) / 2);
 
   return (
-    <div
-      style={{
-        textAlign: "center"
-      }}
-    >
+    <div style={{ textAlign: "center" }}>
       <svg
         style={{ overflow: "visible" }}
         width="9em"
@@ -85,7 +81,7 @@ const Gauge = ({
           cx={markerLocation[0]}
           cy={markerLocation[1]}
           r="0.2"
-          stroke="#2c3e50"
+          stroke={colorPinFill}
           strokeWidth="0.01"
           fill={colorScale(percent)}
         />
@@ -112,7 +108,7 @@ const Gauge = ({
       {!!label && (
         <div
           style={{
-            color: "#8b8ba7",
+            color: colorPinFill,
             marginTop: "0.6em",
             fontSize: "1.3em",
             lineHeight: "1.3em",
@@ -126,7 +122,7 @@ const Gauge = ({
       {!!units && (
         <div
           style={{
-            color: "#8b8ba7",
+            color: colorPinFill,
             lineHeight: "1.3em",
             fontWeight: "300"
           }}

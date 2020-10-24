@@ -18,9 +18,18 @@ import {
 
 import useResourceDetails from "../state/resources/use-resource-details";
 import SlidingQuestions from "../containers/SlidingQuestions";
+import Gauge from "../components/base/Gauge";
 
 const ResourceDetailsView = () => {
-  const { data, projectId, resourceId, isDataLoading } = useResourceDetails();
+  const {
+    data,
+    board,
+    projectId,
+    resourceId,
+    isLoading
+  } = useResourceDetails();
+
+  const stats = board ? board.map.res.values[resourceId].stats : null;
 
   return (
     <IonPage>
@@ -38,7 +47,9 @@ const ResourceDetailsView = () => {
             </IonButton>
           </IonButtons>
           <IonTitle>
-            {data ? (
+            {isLoading ? (
+              <IonSpinner name="dots" />
+            ) : (
               <>
                 <small>
                   {data.group.name}
@@ -46,19 +57,33 @@ const ResourceDetailsView = () => {
                 </small>
                 {data.name}
               </>
-            ) : (
-              <IonSpinner name="dots" />
             )}
           </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {isDataLoading ? (
+        {isLoading ? (
           <div className="ion-padding">
             <IonSpinner name="dots" />
           </div>
         ) : (
           <IonGrid>
+            <IonRow>
+              <IonCol>
+                <Gauge
+                  value={stats ? stats.fillRate * 100 : 0}
+                  label="Fill Rate"
+                  units="%"
+                />
+              </IonCol>
+              <IonCol>
+                <Gauge
+                  value={stats ? stats.score * 100 : 0}
+                  label="Score"
+                  units="%"
+                />
+              </IonCol>
+            </IonRow>
             <IonRow>
               <IonCol sizeLg={12}>
                 <SlidingQuestions resourceId={resourceId} />
