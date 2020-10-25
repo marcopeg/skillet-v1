@@ -1,6 +1,10 @@
+/**
+ * It takes a board and transforms the data so to be used as carousel
+ * of visual controls for setting an answer.
+ */
+
 import { useMemo, useState, useEffect } from "react";
-import useBoardByResourceId from "../board/use-board-by-resource-id";
-import useEntryUpsert from "../use-entry-upsert";
+import useEntryUpsert from "../state/use-entry-upsert";
 
 // STATIC QUESTIONS
 // The slider doesn't work well with dynamic contents.
@@ -65,10 +69,9 @@ const useSortedQuestions = board =>
     }));
   }, [board]);
 
-const useResourceQuestions = resourceId => {
+const useResourceQuestions = ({ resourceId, board, onSubmit }) => {
   const { upsertEntry } = useEntryUpsert();
   const [activeIndex, setActiveIndex] = useState(0);
-  const { data: board } = useBoardByResourceId(resourceId);
 
   const questions = useSortedQuestions(board);
   const slides = useStaticQuestions(questions);
@@ -82,16 +85,18 @@ const useResourceQuestions = resourceId => {
     return activeSlide ? values[activeSlide.question.id] !== null : false;
   }, [activeSlide, values]);
 
-  const requestSubmit = () =>
-    upsertEntry({
+  const requestSubmit = () => {
+    const payload = {
       prop_value_id: activeSlide.answer.propId,
       res_value_id: activeSlide.answer.resId,
       value: values[activeSlide.question.id]
-    });
+    };
+    return upsertEntry(payload).then(
+      data => onSubmit && onSubmit({ payload, data })
+    );
+  };
 
   return {
-    isReady: board !== null,
-    board,
     slides,
     values,
     setValue,

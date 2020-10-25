@@ -42,7 +42,7 @@ const ResourceEditView = () => {
     openConfirm,
     closeConfirm,
     submitDelete
-  } = useResourceDeleteValue();
+  } = useResourceDeleteValue({ projectId, resourceId, data });
 
   return (
     <IonPage>

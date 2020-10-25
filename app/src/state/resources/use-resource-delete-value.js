@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import useResourceDetails from "./use-resource-details";
 import { LOAD_RESOURCES_LIST } from "./use-resources-list";
 
 const DELETE_VALUE = gql`
@@ -13,12 +12,9 @@ const DELETE_VALUE = gql`
   }
 `;
 
-const useResourceDeleteValue = () => {
+const useResourceDeleteValue = ({ projectId, resourceId, data }) => {
   const history = useHistory();
-  const { resourceId, projectId } = useParams();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-
-  const { data } = useResourceDetails();
 
   const [deleteValue] = useMutation(DELETE_VALUE, {
     refetchQueries: [
@@ -32,11 +28,11 @@ const useResourceDeleteValue = () => {
     setIsConfirmOpen(true);
   };
 
-  const closeConfirm = (evt) => {
+  const closeConfirm = evt => {
     setIsConfirmOpen(false);
   };
 
-  const submitDelete = (confirm) => {
+  const submitDelete = confirm => {
     if (confirm.name !== data.name) {
       alert("Wrong name");
       return;
@@ -46,7 +42,7 @@ const useResourceDeleteValue = () => {
         closeConfirm();
         history.push(`/p/${projectId}/resources`);
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
       });
   };
