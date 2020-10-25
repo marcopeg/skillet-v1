@@ -17,13 +17,10 @@ import {
 } from "@ionic/react";
 
 import useResourceGroupDetails from "../state/resources/use-resource-group-details";
-// import SlidingQuestions from "../containers/SlidingQuestions";
-// import Gauge from "../components/base/Gauge";
+import Gauge from "../components/base/Gauge";
 
 const ResourceGroupDetailsView = () => {
-  const { projectId, isLoading } = useResourceGroupDetails();
-
-  // const stats = board ? board.map.res.values[resourceId].stats : null;
+  const { projectId, isLoading, isReady, group } = useResourceGroupDetails();
 
   return (
     <IonPage>
@@ -41,7 +38,13 @@ const ResourceGroupDetailsView = () => {
             </IonButton>
           </IonButtons>
           <IonTitle>
-            {isLoading ? <IonSpinner name="dots" /> : <>{"Resource Group"}</>}
+            {isLoading ? (
+              <IonSpinner name="dots" />
+            ) : isReady ? (
+              <>{group.name}</>
+            ) : (
+              "Error"
+            )}
           </IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -53,7 +56,20 @@ const ResourceGroupDetailsView = () => {
         ) : (
           <IonGrid>
             <IonRow>
-              <IonCol>Hello World</IonCol>
+              <IonCol>
+                <Gauge
+                  value={isReady ? Math.round(group.stats.fillRate * 100) : 0}
+                  label="Fill Rate"
+                  units="%"
+                />
+              </IonCol>
+              <IonCol>
+                <Gauge
+                  value={isReady ? Math.round(group.stats.score * 100) : 0}
+                  label="Score"
+                  units="%"
+                />
+              </IonCol>
             </IonRow>
           </IonGrid>
         )}

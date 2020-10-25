@@ -1,13 +1,22 @@
 /* eslint-disable */
 
 import { useParams } from "react-router-dom";
+import useBoardByResourceGroupId from "../board/use-board-by-resource-group-id";
 
 const useResourceGroupDetails = () => {
-  const { projectId } = useParams();
+  const { projectId, groupId } = useParams();
+  const { data, isLoading, isReady } = useBoardByResourceGroupId(groupId);
+
+  const group = isReady ? data.map.res.groups[groupId] : null;
 
   return {
-    isLoading: false,
-    projectId
+    projectId,
+    groupId,
+    isReady,
+    isLoading,
+    hasError: !isReady && !isLoading,
+    board: data,
+    group
   };
 };
 
