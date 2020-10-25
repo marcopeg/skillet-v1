@@ -20,6 +20,7 @@ import useResourceValue from "../state/resources/use-resource-value";
 import SlidingQuestions from "../containers/SlidingQuestions";
 import Gauge from "../components/base/Gauge";
 import Markdown from "../components/base/Markdown";
+import BoardStrengths from "../components/board/BoardStrengths";
 
 const ResourceDetailsView = () => {
   const {
@@ -95,6 +96,11 @@ const ResourceDetailsView = () => {
                   value={Math.round(data.stats.score * 10000)}
                   label="Score"
                 />
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <BoardStrengths board={board} />
               </IonCol>
             </IonRow>
             <IonRow>
