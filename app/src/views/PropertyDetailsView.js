@@ -19,6 +19,7 @@ import {
 
 import Markdown from "../components/base/Markdown";
 import usePropertyDetails from "../state/properties/use-property-details";
+// import BoardHeroes from '../components/board/BoardHeroes'
 
 const PropertiesView = () => {
   const {
