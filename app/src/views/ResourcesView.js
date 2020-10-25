@@ -54,15 +54,17 @@ const GroupsList = ({ groups, baseUrl, createResource }) => (
     {groups.map((group, idx) => {
       return (
         <React.Fragment key={`gr-${group.id}`}>
-          <IonListHeader className={idx > 0 ? "ion-padding-top" : null}>
-            <IonToolbar>
-              <h3>{group.name}</h3>
-            </IonToolbar>
+          <IonListHeader
+            lines="full"
+            className={idx > 0 ? "ion-padding-top" : null}
+          >
+            <IonLabel>{group.name}</IonLabel>
+            <IonButton routerLink={`${baseUrl}/g/${group.id}`}>Open</IonButton>
           </IonListHeader>
 
           {group.values.length ? (
             <>
-              {group.values.map((value) => {
+              {group.values.map(value => {
                 return (
                   <IonItem
                     key={`gr-${group.id}-${value.id}`}
@@ -156,7 +158,7 @@ const PropertiesView = ({ match }) => {
                   <IonLabel position="floating">Name:</IonLabel>
                   <IonInput
                     value={createGroup.values.name}
-                    onIonChange={(e) =>
+                    onIonChange={e =>
                       createGroup.setValue("name", e.detail.value)
                     }
                   />
@@ -166,7 +168,7 @@ const PropertiesView = ({ match }) => {
                   <IonTextarea
                     rows="5"
                     value={createGroup.values.description}
-                    onIonChange={(e) =>
+                    onIonChange={e =>
                       createGroup.setValue("description", e.detail.value)
                     }
                   />
@@ -208,7 +210,7 @@ const PropertiesView = ({ match }) => {
                   <IonLabel position="floating">Name:</IonLabel>
                   <IonInput
                     value={createValue.values.name}
-                    onIonChange={(e) =>
+                    onIonChange={e =>
                       createValue.setValue("name", e.detail.value)
                     }
                   />
@@ -218,7 +220,7 @@ const PropertiesView = ({ match }) => {
                   <IonTextarea
                     rows="5"
                     value={createValue.values.description}
-                    onIonChange={(e) =>
+                    onIonChange={e =>
                       createValue.setValue("description", e.detail.value)
                     }
                   />

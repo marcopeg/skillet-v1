@@ -55,5 +55,12 @@ INSERT INTO "res_values" ("id", "project_id", "res_group_id", "name", "descripti
 (2,	'Lk3on9',	1,	'Dev2',	'',	'{}',	0,	'2020-10-06 09:14:09.288884+00'),
 (3,	'S3iOla',	2,	'Skill1',	'',	'{}',	0,	'2020-10-13 08:16:46.23322+00');
 
+
+-- reset internal sequences:
+SELECT setval('"prop_values_id_seq"', (select max(id) from prop_values));
+SELECT setval('"prop_groups_id_seq"', (select max(id) from prop_groups));
+SELECT setval('"res_values_id_seq"', (select max(id) from res_values));
+SELECT setval('"res_groups_id_seq"', (select max(id) from res_groups));
+
 -- 2020-10-13 08:38:20.28569+00
 SET session_replication_role = DEFAULT;
