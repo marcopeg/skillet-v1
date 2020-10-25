@@ -16,9 +16,10 @@ import {
   IonCol
 } from "@ionic/react";
 
-import useResourceDetails from "../state/resources/use-resource-details";
+import useResourceValue from "../state/resources/use-resource-value";
 import SlidingQuestions from "../containers/SlidingQuestions";
 import Gauge from "../components/base/Gauge";
+import Markdown from "../components/base/Markdown";
 
 const ResourceDetailsView = () => {
   const {
@@ -26,10 +27,10 @@ const ResourceDetailsView = () => {
     board,
     projectId,
     resourceId,
-    isLoading
-  } = useResourceDetails();
-
-  const stats = board ? board.map.res.values[resourceId].stats : null;
+    isLoading,
+    isReady,
+    refetch
+  } = useResourceValue();
 
   return (
     <IonPage>
@@ -49,7 +50,7 @@ const ResourceDetailsView = () => {
           <IonTitle>
             {isLoading ? (
               <IonSpinner name="dots" />
-            ) : (
+            ) : isReady ? (
               <>
                 <small>
                   {data.group.name}
@@ -57,6 +58,8 @@ const ResourceDetailsView = () => {
                 </small>
                 {data.name}
               </>
+            ) : (
+              "error"
             )}
           </IonTitle>
         </IonToolbar>
@@ -66,27 +69,41 @@ const ResourceDetailsView = () => {
           <div className="ion-padding">
             <IonSpinner name="dots" />
           </div>
-        ) : (
+        ) : isReady ? (
           <IonGrid>
             <IonRow>
               <IonCol>
+                <h1>{data.name}</h1>
+              </IonCol>
+            </IonRow>
+            {data.description ? (
+              <IonRow>
+                <IonCol>
+                  <Markdown source={data.description} />
+                </IonCol>
+              </IonRow>
+            ) : null}
+            <IonRow>
+              <IonCol>
                 <Gauge
-                  value={stats ? Math.round(stats.fillRate * 100) : 0}
+                  value={Math.round(data.stats.fillRate * 100)}
                   label="Fill Rate"
-                  units="%"
                 />
               </IonCol>
               <IonCol>
                 <Gauge
-                  value={stats ? Math.round(stats.score * 100) : 0}
+                  value={Math.round(data.stats.score * 10000)}
                   label="Score"
-                  units="%"
                 />
               </IonCol>
             </IonRow>
             <IonRow>
               <IonCol sizeLg={12}>
-                <SlidingQuestions resourceId={resourceId} />
+                <SlidingQuestions
+                  resourceId={resourceId}
+                  board={board}
+                  onSubmit={refetch}
+                />
               </IonCol>
             </IonRow>
             <IonRow>
@@ -101,6 +118,8 @@ const ResourceDetailsView = () => {
               </IonCol>
             </IonRow>
           </IonGrid>
+        ) : (
+          "error"
         )}
       </IonContent>
     </IonPage>

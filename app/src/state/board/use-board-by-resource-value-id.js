@@ -3,8 +3,8 @@ import { gql, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { formatProjectData } from "../project/format-project-data";
 
-export const LOAD_BOARD_BY_RESOURCE_ID = gql`
-  query loadBoardByResourceId($resourceId: Int!) {
+export const LOAD_BOARD_BY_RESOURCE_VALUE_ID = gql`
+  query loadBoardByResourceValueId($resourceId: Int!) {
     projects {
       id
       title
@@ -37,6 +37,7 @@ export const LOAD_BOARD_BY_RESOURCE_ID = gql`
     ) {
       id
       name
+      description
       groupId: res_group_id
     }
     entries(where: { res_value_id: { _eq: $resourceId } }) {
@@ -48,22 +49,23 @@ export const LOAD_BOARD_BY_RESOURCE_ID = gql`
   }
 `;
 
-const useBoardByResourceId = (resourceId) => {
+const useBoardByResourceValueId = resourceId => {
   const { projectId } = useParams();
-  const { data, loading } = useQuery(LOAD_BOARD_BY_RESOURCE_ID, {
+  const { data, loading, refetch } = useQuery(LOAD_BOARD_BY_RESOURCE_VALUE_ID, {
     variables: { resourceId },
     fetchPolicy: "network-only"
   });
 
-  return useMemo(
-    () => ({
-      projectId,
-      isReady: !!data,
-      isLoading: loading,
-      data: formatProjectData(data, "byId")
-    }),
-    [data, loading, projectId]
-  );
+  // Calculate the board and memorize the value for performances
+  const board = useMemo(() => formatProjectData(data, "byId"), [data]);
+
+  return {
+    isLoading: loading,
+    isReady: loading === false && data !== null,
+    projectId,
+    board,
+    refetch: () => refetch()
+  };
 };
 
-export default useBoardByResourceId;
+export default useBoardByResourceValueId;

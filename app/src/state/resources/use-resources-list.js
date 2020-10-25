@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 
 export const LOAD_RESOURCES_LIST = gql`
-  query propertiesList {
+  query loadResourcesList {
     groups: res_groups(order_by: { order: desc, id: asc }) {
       id
       name
@@ -24,10 +24,10 @@ const useResourcesList = () => {
     fetchPolicy: "network-only"
   });
 
-  const refresh = (event) => {
+  const refresh = event => {
     refetch()
       .then(() => event.detail.complete())
-      .catch((err) => console.error(err));
+      .catch(err => console.error(err));
   };
 
   return {

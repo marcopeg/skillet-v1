@@ -153,7 +153,7 @@ export const formatProjectData = (data, sourceName = "default") => {
     propGroup.stats = calculateStats(propGroup.entries);
   });
 
-  // Distribute entries to resGroups/resValues
+  // Distribute entries to resGroups
   raw.res.groups.forEach(resGroup => {
     const values$ = $ => $.groupId === resGroup.id;
     resGroup.values = raw.res.values.filter(values$);
@@ -166,6 +166,11 @@ export const formatProjectData = (data, sourceName = "default") => {
     }, []);
 
     resGroup.stats = calculateStats(resGroup.entries);
+  });
+
+  // Distribute entries to resValues
+  raw.res.values.forEach(resValue => {
+    resValue.group = map.res.groups[resValue.groupId];
   });
 
   raw.project.stats = calculateStats(raw.entries);
