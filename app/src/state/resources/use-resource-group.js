@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import useBoardByResourceGroupId from "../board/use-board-by-resource-group-id";
 
-const useResourceGroupDetails = () => {
+const useResourceGroup = () => {
   const { projectId, groupId } = useParams();
   const { board, isLoading, isReady } = useBoardByResourceGroupId(groupId);
 
@@ -18,4 +18,4 @@ const useResourceGroupDetails = () => {
   };
 };
 
-export default useResourceGroupDetails;
+export default useResourceGroup;

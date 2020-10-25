@@ -1,4 +1,7 @@
 export const PROJECT_DEFAULTS = {
+  /**
+   * This key is used to render the question UI
+   */
   question: {
     type: "slider",
     options: {
@@ -57,6 +60,10 @@ export const PROJECT_DEFAULTS = {
       }
     }
   },
+
+  /**
+   * This key is used to calculate stats and render the board
+   */
   efficiency: {
     // It's the value that is assigned to the score of an empty cell.
     voidValue: -100,
@@ -91,7 +98,13 @@ export const PROJECT_DEFAULTS = {
       }
     ]
   },
+
+  /**
+   * This is used to render the board and its data visualization components
+   */
   appearance: {
+    // Used to define che color of a cell in SkillMatrix component
+    // TODO: scope by component name
     thresholds: {
       _null: {
         style: { backgroundColor: "#fff1d4" }
@@ -122,8 +135,16 @@ export const PROJECT_DEFAULTS = {
           style: { backgroundColor: "#84c195" }
         }
       ]
+    },
+
+    BoardStrengths: {
+      minScore: 0.7
     }
   },
+
+  /**
+   * Used for Properties data calculations
+   */
   prop: {
     value: {
       url_docs: ""
