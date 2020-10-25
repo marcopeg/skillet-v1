@@ -16,11 +16,12 @@ import {
   IonCol
 } from "@ionic/react";
 
-import useResourceGroupDetails from "../state/resources/use-resource-group-details";
+import useResourceGroup from "../state/resources/use-resource-group";
 import Gauge from "../components/base/Gauge";
+import BoardStrengths from "../components/board/BoardStrengths";
 
 const ResourceGroupDetailsView = () => {
-  const { projectId, isLoading, isReady, group } = useResourceGroupDetails();
+  const { projectId, isLoading, isReady, group, board } = useResourceGroup();
 
   return (
     <IonPage>
@@ -60,15 +61,18 @@ const ResourceGroupDetailsView = () => {
                 <Gauge
                   value={isReady ? Math.round(group.stats.fillRate * 100) : 0}
                   label="Fill Rate"
-                  units="%"
                 />
               </IonCol>
               <IonCol>
                 <Gauge
-                  value={isReady ? Math.round(group.stats.score * 100) : 0}
+                  value={isReady ? Math.round(group.stats.score * 10000) : 0}
                   label="Score"
-                  units="%"
                 />
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <BoardStrengths board={board} />
               </IonCol>
             </IonRow>
           </IonGrid>
