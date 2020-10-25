@@ -8,7 +8,7 @@ const HeaderGroup = ({ propGroup }) => {
   return (
     <td colSpan={propGroup.values.length} className="skm-header-group">
       <span style={style}>{propGroup.name}</span>
-      <ScoreProgressBar value={propGroup.stats.score} color="medium" />
+      <ScoreProgressBar value={propGroup.stats.fillRate} color="medium" />
     </td>
   );
 };
