@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
-import { LOAD_RESOURCES_LIST } from "./use-resources-list";
-import useResourceDetails, {
-  LOAD_RESOURCE_DETAILS
-} from "./use-resource-details";
+import { useResourceValueOnly } from "./use-resource-value";
 
 const UPDATE_VALUE = gql`
   mutation updateResValue($id: Int!, $name: String!, $description: String) {
@@ -29,19 +26,9 @@ const useResourceEditValue = () => {
   const { resourceId, projectId } = useParams();
   const [values, setValues] = useState({ ...defaultValues });
 
-  const { data, isDataLoading } = useResourceDetails();
+  const { data } = useResourceValueOnly();
 
-  const [updateValue] = useMutation(UPDATE_VALUE, {
-    refetchQueries: [
-      {
-        query: LOAD_RESOURCES_LIST
-      },
-      {
-        query: LOAD_RESOURCE_DETAILS,
-        variables: { id: resourceId }
-      }
-    ]
-  });
+  const [updateValue] = useMutation(UPDATE_VALUE);
 
   const resetValues = (values = {}) =>
     setValues({ ...defaultValues, ...values });
@@ -68,7 +55,7 @@ const useResourceEditValue = () => {
   }, [data]);
 
   return {
-    isDataLoading,
+    // isDataLoading,
     isFormDisabled: values.name.length < 3,
     isFormLoading: false,
     projectId,

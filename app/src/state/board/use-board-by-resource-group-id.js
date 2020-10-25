@@ -50,20 +50,21 @@ export const LOAD_BOARD_BY_RESOURCE_GROUP_ID = gql`
 
 const useBoardByResourceGroupId = groupId => {
   const { projectId } = useParams();
-  const { data, loading } = useQuery(LOAD_BOARD_BY_RESOURCE_GROUP_ID, {
+  const { data, loading, refetch } = useQuery(LOAD_BOARD_BY_RESOURCE_GROUP_ID, {
     variables: { groupId },
     fetchPolicy: "network-only"
   });
 
-  return useMemo(
-    () => ({
-      projectId,
-      isLoading: loading,
-      isReady: loading === false && data !== null,
-      data: formatProjectData(data, "byId")
-    }),
-    [data, loading, projectId]
-  );
+  // Calculate the board and memorize the value for performances
+  const board = useMemo(() => formatProjectData(data, "byId"), [data]);
+
+  return {
+    isLoading: loading,
+    isReady: loading === false && data !== null,
+    projectId,
+    board,
+    refetch: () => refetch()
+  };
 };
 
 export default useBoardByResourceGroupId;
