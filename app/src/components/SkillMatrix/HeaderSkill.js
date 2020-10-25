@@ -13,7 +13,7 @@ const HeaderSkill = ({ skill }) => {
   return (
     <td className="skm-header-skill" onClick={navigateToProp}>
       <span>{skill.name}</span>
-      <ScoreProgressBar value={skill.stats.score} color="medium" />
+      <ScoreProgressBar value={skill.stats.fillRate} color="medium" />
     </td>
   );
 };

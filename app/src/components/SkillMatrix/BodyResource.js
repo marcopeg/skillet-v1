@@ -6,7 +6,7 @@ import { useHistory, useParams } from "react-router-dom";
 const BodyResource = ({ resGroup, resValue, data, onUpdate }) => {
   const { projectId } = useParams();
   const history = useHistory();
-  const { score } = resValue.stats;
+  const { fillRate } = resValue.stats;
 
   const navigateToUser = () => {
     history.push(`/p/${projectId}/resources/v/${resValue.id}`);
@@ -16,7 +16,7 @@ const BodyResource = ({ resGroup, resValue, data, onUpdate }) => {
     <tr>
       <td className="skm-body-resource" onClick={navigateToUser}>
         <span>{resValue.name}</span>
-        <ScoreProgressBar value={score} />
+        <ScoreProgressBar value={fillRate} />
       </td>
       {data.prop.groups.map(propGroup =>
         propGroup.values.map(propValue => {
