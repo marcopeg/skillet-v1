@@ -19,16 +19,18 @@ import {
 
 import Markdown from "../components/base/Markdown";
 import usePropertyDetails from "../state/properties/use-property-details";
-// import BoardHeroes from '../components/board/BoardHeroes'
+import usePropertyValue from "../state/properties/use-property-value";
+import BoardHeroes from "../components/board/BoardHeroes";
 
 const PropertiesView = () => {
   const {
-    data,
-    values,
+    isReady,
     projectId,
     propertyId,
-    isDataLoading
-  } = usePropertyDetails();
+    data,
+    values,
+    board
+  } = usePropertyValue();
 
   return (
     <IonPage>
@@ -61,7 +63,7 @@ const PropertiesView = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        {isDataLoading ? (
+        {!isReady ? (
           <div className="ion-padding">
             <IonSpinner name="dots" />
           </div>
@@ -98,6 +100,11 @@ const PropertiesView = () => {
                 >
                   Edit
                 </IonButton>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <BoardHeroes board={board} />
               </IonCol>
             </IonRow>
           </IonGrid>
