@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import useBoardByResourceValueId from "../board/use-board-by-resource-value-id";
 
 export const LOAD_RESOURCE_VALUE_BY_ID = gql`
-  query loadResourceValueByUd($id: Int!) {
+  query loadResourceValueById($id: Int!) {
     value: res_values_by_pk(id: $id) {
       name
       description

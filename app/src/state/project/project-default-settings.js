@@ -139,6 +139,9 @@ export const PROJECT_DEFAULTS = {
 
     BoardStrengths: {
       minScore: 0.7
+    },
+    BoardHeroes: {
+      minScore: 0.7
     }
   },
 
