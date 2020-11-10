@@ -77,10 +77,7 @@ export const usePropertyValueOnly = () => {
     fetchPolicy: "network-only"
   });
 
-  const [data, setData] = useState(null);
-  useEffect(() => {
-    board && setData(board.map.prop.values[propertyId]);
-  }, [isLoading, board, setData]);
+  const data = rawData ? rawData.value : null;
 
   const settings = data
     ? deepmerge(

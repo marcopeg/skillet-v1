@@ -29,9 +29,10 @@ export const LOAD_PROPERTY_DETAILS = gql`
 `;
 
 const usePropertyDetails = () => {
+  console.warn("@@DEPRECATED: usePropertyValue instead!");
   const { propertyId, projectId } = useParams();
 
-  const { data: rawData, loading: isDataLoading } = useQuery(
+  const { data: rawData, loading: isLoading } = useQuery(
     LOAD_PROPERTY_DETAILS,
     {
       variables: { id: propertyId },
@@ -66,7 +67,7 @@ const usePropertyDetails = () => {
     data,
     values,
     settings,
-    isDataLoading
+    isLoading
   };
 };
 

@@ -4,10 +4,8 @@ import { useParams } from "react-router-dom";
 
 import { composeUrl } from "../../lib/strings";
 
-import { LOAD_PROPERTIES_LIST } from "./use-properties-list";
-import usePropertyDetails, {
-  LOAD_PROPERTY_DETAILS
-} from "./use-property-details";
+// import { LOAD_PROPERTIES_LIST } from "./use-properties-list";
+import { usePropertyValueOnly } from "./use-property-value";
 
 const UPDATE_VALUE = gql`
   mutation updatePropValue(
@@ -38,18 +36,18 @@ const usePropertyEditValue = () => {
   const { propertyId, projectId } = useParams();
   const [values, setValues] = useState({ ...defaultValues });
 
-  const { data, settings, isDataLoading } = usePropertyDetails();
+  const { data, settings, isLoading } = usePropertyValueOnly();
 
   const [updateValue] = useMutation(UPDATE_VALUE, {
-    refetchQueries: [
-      {
-        query: LOAD_PROPERTIES_LIST
-      },
-      {
-        query: LOAD_PROPERTY_DETAILS,
-        variables: { id: propertyId }
-      }
-    ]
+    // refetchQueries: [
+    //   {
+    //     query: LOAD_PROPERTIES_LIST
+    //   },
+    //   {
+    //     query: LOAD_PROPERTY_DETAILS,
+    //     variables: { id: propertyId }
+    //   }
+    // ]
   });
 
   const hints = {
@@ -72,7 +70,7 @@ const usePropertyEditValue = () => {
       data: { url_docs },
       id: propertyId
     };
-    updateValue({ variables }).catch((err) => {
+    updateValue({ variables }).catch(err => {
       console.error(err);
     });
   };
@@ -88,7 +86,7 @@ const usePropertyEditValue = () => {
   }, [data]);
 
   return {
-    isDataLoading,
+    isDataLoading: isLoading,
     isFormDisabled: values.name.length < 3,
     isFormLoading: false,
     projectId,
