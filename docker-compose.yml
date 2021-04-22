@@ -93,7 +93,7 @@ services:
       EVT_PROJECT_CACHE_UPDATE: http://backend:4000/project/cache/update
       ACTION_BASE_URL: http://backend:4000
     healthcheck:
-      test: ["CMD", "wget", "-qO", "-", "http://hasura:8080/healthz"]
+      test: ["CMD", "wget", "-qO", "-", "http://localhost:8080/healthz"]
       interval: 5s
       timeout: 5s
       retries: 20

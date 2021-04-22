@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
-  "main": "src/index.js",
+  "private": true,
   "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "@apollo/client": "^3.2.2",
     "@ionic/react": "5.4.1",
     "@ionic/react-router": "5.4.1",
@@ -14,25 +16,25 @@
     "deepmerge": "^4.2.2",
     "graphql": "^15.3.0",
     "object-path": ">=0.11.5",
-    "react": "16.13.1",
     "react-device-detect": "^1.14.0",
-    "react-dom": "16.13.1",
     "react-markdown": "^4.3.1",
     "react-router": "5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.0",
     "subscriptions-transport-ws": "^0.9.18",
     "use-media": "^1.4.0"
   },
   "devDependencies": {
-    "node-forge": ">=0.10.0",
-    "react-styleguidist": "^11.1.0",
-    "typescript": "3.8.3"
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.1.1",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "react-styleguidist": "^11.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start:compose": "npm i && react-scripts start",
     "start:node": "REACT_APP_HASURA_URL=http://localhost:8080/v1/graphql react-scripts start",
@@ -44,6 +46,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "proxy": "http://localhost:8080"
+  ]
 }
