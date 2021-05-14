@@ -34,7 +34,7 @@ const usePropertyDetails = () => {
   const { data: rawData, loading: isDataLoading } = useQuery(
     LOAD_PROPERTY_DETAILS,
     {
-      variables: { id: propertyId },
+      variables: { id: Number(propertyId) },
       fetchPolicy: "network-only"
     }
   );

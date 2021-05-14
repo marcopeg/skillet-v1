@@ -29,3 +29,9 @@ logs:
 
 logs-hasura:
 	docker-compose logs -f hasura
+
+prod-start:
+	docker-compose -f docker-compose.prod.yml up
+
+prod-stop:
+	docker-compose -f docker-compose.prod.yml down

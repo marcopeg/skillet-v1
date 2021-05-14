@@ -49,12 +49,15 @@ export const LOAD_BOARD_BY_RESOURCE_VALUE_ID = gql`
   }
 `;
 
-const useBoardByResourceValueId = resourceId => {
+const useBoardByResourceValueId = (resourceId) => {
   const { projectId } = useParams();
-  const { data, loading, refetch } = useQuery(LOAD_BOARD_BY_RESOURCE_VALUE_ID, {
-    variables: { resourceId },
-    fetchPolicy: "network-only"
-  });
+  const { data, error, loading, refetch } = useQuery(
+    LOAD_BOARD_BY_RESOURCE_VALUE_ID,
+    {
+      variables: { resourceId: Number(resourceId) },
+      fetchPolicy: "network-only"
+    }
+  );
 
   // Calculate the board and memorize the value for performances
   const board = useMemo(() => formatProjectData(data, "byId"), [data]);
