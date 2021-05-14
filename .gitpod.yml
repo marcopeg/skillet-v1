@@ -1,4 +1,4 @@
-image: marcopeg/gitpod-workspace-hasura:v2.0.0-alpha.10
+image: marcopeg/gitpod-workspace-hasura:v1.3.2
 
 tasks:
   # Hasura Engine
@@ -67,9 +67,9 @@ tasks:
     command:
       bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8080/v1/version)" != "200" ]]; do sleep 5; done'
       && bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:4000/healthz)" != "200" ]]; do sleep 5; done'
-      && hasura migrate apply
-      && hasura metadata apply
-      && hasura seeds apply
+      && hasura --skip-update-check migrate apply
+      && hasura --skip-update-check metadata apply
+      && hasura --skip-update-check seeds apply
     openIn: bottom
     openMode: tab-after
 
