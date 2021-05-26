@@ -70,7 +70,7 @@ const usePropertyEditValue = () => {
     const variables = {
       ...otherValues,
       data: { url_docs },
-      id: propertyId
+      id: Number(propertyId)
     };
     updateValue({ variables }).catch((err) => {
       console.error(err);
