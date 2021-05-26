@@ -47,7 +47,7 @@ const usePropertyEditValue = () => {
       },
       {
         query: LOAD_PROPERTY_DETAILS,
-        variables: { id: propertyId }
+        variables: { id: Number(propertyId) }
       }
     ]
   });
